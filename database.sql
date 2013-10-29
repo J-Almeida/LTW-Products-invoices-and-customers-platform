@@ -1,0 +1,86 @@
+PRAGMA foreign_keys = ON;
+
+DROP TABLE IF EXISTS Customer;
+DROP TABLE IF EXISTS BillingAddress;
+DROP TABLE IF EXISTS City;
+DROP TABLE IF EXISTS Country;
+DROP TABLE IF EXISTS InvoiceLine;
+DROP TABLE IF EXISTS Tax;
+DROP TABLE IF EXISTS Permissions;
+DROP TABLE IF EXISTS Product;
+DROP TABLE IF EXISTS Invoice;
+
+CREATE TABLE Customer (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	customerTaxID INTEGER UNIQUE NOT NULL,
+	name TEXT NOT NULL,
+	billingAddressID INTEGER REFERENCES BillingAddress(id) ON DELETE CASCADE,
+	email TEXT,
+	permissionsID INTEGER REFERENCES Permissions(id) ON DELETE CASCADE
+);
+
+CREATE TABLE BillingAddress (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	addressDetail TEXT NOT NULL,
+	cityID INTEGER REFERENCES City(id) ON DELETE CASCADE,
+	countryID INTEGER REFERENCES Country(id) ON DELETE CASCADE,
+	postalCode TEXT NOT NULL
+);
+
+CREATE TABLE City (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name TEXT UNIQUE NOT NULL
+);
+
+CREATE TABLE Country (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name TEXT UNIQUE NOT NULL
+);
+
+CREATE TABLE Product (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	productCode TEXT,
+	productDescription TEXT NOT NULL,
+	unitPrice REAL NOT NULL,
+	unitOfMeasure TEXT NOT NULL
+);
+
+CREATE TABLE Invoice (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	invoiceNo TEXT UNIQUE NOT NULL,
+	invoiceDate DATE NOT NULL,
+	customerID INTEGER REFERENCES Customer(id) ON DELETE CASCADE,
+	/* Document Totals */
+	taxPayable REAL NOT NULL, /* Sum of taxes of all lines */ 
+	netTotal REAL NOT NULL,   /* Sum of price of all lines w/o tax */ 
+	grossTotal REAL NOT NULL /* netTotal + taxPayable */
+);
+
+CREATE TABLE InvoiceLine (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	invoiceID INTEGER REFERENCES Invoice(id) ON DELETE CASCADE,
+	lineNumber INTEGER NOT NULL,
+	productCodeID INTEGER REFERENCES Product(id) ON DELETE CASCADE,
+	quantity INTEGER NOT NULL,
+	creditAmount REAL NOT NULL,
+	taxID INTEGER REFERENCES Tax(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Tax (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	type TEXT UNIQUE NOT NULL,
+	percentage REAL NOT NULL
+);
+
+CREATE TABLE Permissions (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	type TEXT UNIQUE NOT NULL,
+	read INTEGER NOT NULL,
+	write INTEGER NOT NULL,
+	promote INTEGER NOT NULL
+);
+
+INSERT INTO Permissions(type, read, write, promote) VALUES ( "admin", 1, 1, 1);
+INSERT INTO Permissions(type, read, write, promote) VALUES ("editor", 1, 1, 0);
+INSERT INTO Permissions(type, read, write, promote) VALUES ("reader", 1, 0, 0);
+
