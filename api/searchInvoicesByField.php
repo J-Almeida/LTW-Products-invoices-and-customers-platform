@@ -2,22 +2,14 @@
 include 'utilities.php';
 include 'search.php';
 
-if ( isset($_GET['field']) && !empty($_GET['field']) ) {
-    $field = $_GET['field'];
-}
+$parameters = getSearchParameters();
+$parameters['table'] = 'Invoice';
+$parameters['rows'] = array('InvoiceNo', 'InvoiceDate', 'GrossTotal', 'CompanyName');
+$parameters['joins'] = array('customer');
 
-if ( isset($_GET['value']) && !empty($_GET['value']) ) {
-    $values = retrieveGETparameters('value');
-}
-
-$rows = array('InvoiceNo', 'InvoiceDate', 'GrossTotal', 'CompanyName');
-$joins = array('customer');
-
-$search = new RangeSearch('invoice', $field, $values, $rows, $joins);
-$result = $search->getResults();
+$result = executeSearch($parameters);
 
 if (!$result)
-    echo "empty";
-else {
+    echo '[]';
+else
     echo json_encode($result);
-}

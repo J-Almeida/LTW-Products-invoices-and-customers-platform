@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS Invoice;
 
 CREATE TABLE Customer (
 	customerId INTEGER PRIMARY KEY AUTOINCREMENT,
-	customerTaxID INTEGER UNIQUE NOT NULL,
+	customerTaxId INTEGER UNIQUE NOT NULL,
 	companyName TEXT NOT NULL,
 	billingAddressId INTEGER REFERENCES BillingAddress(billingAddressId) ON DELETE CASCADE,
 	email TEXT,
