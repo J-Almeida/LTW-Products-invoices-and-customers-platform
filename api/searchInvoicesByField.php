@@ -1,7 +1,6 @@
 <?php
 include 'utilities.php';
-
-$db = new PDO('sqlite:../database.db');
+include 'search.php';
 
 if ( isset($_GET['field']) && !empty($_GET['field']) ) {
     $field = $_GET['field'];
@@ -9,11 +8,12 @@ if ( isset($_GET['field']) && !empty($_GET['field']) ) {
 }
 
 if ( isset($_GET['value']) && !empty($_GET['value']) ) {
-    $params = retrieveGETparameters('value');
-    var_export($params);
+    $values = retrieveGETparameters('value');
+    var_export($values);
 }
 
-$result = $db->query("SELECT * FROM Invoice");
+$search = new RangeSearch('invoice', $field, $values);
+$result = $search->getResults();
 
 if (!$result)
     echo "empty";
@@ -23,5 +23,3 @@ else {
         echo json_encode($row);
     }
 }
-
-?>

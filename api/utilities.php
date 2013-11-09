@@ -11,10 +11,8 @@ function retrieveGETparameters($parameter) {
     {
         list($name, $value) = explode('=', $param);
         if ($name == $parameter)
-            $params[urldecode($name)][] = urldecode($value);
+            $params[] = urldecode($value);
     }
 
     return $params;
 }
-
-?>
