@@ -22,6 +22,9 @@ function getSearchParametersFromURL() {
     $field = NULL;
     if ( isset($_GET['field']) && !empty($_GET['field']) ) {
         $field = $_GET['field'];
+    } else {
+        $error = new InvalidSearch(700, 'Missing \'field\' field');
+        die( json_encode($error->getInfo()) );
     }
 
     $values = array();
@@ -32,6 +35,9 @@ function getSearchParametersFromURL() {
     $operation = NULL;
     if ( isset($_GET['op']) && !empty($_GET['op']) ) {
         $operation = $_GET['op'];
+    } else {
+        $error = new InvalidSearch(700, 'Missing \'op\' field');
+        die( json_encode($error->getInfo()) );
     }
 
     return array('field' => $field, 'values' => $values, 'operation' => $operation);
@@ -52,9 +58,10 @@ function executeSearch($parameters) {
         $result = $search->getResults();
         return $result;
     } catch (ReflectionException $exception) {
-        echo 'Invalid op value!';
+        $error = new InvalidSearch(700, 'Invalid \'op\' field');
+        die( json_encode($error->getInfo()) );
     } catch (InvalidSearch $invalid) {
-        echo 'Invalid query!';
+        die( json_encode($invalid->getInfo()) );
     }
 
     return NULL;

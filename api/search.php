@@ -1,6 +1,19 @@
 <?php
 
-class InvalidSearch extends Exception {}
+class InvalidSearch extends Exception {
+    private $info;
+
+    public function __construct($errorCode, $reason) {
+        $errorInfo = array();
+        $errorInfo['code'] = $errorCode;
+        $errorInfo['reason'] = $reason;
+        $this->info = array('error' => $errorInfo);
+    }
+
+    public function getInfo() {
+        return $this->info;
+    }
+}
 
 class Search {
     protected $table;
@@ -52,7 +65,7 @@ class Search {
 class RangeSearch extends Search {
     public function __construct($table, $field, $values, $rows, $tableJoints = array()) {
         if ( count($values) != 2 )
-            throw new InvalidSearch();
+            throw new InvalidSearch(700, "Expected only 2 values");
         $this->initialize($table, $field, $values, $rows, $tableJoints);
     }
 
@@ -66,7 +79,7 @@ class RangeSearch extends Search {
 class EqualSearch extends Search {
     public function __construct($table, $field, $values, $rows, $tableJoints = array()) {
         if ( count($values) != 1 )
-            throw new InvalidSearch();
+            throw new InvalidSearch(700, "Expected only 1 value");
         $this->initialize($table, $field, $values, $rows, $tableJoints);
     }
 
@@ -80,7 +93,7 @@ class EqualSearch extends Search {
 class ContainsSearch extends Search {
     public function __construct($table, $field, $values, $rows, $tableJoints = array()) {
         if ( count($values) != 1 )
-            throw new InvalidSearch();
+            throw new InvalidSearch(700, "Expected only 1 value");
         $this->initialize($table, $field, $values, $rows, $tableJoints);
     }
 
@@ -94,7 +107,7 @@ class ContainsSearch extends Search {
 class MinSearch extends Search {
     public function __construct($table, $field, $values, $rows, $tableJoints = array()) {
         if ( count($values) != 0 )
-            throw new InvalidSearch();
+            throw new InvalidSearch(700, "Expected no values");
         $this->initialize($table, $field, $values, $rows, $tableJoints);
     }
 
@@ -107,7 +120,7 @@ class MinSearch extends Search {
 class MaxSearch extends Search {
     public function __construct($table, $field, $values, $rows, $tableJoints = array()) {
         if ( count($values) != 0 )
-            throw new InvalidSearch();
+            throw new InvalidSearch(700, "Expected no values");
         $this->initialize($table, $field, $values, $rows, $tableJoints);
     }
 

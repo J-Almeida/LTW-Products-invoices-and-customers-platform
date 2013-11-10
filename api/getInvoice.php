@@ -15,10 +15,14 @@ $rows = array('invoiceId','invoiceNo', 'invoiceDate', 'customerID', 'taxPayable'
 $joins = array();
 
 $invoiceSearch = new EqualSearch($table, $field, $values, $rows, $joins);
-$invoice = $invoiceSearch->getResults()[0];
+$invoice = $invoiceSearch->getResults();
 
-if (!$invoice)
-    echo '[]'; // error json
+if (!$invoice) {
+    $error = new InvalidSearch(404, "Invoice not found");
+    die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
+}
+
+$invoice = $invoice[0];
 
 // Fetch the invoice lines associated with the invoice found
 $table = 'InvoiceLine';
