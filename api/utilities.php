@@ -18,7 +18,7 @@ function retrieveGETparameter($parameter) {
 }
 
 
-function getSearchParameters() {
+function getSearchParametersFromURL() {
     $field = NULL;
     if ( isset($_GET['field']) && !empty($_GET['field']) ) {
         $field = $_GET['field'];

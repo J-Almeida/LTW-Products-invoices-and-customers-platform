@@ -19,6 +19,7 @@ class Search {
         $this->setRows($rows);
         $this->setJoints($tableJoints);
         $this->db = new PDO("sqlite:../database.db");
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
     // this will create the necessary table joins string to be in the sql query
@@ -26,8 +27,8 @@ class Search {
         if (count($tableJoints) == 0)
             $this->joins = "";
         else
-            foreach ($tableJoints as $join ) {
-                $this->joins .= "INNER JOIN $join ON $this->table.$join" . "Id" . " = $join.$join" . "Id ";
+            foreach ($tableJoints as $table => $join ) {
+                $this->joins .= "INNER JOIN $join ON $table.$join" . "Id" . " = $join.$join" . "Id ";
             }
     }
 

@@ -2,10 +2,11 @@
 include 'utilities.php';
 include 'search.php';
 
-$parameters = getSearchParameters();
+$parameters = getSearchParametersFromURL();
+
 $parameters['table'] = 'Customer';
-$parameters['rows'] = array('CustomerID', 'customerTaxID', 'CompanyName');
-$parameters['joins'] = array();
+$parameters['rows'] = array('CustomerID', 'customerTaxID', 'CompanyName', 'addressDetail', 'cityName');
+$parameters['joins'] = array('Customer' => 'BillingAddress', 'BillingAddress' => 'City');
 
 $result = executeSearch($parameters);
 

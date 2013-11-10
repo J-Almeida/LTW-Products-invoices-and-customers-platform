@@ -2,10 +2,11 @@
 include 'utilities.php';
 include 'search.php';
 
-$parameters = getSearchParameters();
+$parameters = getSearchParametersFromURL();
+
 $parameters['table'] = 'Invoice';
 $parameters['rows'] = array('InvoiceNo', 'InvoiceDate', 'GrossTotal', 'CompanyName');
-$parameters['joins'] = array('customer');
+$parameters['joins'] = array('Invoice' => 'Customer');
 
 $result = executeSearch($parameters);
 
