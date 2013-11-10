@@ -27,8 +27,12 @@ class Search {
         if (count($tableJoints) == 0)
             $this->joins = "";
         else
-            foreach ($tableJoints as $table => $join ) {
-                $this->joins .= "INNER JOIN $join ON $table.$join" . "Id" . " = $join.$join" . "Id ";
+            foreach ($tableJoints as $table => $joins ) {
+                if ( is_array($joins) )  // support for multiple joins on the same table
+                    foreach ($joins as $join)
+                        $this->joins .= "INNER JOIN $join ON $table.$join" . "Id" . " = $join.$join" . "Id ";
+                else
+                    $this->joins .= "INNER JOIN $joins ON $table.$joins" . "Id" . " = $joins.$joins" . "Id ";
             }
     }
 

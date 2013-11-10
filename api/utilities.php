@@ -59,3 +59,16 @@ function executeSearch($parameters) {
 
     return NULL;
 }
+
+// Takes values from an array, unsets and sets them as a new array of values
+// Example: if an array has values 'taxType' and 'taxPercentage' and we want the new value 'tax'
+// this function will create a new array with 'taxType' and 'taxPercentage'
+// and set that array as an index to array['tax']
+function setValuesAsArray($newValue, $values, &$array) {
+    $attributesArray = array();
+    foreach($values as $value){
+        $attributesArray[$value] = $array[$value];
+        unset($array[$value]);
+    }
+    $array[$newValue] = $attributesArray;
+}
