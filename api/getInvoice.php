@@ -2,15 +2,18 @@
 include 'utilities.php';
 include 'search.php';
 
-$invoiceNo = NULL;
+$value = NULL;
 if ( isset($_GET['InvoiceNo']) && !empty($_GET['InvoiceNo']) ) {
-    $invoiceNo = $_GET['InvoiceNo'];
+    $value = $_GET['InvoiceNo'];
+} else {
+    $error = new InvalidSearch(700, "Expected InvoiceNo parameter");
+    die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 
 // Fetch the invoice we are looking for
 $table = 'Invoice';
 $field = 'invoiceNo';
-$values = array($invoiceNo);
+$values = array($value);
 $rows = array('invoiceId','invoiceNo', 'invoiceDate', 'customerID', 'taxPayable', 'netTotal', 'grossTotal');
 $joins = array();
 

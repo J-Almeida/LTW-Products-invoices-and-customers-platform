@@ -62,6 +62,9 @@ function executeSearch($parameters) {
         die( json_encode($error->getInfo()) );
     } catch (InvalidSearch $invalid) {
         die( json_encode($invalid->getInfo()) );
+    } catch (Exception $sqlError) {
+        $error = new InvalidSearch($sqlError->getCode(), $sqlError->getMessage());
+        die ( json_encode($error->getInfo()) );
     }
 
     return NULL;

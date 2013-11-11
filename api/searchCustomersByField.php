@@ -5,8 +5,8 @@ include 'search.php';
 $parameters = getSearchParametersFromURL();
 
 $parameters['table'] = 'Customer';
-$parameters['rows'] = array('CustomerID', 'customerTaxID', 'CompanyName', 'addressDetail', 'cityName');
-$parameters['joins'] = array('Customer' => 'BillingAddress', 'BillingAddress' => 'City');
+$parameters['rows'] = array('CustomerID', 'customerTaxID', 'CompanyName', 'addressDetail', 'cityName', 'countryName');
+$parameters['joins'] = array('Customer' => 'BillingAddress', 'BillingAddress' => array('City', 'Country'));
 
 $result = executeSearch($parameters);
 
