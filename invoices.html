@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoices</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        function submitForm() {
+            var op = $('#op option').val();
+
+            var field = $('#field option').val();
+
+            var parameters = "?&op=" + op + "&field=" + field;
+
+            $('input[type=text]').each(function() {
+                parameters + "&value=" + $(this).val();
+            });
+
+            console.log(parameters);
+
+            $.ajax($('#content form').attr('action') + parameters, {
+                type: "GET",
+                data: "",
+                success: function(data)
+                {
+                    console.log(data);
+                },
+                error: function(a, b, c)
+                {
+                    console.log(a + ", " + b + ", " + c);
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+
+<div id="header">
+    <h1>Invoices</h1>
+    <h2>Search and details</h2>
+</div>
+
+<div id="menu">
+    <ul>
+        <li><a href="invoices.html">Invoices</a></li>
+        <li><a href="">Customers</a></li>
+        <li><a href="">Products</a></li>
+    </ul>
+</div>
+
+<div id="content">
+    <form action="./api/searchInvoicesByField.php" method="GET">
+
+        <label for="op">Operation</label>
+        <select id="op" name="op">
+            <option value="range">Between</option>
+            <option value="equal">Equals to</option>
+            <option value="contains">Contains</option>
+            <option value="min">Minimum</option>
+            <option value="max">Maximum</option>
+        </select><br>
+
+        <label for="field">Field</label>
+        <select id="field" name="field">
+            <option value="invoiceNo">Invoice Number</option>
+            <option value="invoiceDate">Invoice Date</option>
+            <option value="companyName">Company Name</option>
+            <option value="taxPayable">Tax payable</option>
+            <option value="netTotal">Net Total</option>
+            <option value="grossTotal">Gross total</option>
+        </select><br>
+
+        <label for="value">Value 1</label>
+        <input name="value" type="text"><br>
+
+        <label for="value">Value 2</label>
+        <input name="value" type="text"><br>
+
+
+        <input type="button" value="Submit" onclick="submitForm(); return false;">
+        <input type="submit" value="Submit" >
+    </form>
+</div>
+
+</body>
+</html>
