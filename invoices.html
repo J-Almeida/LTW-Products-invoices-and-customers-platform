@@ -5,23 +5,16 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
     <script type="text/javascript">
         function submitForm() {
-            var op = $('#op option').val();
 
-            var field = $('#field option').val();
+            var form = "?";
+            form += $('form').serialize();
+            console.log(form);
 
-            var parameters = "?&op=" + op + "&field=" + field;
-
-            $('input[type=text]').each(function() {
-                parameters + "&value=" + $(this).val();
-            });
-
-            console.log(parameters);
-
-            $.ajax($('#content form').attr('action') + parameters, {
+            $.ajax($('#content form').attr('action') + form, {
                 type: "GET",
                 data: "",
                 success: function(data)
@@ -73,11 +66,11 @@
             <option value="grossTotal">Gross total</option>
         </select><br>
 
-        <label for="value">Value 1</label>
-        <input name="value" type="text"><br>
+        <label>Value 1</label>
+        <input name="value[]" type="text"><br>
 
-        <label for="value">Value 2</label>
-        <input name="value" type="text"><br>
+        <label>Value 2</label>
+        <input name="value[]" type="text"><br>
 
 
         <input type="button" value="Submit" onclick="submitForm(); return false;">
