@@ -105,6 +105,25 @@ INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, taxPayable, netTotal, g
 INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, taxPayable, netTotal, grossTotal)
             VALUES ("FT SEQ/12", "2013-09-29", 2, 0.0, 0.0, 432.5);
 
+/* TODO remove this FT SEQ/1x spam, it's for pagination example only */
+
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, taxPayable, netTotal, grossTotal)
+            VALUES ("FT SEQ/13", "2013-09-29", 2, 0.0, 0.0, 432.5);
+
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, taxPayable, netTotal, grossTotal)
+            VALUES ("FT SEQ/14", "2013-09-29", 2, 0.0, 0.0, 432.5);
+
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, taxPayable, netTotal, grossTotal)
+            VALUES ("FT SEQ/15", "2013-09-29", 2, 0.0, 0.0, 432.5);
+
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, taxPayable, netTotal, grossTotal)
+            VALUES ("FT SEQ/16", "2013-09-29", 2, 0.0, 0.0, 432.5);
+
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, taxPayable, netTotal, grossTotal)
+            VALUES ("FT SEQ/17", "2013-09-29", 2, 0.0, 0.0, 432.5);
+
+
+
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
             VALUES(125, "Carimbos MIEIC", 90.0, "unidades");
 
