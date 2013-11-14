@@ -27,7 +27,34 @@
                 }
             })
         }
+
+        function getValueBoxes(operation) {
+            console.log("I'm here!");
+            var valueBoxes = "";
+            if(operation == "range") {
+                valueBoxes +=("<label>From: </label>");
+                valueBoxes +=('<input name="value[]" type="text">');
+
+                valueBoxes +=("   <label>To: </label>");
+                valueBoxes +=('<input name="value[]" type="text">');
+            }
+            else if(operation != "min" && operation != "max") {
+                valueBoxes +=('<label>Search for</label>');
+                valueBoxes +=('<input name="value[]" type="text">');
+            }
+
+            return valueBoxes;
+        }
+
+        function getOperation() {
+                var op = "";
+                op = $( "#op option:selected" ).val();
+                
+                $( "#queryBoxes" ).html( getValueBoxes(op) );
+        }
+
     </script>
+
 </head>
 <body>
 
@@ -46,15 +73,17 @@
 
 <div id="content">
     <form action="./api/searchInvoicesByField.php" method="GET">
-
         <label for="op">Operation</label>
-        <select id="op" name="op">
+        <select id="op" name="op" onchange="getOperation()">
+            <option value="" disabled selected style="display:none;">Please select one</option>
             <option value="range">Between</option>
             <option value="equal">Equals to</option>
             <option value="contains">Contains</option>
             <option value="min">Minimum</option>
             <option value="max">Maximum</option>
-        </select><br>
+        </select><br><br>
+
+        <div id="queryBoxes"></div><br>
 
         <label for="field">Field</label>
         <select id="field" name="field">
@@ -66,15 +95,8 @@
             <option value="grossTotal">Gross total</option>
         </select><br>
 
-        <label>Value 1</label>
-        <input name="value[]" type="text"><br>
-
-        <label>Value 2</label>
-        <input name="value[]" type="text"><br>
-
 
         <input type="button" value="Submit" onclick="submitForm(); return false;">
-        <input type="submit" value="Submit" >
     </form>
 </div>
 
