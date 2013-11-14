@@ -72,7 +72,7 @@
                 valueBoxes +=('<input name="value[]" type="text">');
             }
             else if(operation != "min" && operation != "max") {
-                valueBoxes +=('<label>Search for</label>');
+                valueBoxes +=('<label>Search for: </label>');
                 valueBoxes +=('<input name="value[]" type="text">');
             }
 
@@ -82,6 +82,10 @@
         function getOperation() {
             var op = $( "#op option:selected" ).val();
             $( "#queryBoxes" ).html( getValueBoxes(op) );
+        }
+
+        function displayResults(data) {
+            $("#searchResults").html(data);
         }
 
     </script>
@@ -114,7 +118,15 @@
             <option value="max">Maximum</option>
         </select><br><br>
 
-        <div id="queryBoxes"></div><br>
+        <div id="queryBoxes">
+            <script>
+            $(this).keypress(function(e) {
+              if (e.keyCode == '13') {
+               e.preventDefault();
+            }
+            });
+            </script>
+        </div><br>
 
         <label for="field">Field</label>
         <select id="field" name="field">
@@ -126,11 +138,14 @@
             <option value="grossTotal">Gross total</option>
         </select><br>
 
-
         <input type="button" value="Submit" onclick="submitForm(); return false;">
     </form>
 
+<<<<<<< HEAD
     <div id="results"></div>
+=======
+    <div id="searchResults"></div>
+>>>>>>> 557db8a7f966bc9d522196219c036f48f2250586
 </div>
 
 </body>
