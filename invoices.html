@@ -8,6 +8,11 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
     <script type="text/javascript">
+        var fieldNames = { "invoiceNo" : "Invoice Number",
+            "invoiceDate": "Invoice Date",
+            "grossTotal": "Gross Total",
+            "companyName": "Company Name"};
+
         function submitForm() {
 
             var form = "?";
@@ -19,7 +24,7 @@
                 data: "",
                 success: function(data)
                 {
-                    console.log(data);
+                    drawSearchResults(data, fieldNames);
                 },
                 error: function(a, b, c)
                 {
@@ -28,8 +33,36 @@
             })
         }
 
+        function drawSearchResults(data, fieldNames) {
+            var json = JSON.parse(data);
+            var tables = "<table>"
+
+            // print table headers
+            tables += "<tr>";
+            for(field in json[0]) {
+                tables += "<th>";
+                tables += fieldNames[field];
+                tables += "</th>"
+            }
+            tables += "</tr>";
+
+            // print table contents
+            for(result in json) {
+                tables += "<tr>";
+                var object = json[result];
+                for(field in object) {
+                    tables += "<td>";
+                    tables += object[field];
+                    tables += "</td>";
+                }
+                tables += "</tr>";
+            }
+
+            tables += "</table>";
+            $("#results").html(tables);
+        }
+
         function getValueBoxes(operation) {
-            console.log("I'm here!");
             var valueBoxes = "";
             if(operation == "range") {
                 valueBoxes +=("<label>From: </label>");
@@ -47,10 +80,8 @@
         }
 
         function getOperation() {
-                var op = "";
-                op = $( "#op option:selected" ).val();
-                
-                $( "#queryBoxes" ).html( getValueBoxes(op) );
+            var op = $( "#op option:selected" ).val();
+            $( "#queryBoxes" ).html( getValueBoxes(op) );
         }
 
     </script>
@@ -98,6 +129,8 @@
 
         <input type="button" value="Submit" onclick="submitForm(); return false;">
     </form>
+
+    <div id="results"></div>
 </div>
 
 </body>
