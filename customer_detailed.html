@@ -30,23 +30,23 @@
         return params;
     }
 
-    function drawInvoiceStructure(customerData) {
+    function drawCustomerStructure(customerData) {
         var json = JSON.parse(customerData);
 
-        $("#customerId").html(json.CustomerID);
-        $("#customerTaxID").html(json.customerTaxID);
+        $("#customerID").html(json.customerId);
+        $("#customerTaxID").html(json.customerTaxId);
         $("#companyName").html(json.companyName);
-        $("#billingAddress").html(json.billingAddress);
-        $("#email").html(json.email);
+        $("#billingAddress").html(json.addressDetail);
+        $("#emailAddress").html(json.email);
     }
 
-    function displayInvoice(customerID) {
+    function displayCustomer(customerID) {
         $.ajax("./api/getCustomer.php?CustomerID=" + customerID, {
             type: "GET",
             data: "",
             success: function(data)
             {
-                drawInvoiceStructure(data);
+                drawCustomerStructure(data);
             },
             error: function(a, b, c)
             {
@@ -58,7 +58,7 @@
     </script>
 
 </head>
-<body onload="" >
+<body onload="displayCustomer(getParameter(document.location.search).CustomerID)" >
 
     <div id="customer">
 
@@ -83,7 +83,7 @@
             <dt class="billingAddress">Billing address: </dt>
             <dd id="billingAddress"></dd>
             <dt class="emailAddress">Email address: </dt>
-            <dd id="emaildAddress"></dd>
+            <dd id="emailAddress"></dd>
 
         </section>
 

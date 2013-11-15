@@ -32,9 +32,10 @@ function drawSearchResults(data, fieldNames) {
     tables += "</tr></thead>";
 
     var hyperlinks = {
-        "invoiceNo" : "<a href='invoice_det.html?InvoiceNo=",
-        "customerId": "<a href='customer_det.html?CustomerID=",
-        "productCode": "<a href='product_det.html?ProductCode="};
+        "invoiceNo" : "<a href='invoice_detailed.html?InvoiceNo=",
+        "customerId": "<a href='customer_detailed.html?CustomerID=",
+        "productCode": "<a href='product_detailed.html?ProductCode="
+    };
 
     tables += "<tbody>"
     // print table contents
