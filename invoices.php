@@ -2,7 +2,8 @@
 
 include "searches.php";
 
-$fields = array('invoiceNo' => 'Invoice Number',
+$fields = array(
+    'invoiceNo' => 'Invoice Number',
     'invoiceDate' => 'Invoice Date',
     'companyName' => 'Company Name',
     'taxPayable' => 'Tax payable',

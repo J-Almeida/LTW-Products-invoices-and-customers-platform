@@ -6,16 +6,16 @@
     <link rel="stylesheet" href="style.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script src="./selectUtilities.js"></script>
+    <script src="searches.js"></script>
 
     <script type="text/javascript">
-    /*  // example
-        var fieldNames = { 
-            "invoiceNo" : "Invoice Number",
-            "invoiceDate": "Invoice Date",
-            "grossTotal": "Gross Total",
-            "companyName": "Company Name"};
-            */
+        /*  // example
+         var fieldNames = {
+         "invoiceNo" : "Invoice Number",
+         "invoiceDate": "Invoice Date",
+         "grossTotal": "Gross Total",
+         "companyName": "Company Name"};
+         */
         var fieldNames = { {{tableFields}} };
     </script>
 
@@ -53,11 +53,11 @@
 
         <div id="queryBoxes">
             <script>
-            $(this).keypress(function(e) {
-              if (e.keyCode == '13') {
-               e.preventDefault();
-            }
-            });
+                $(this).keypress(function(e) {
+                    if (e.keyCode == '13') {
+                        e.preventDefault();
+                    }
+                });
             </script>
         </div><br>
 
