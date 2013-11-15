@@ -22,6 +22,12 @@ function drawSearchResults(data, fieldNames) {
     var json = JSON.parse(data);
     var tables = "<table class=\"paginated\">";
 
+    if (json.length == 0) {
+        tables = "<div>Got no results</div>";
+        $("#results").html(tables);
+        return;
+    }
+
     // print table headers
     tables += "<thead><tr>";
     for(field in json[0]) {
