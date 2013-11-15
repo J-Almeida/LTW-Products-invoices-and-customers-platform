@@ -41,7 +41,6 @@ foreach($invoiceLines as &$invoiceLine){
 }
 
 unset($invoice['invoiceId']);
-unset($invoice['customerId']);
 $invoice['Line'] = $invoiceLines;
 
 setValuesAsArray('DocumentTotals', array('taxPayable', 'netTotal', 'grossTotal' ), $invoice);

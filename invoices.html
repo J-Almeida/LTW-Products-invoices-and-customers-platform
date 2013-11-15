@@ -53,7 +53,16 @@
                 var object = json[result];
                 for(field in object) {
                     tables += "<td>";
-                    tables += object[field];
+                    if(field == "invoiceNo") {
+                        tables += "<a href='invoice_det.html?InvoiceNo=";
+                        tables += object[field];
+                        tables += "'target='_blank'>";
+                        tables += object[field];
+                        tables += "</a>";
+                    }
+                    else {
+                        tables += object[field];
+                    }
                     tables += "</td>";
                 }
                 tables += "</tr>";
@@ -85,7 +94,7 @@
                 }
                 $pager.insertBefore($table).find('span.page-number:first').addClass('active');
             });
-        }
+}
 
         function getValueBoxes(operation) {
             var valueBoxes = "";

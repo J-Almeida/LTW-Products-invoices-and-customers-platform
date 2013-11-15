@@ -1,0 +1,220 @@
+<!doctype html>
+<html dir="ltr" lang="en" class="no-js">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Invoice</title>
+
+    <link rel="stylesheet" href="reset.css" media="screen" />
+    <link rel="stylesheet" href="invoiceStyle.css" media="screen" />
+
+    <!-- js HTML class -->
+    <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+    var invoiceFieldNames = { "invoiceNo" : "invoiceNo",
+            "costumerId": "costumerId",
+            "invoiceDate": "invoiceDate",
+            "grossTotal": "grossTotal",
+            "companyName": "companyName"};
+
+    function getParameter(urlQuery) {
+        urlQuery = urlQuery.split("+").join(" ");
+
+        var params = {};
+        var tokens;
+        var regex = /[?&]?([^=]+)=([^&]*)/g;
+
+        while (tokens = regex.exec(urlQuery)) {
+            params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+        }
+
+        return params;
+    }
+
+    function drawInvoiceStructure(invoiceData) {
+        var json = JSON.parse(invoiceData);
+
+        $("#invoiceNo").html(json.invoiceNo);
+        $("#invoiceDate").html(json.invoiceDate);
+        $("#invoiceToName").html(json.customerId);
+        $("#invoiceFromName").html(json.companyName);
+
+        var lines = "";
+        for(result in json.Line) {
+            lines += "<tr>";
+            var object = json.Line[result];
+            for(field in object) {
+                if(field != "lineNumber") {
+                    if(field == "tax") {
+                        for(taxField in object[field]) {
+                            lines += "<td>";
+                            lines += object[field][taxField];
+                            lines += "</td>";
+                        }
+                    }
+                    else {
+                        lines += "<td>";
+                        if(field == "unitPrice" || field == "creditAmount")
+                            lines += "€ "; 
+                        lines += object[field];
+                        lines += "</td>";
+                    }
+                }
+            }
+            lines += "</tr>";
+        }
+
+        $("#invoiceLines").html(lines);
+
+        var documentTotals = json.DocumentTotals;
+
+        $("#taxPay").html("€ " + documentTotals.taxPayable);
+        $("#netTotal").html("€ " + documentTotals.netTotal);
+        $("#grossTotal").html("€ " + documentTotals.grossTotal);
+    }
+
+    function displayInvoice(invoiceNo) {
+        $.ajax("./api/getInvoice.php?InvoiceNo=" + invoiceNo, {
+                type: "GET",
+                data: "",
+                success: function(data)
+                {
+                    drawInvoiceStructure(data);
+                },
+                error: function(a, b, c)
+                {
+                    console.log(a + ", " + b + ", " + c);
+                }
+        })
+    }
+
+    </script>
+
+</head>
+<body onload="displayInvoice(getParameter(document.location.search).InvoiceNo)">
+
+<div id="invoice" class="unpaid">
+
+
+    <div class="this-is">
+        <strong>Invoice</strong>
+    </div><!-- invoice headline -->
+
+
+    <header id="header">
+        <div class="invoice-intro">
+            <h1>Invoice Database</h1>
+            <p>Where college projects meet financial applications</p>
+        </div>
+
+        <dl class="invoice-meta">
+            <dt class="invoice-number">Invoice #</dt>
+            <dd id="invoiceNo"></dd>
+            <dt class="invoice-date">Date of Invoice</dt>
+            <dd id="invoiceDate"></dd>
+        </dl>
+    </header>
+    <!-- e: invoice header -->
+
+
+    <section id="parties">
+
+        <div class="invoice-to">
+            <h2>Invoice To:</h2>
+            <div id="invoiceTo" class="vcard">
+                <div class="org" id="invoiceToName"></div>
+                <a class="email" href="mailto:president.roth@ufop.uni">president.roth@ufop.uni</a>
+                
+                <div class="adr">
+                    <div class="street-address">2269 Elba Lane</div>
+                    <span class="locality">Paris</span>
+                    <span class="country-name">France</span>
+                </div>
+
+                <div class="tel">888-555-2311</div>
+            </div><!-- e: vcard -->
+        </div><!-- e invoice-to -->
+
+        <div class="invoice-from">
+            <h2>Invoice From:</h2>
+            <div id="invoiceFrom" class="vcard">
+                <div class="org" id="invoiceFromName"></div>
+                <a class="email" href="mailto:admiral.valdore@theempire.uni">admiral.valdore@theempire.uni</a>
+                
+                <div class="adr">
+                    <div class="street-address">5151 Pardek Memorial Way</div>
+                    <span class="locality">Krocton Segment</span>
+                    <span class="country-name">Romulus</span>
+                </div>
+
+                <div class="tel">000-555-9988</div>
+            </div><!-- e: vcard -->
+        </div><!-- e invoice-from -->
+
+        <div class="invoice-status">
+            <h3>Invoice Status</h3>
+            <strong>Invoice is <em>Unpaid</em></strong>
+        </div><!-- e: invoice-status -->
+
+    </section><!-- e: invoice parties -->
+
+
+    <section class="invoice-financials">
+
+        <div class="invoice-items">
+            <table>
+                <caption>Your Invoice</caption>
+                <thead>
+                    <tr>
+                        <th>Product code</th>
+                        <th>Quantity</th>
+                        <th>Unit price</th>
+                        <th>Credit amount</th>
+                        <th>Tax type</th>
+                        <th>Tax Percentage</th>
+                    </tr>
+                </thead>
+                <tbody id="invoiceLines">
+
+                </tbody>
+            </table>
+        </div><!-- e: invoice items -->
+
+
+        <div class="invoice-totals">
+            <table>
+                <caption>Totals:</caption>
+                <tbody>
+                    <tr>
+                        <th>Payable tax:</th>
+                        <td></td>
+                        <td id="taxPay"></td>
+                    </tr>
+                    <tr>
+                        <th>Net total:</th>
+                        <td></td>
+                        <td id="netTotal"></td>
+                    </tr>
+                    <tr>
+                        <th>Gross total:</th>
+                        <td></td>
+                        <td id="grossTotal"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div><!-- e: invoice totals -->
+
+    </section><!-- e: invoice financials -->
+
+</div><!-- e: invoice -->
+
+</body>
+
+<!-- Invoice layout by http://sprresponsive.com -->
+</html>
