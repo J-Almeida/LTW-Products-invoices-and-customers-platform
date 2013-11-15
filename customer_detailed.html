@@ -9,13 +9,6 @@
 
     <script type="text/javascript">
 
-    var invoiceFieldNames = {
-    "customerId": "customerId",
-    "customerTaxID": "customerTaxID",
-    "companyName": "companyName",
-    "billingAddress": "billingAddress",
-    "email": "email"};
-
     function getParameter(urlQuery) {
         urlQuery = urlQuery.split("+").join(" ");
 
@@ -36,7 +29,7 @@
         $("#customerID").html(json.customerId);
         $("#customerTaxID").html(json.customerTaxId);
         $("#companyName").html(json.companyName);
-        $("#billingAddress").html(json.addressDetail);
+        $("#billingAddress").html(json.addressDetail + "<br>" + json.postalCode + " " + json.cityName + ", " + json.countryName);
         $("#emailAddress").html(json.email);
     }
 
