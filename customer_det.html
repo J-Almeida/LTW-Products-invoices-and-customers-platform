@@ -1,0 +1,94 @@
+<!doctype html>
+<html dir="ltr" lang="en" class="no-js">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>Customer</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+    var invoiceFieldNames = {
+    "customerId": "customerId",
+    "customerTaxID": "customerTaxID",
+    "companyName": "companyName",
+    "billingAddress": "billingAddress",
+    "email": "email"};
+
+    function getParameter(urlQuery) {
+        urlQuery = urlQuery.split("+").join(" ");
+
+        var params = {};
+        var tokens;
+        var regex = /[?&]?([^=]+)=([^&]*)/g;
+
+        while (tokens = regex.exec(urlQuery)) {
+            params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+        }
+
+        return params;
+    }
+
+    function drawInvoiceStructure(customerData) {
+        var json = JSON.parse(customerData);
+
+        $("#customerId").html(json.CustomerID);
+        $("#customerTaxID").html(json.customerTaxID);
+        $("#companyName").html(json.companyName);
+        $("#billingAddress").html(json.billingAddress);
+        $("#email").html(json.email);
+    }
+
+    function displayInvoice(customerID) {
+        $.ajax("./api/getCustomer.php?CustomerID=" + customerID, {
+            type: "GET",
+            data: "",
+            success: function(data)
+            {
+                drawInvoiceStructure(data);
+            },
+            error: function(a, b, c)
+            {
+                console.log(a + ", " + b + ", " + c);
+            }
+        })
+    }
+
+    </script>
+
+</head>
+<body onload="" >
+
+    <div id="customer">
+
+        <div class="customerTitle">
+            <strong>Customer</strong>
+        </div>
+
+        <header id="customerHeader">
+
+            <dl class="customerInfo">
+                <dt class="customerID">customer ID: </dt>
+                <dd id="customerID"></dd>
+                <dt class="customerTaxID">Tax ID: </dt>
+                <dd id="customerTaxID"></dd>
+            </dl>
+        </header>
+
+        <section id="customerDetail">
+
+            <dt class="companyName">Name: </dt>
+            <dd id="companyName"></dd><br>
+            <dt class="billingAddress">Billing address: </dt>
+            <dd id="billingAddress"></dd>
+            <dt class="emailAddress">Email address: </dt>
+            <dd id="emaildAddress"></dd>
+
+        </section>
+
+    </div>
+
+</body>
+
+</html>
