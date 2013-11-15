@@ -1,0 +1,78 @@
+<!doctype html>
+<html dir="ltr" lang="en" class="no-js">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>Product</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+    function getParameter(urlQuery) {
+        urlQuery = urlQuery.split("+").join(" ");
+
+        var params = {};
+        var tokens;
+        var regex = /[?&]?([^=]+)=([^&]*)/g;
+
+        while (tokens = regex.exec(urlQuery)) {
+            params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+        }
+
+        return params;
+    }
+
+    function drawProductStructure(productData) {
+        var json = JSON.parse(productData);
+
+        $("#productCode").html(json.productCode);
+        $("#productDescription").html(json.productDescription);
+        $("#unitPrice").html(json.unitPrice);
+        $("#unitOfMeasure").html(json.unitOfMeasure);
+    }
+
+    function displayProduct(productCode) {
+        $.ajax("./api/getProduct.php?ProductCode=" + productCode, {
+            type: "GET",
+            data: "",
+            success: function(data)
+            {
+                drawProductStructure(data);
+            },
+            error: function(a, b, c)
+            {
+                console.log(a + ", " + b + ", " + c);
+            }
+        })
+    }
+
+    </script>
+
+</head>
+<body onload="displayProduct(getParameter(document.location.search).ProductCode)" >
+
+    <div id="product">
+
+        <div class="productTitle">
+            <strong>Product</strong>
+        </div>
+
+        <section id="productDetail">
+
+            <dt class="productCode">Product code: </dt>
+            <dd id="productCode"></dd><br>
+            <dt class="productDescription">Description: </dt>
+            <dd id="productDescription"></dd>
+            <dt class="unitPrice">Unit Price: </dt>
+            <dd id="unitPrice"></dd>
+            <dt class="unitOfMeasure">Unit of Measure: </dt>
+            <dd id="unitOfMeasure"></dd>
+
+        </section>
+
+    </div>
+
+</body>
+
+</html>
