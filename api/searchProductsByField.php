@@ -5,7 +5,7 @@ include 'search.php';
 $parameters = getSearchParametersFromURL();
 
 $parameters['table'] = 'Product';
-$parameters['rows'] = array('ProductCode', 'ProductDescription', 'UnitPrice');
+$parameters['rows'] = array('productCode', 'productDescription', 'unitPrice', 'unitOfMeasure');
 $parameters['joins'] = array();
 
 $result = executeSearch($parameters);
