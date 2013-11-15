@@ -110,3 +110,12 @@ class MaxSearch extends Search {
         $this->sql = "SELECT $this->rows from $this->table $this->joins WHERE $this->field = (SELECT max($this->field) FROM $this->table)";
     }
 }
+
+class ListAllSearch extends Search {
+    public function __construct($table, $field, $values, $rows, $tableJoints = array()) {
+        if ( count($values) != 0 )
+            throw new InvalidSearch(700, "Expected no values");
+        $this->initialize($table, $field, $values, $rows, $tableJoints);
+        $this->sql = "SELECT $this->rows from $this->table $this->joins";
+    }
+}
