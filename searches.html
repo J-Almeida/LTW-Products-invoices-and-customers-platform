@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Invoices</title>
+    <title>{{title}}</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
 
@@ -9,30 +9,34 @@
     <script src="./selectUtilities.js"></script>
 
     <script type="text/javascript">
-        var fieldNames = { "invoiceNo" : "Invoice Number",
+    /*  // example
+        var fieldNames = { 
+            "invoiceNo" : "Invoice Number",
             "invoiceDate": "Invoice Date",
             "grossTotal": "Gross Total",
             "companyName": "Company Name"};
+            */
+        var fieldNames = { {{tableFields}} };
     </script>
 
 </head>
 <body>
 
 <div id="header">
-    <h1>Invoices</h1>
+    <h1>{{title}}</h1>
     <h2>Search and details</h2>
 </div>
 
 <div id="menu">
     <ul>
-        <li><a href="invoices.html">Invoices</a></li>
-        <li><a href="customers.html">Customers</a></li>
-        <li><a href="">Products</a></li>
+        <li><a href="invoices.php">Invoices</a></li>
+        <li><a href="customers.php">Customers</a></li>
+        <li><a href="products.php">Products</a></li>
     </ul>
 </div>
 
 <div id="content">
-    <form action="./api/searchInvoicesByField.php" method="GET">
+    <form action="./api/search{{title}}ByField.php" method="GET">
 
         <div id="operationSelect" >
             <label for="op">Operation</label>
@@ -60,12 +64,7 @@
         <div id="fieldSelect" >
             <label for="field">Field</label>
             <select id="field" name="field">
-                <option value="invoiceNo">Invoice Number</option>
-                <option value="invoiceDate">Invoice Date</option>
-                <option value="companyName">Company Name</option>
-                <option value="taxPayable">Tax payable</option>
-                <option value="netTotal">Net Total</option>
-                <option value="grossTotal">Gross total</option>
+                {{searchFields}}
             </select><br>
         </div>
 
