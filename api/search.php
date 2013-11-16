@@ -29,22 +29,22 @@ class Search {
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    protected function initialize($table, $field, $values, $rows, $tableJoints) {
+    protected function initialize($table, $field, $values, $rows, $tableJoins) {
         $this->table = $table;
         $this->field = $field;
         $this->values = $values;
         $this->setRows($rows);
-        $this->setJoints($tableJoints);
+        $this->setJoins($tableJoins);
         $this->db = new PDO("sqlite:../database.db");
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     // this will create the necessary table joins string to be in the sql query
-    protected function setJoints($tableJoints) {
-        if (count($tableJoints) == 0)
+    protected function setJoins($tableJoins) {
+        if (count($tableJoins) == 0)
             $this->joins = "";
         else
-            foreach ($tableJoints as $table => $joins ) {
+            foreach ($tableJoins as $table => $joins ) {
                 if ( is_array($joins) )  // support for multiple joins on the same table
                     foreach ($joins as $join)
                         $this->joins .= "INNER JOIN $join ON $table.$join" . "Id" . " = $join.$join" . "Id ";
@@ -67,55 +67,55 @@ class Search {
 }
 
 class RangeSearch extends Search {
-    public function __construct($table, $field, $values, $rows, $tableJoints = array()) {
+    public function __construct($table, $field, $values, $rows, $tableJoins = array()) {
         if ( count($values) != 2 )
             throw new InvalidSearch(700, "Expected only 2 values");
-        $this->initialize($table, $field, $values, $rows, $tableJoints);
+        $this->initialize($table, $field, $values, $rows, $tableJoins);
         $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field BETWEEN '". $this->values[0] . "' AND '" . $this->values[1] . "'";
     }
 }
 
 class EqualSearch extends Search {
-    public function __construct($table, $field, $values, $rows, $tableJoints = array()) {
+    public function __construct($table, $field, $values, $rows, $tableJoins = array()) {
         if ( count($values) != 1 )
             throw new InvalidSearch(700, "Expected only 1 value");
-        $this->initialize($table, $field, $values, $rows, $tableJoints);
+        $this->initialize($table, $field, $values, $rows, $tableJoins);
         $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field = '" . $this->values[0] . "'";
     }
 }
 
 class ContainsSearch extends Search {
-    public function __construct($table, $field, $values, $rows, $tableJoints = array()) {
+    public function __construct($table, $field, $values, $rows, $tableJoins = array()) {
         if ( count($values) != 1 )
             throw new InvalidSearch(700, "Expected only 1 value");
-        $this->initialize($table, $field, $values, $rows, $tableJoints);
+        $this->initialize($table, $field, $values, $rows, $tableJoins);
         $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field LIKE ('%" . $this->values[0] ."%')";
     }
 }
 
 class MinSearch extends Search {
-    public function __construct($table, $field, $values, $rows, $tableJoints = array()) {
+    public function __construct($table, $field, $values, $rows, $tableJoins = array()) {
         if ( count($values) != 0 )
             throw new InvalidSearch(700, "Expected no values");
-        $this->initialize($table, $field, $values, $rows, $tableJoints);
+        $this->initialize($table, $field, $values, $rows, $tableJoins);
         $this->sql = "SELECT $this->rows from $this->table $this->joins WHERE $this->field = (SELECT min($this->field) FROM $this->table)";
     }
 }
 
 class MaxSearch extends Search {
-    public function __construct($table, $field, $values, $rows, $tableJoints = array()) {
+    public function __construct($table, $field, $values, $rows, $tableJoins = array()) {
         if ( count($values) != 0 )
             throw new InvalidSearch(700, "Expected no values");
-        $this->initialize($table, $field, $values, $rows, $tableJoints);
+        $this->initialize($table, $field, $values, $rows, $tableJoins);
         $this->sql = "SELECT $this->rows from $this->table $this->joins WHERE $this->field = (SELECT max($this->field) FROM $this->table)";
     }
 }
 
 class ListAllSearch extends Search {
-    public function __construct($table, $field, $values, $rows, $tableJoints = array()) {
+    public function __construct($table, $field, $values, $rows, $tableJoins = array()) {
         if ( count($values) != 0 )
             throw new InvalidSearch(700, "Expected no values");
-        $this->initialize($table, $field, $values, $rows, $tableJoints);
+        $this->initialize($table, $field, $values, $rows, $tableJoins);
         $this->sql = "SELECT $this->rows from $this->table $this->joins";
     }
 }

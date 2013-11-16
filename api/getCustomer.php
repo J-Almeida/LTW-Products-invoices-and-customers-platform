@@ -21,7 +21,7 @@ $search = new EqualSearch($table, $field, $values, $rows, $joins);
 $result = $search->getResults();
 
 if (!$result) {
-    $error = new InvalidSearch(404, "Product not found");
+    $error = new InvalidSearch(404, "Customer not found");
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 

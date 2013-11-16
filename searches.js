@@ -3,7 +3,7 @@ function submitForm() {
     var form = "?";
     form += $('form').serialize();
 
-    if (!form.op) return;
+    if (form.indexOf("op") < 0) return;
 
     $.ajax($('#content form').attr('action') + form, {
         type: "GET",
