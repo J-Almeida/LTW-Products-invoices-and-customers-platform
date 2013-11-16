@@ -40,7 +40,7 @@
 
         <div id="operationSelect" >
             <label for="op">Operation</label>
-            <select id="op" name="op" onchange="getOperation()">
+            <select id="op" name="op" onchange="updateValueBoxes()">
                 <option value="" disabled selected style="display:none;">Please select one</option>
                 <option value="listall">List all</option>
                 <option value="range">Between</option>
@@ -51,7 +51,7 @@
             </select><br><br>
         </div>
 
-        <div id="queryBoxes">
+        <div id="valueBoxes">
             <script>
                 $(this).keypress(function(e) {
                     if (e.keyCode == '13') {
@@ -63,7 +63,7 @@
 
         <div id="fieldSelect" >
             <label for="field">Field</label>
-            <select id="field" name="field">
+            <select id="field" name="field" onchange="updateValueBoxes()">
                 {{searchFields}}
             </select><br>
         </div>

@@ -11,7 +11,7 @@ function getSearchPage($title, $fields) {
 
     $searchFields = "";
     foreach($fields as $field => $searchField){
-        $searchFields .= "<option value=\" $field \">$searchField</option>";
+        $searchFields .= "<option value=\"$field\">$searchField</option>";
     };
 
     $html = str_replace("{{title}}", $title, $html);
