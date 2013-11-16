@@ -14,14 +14,14 @@ if ( isset($_GET['CustomerID']) && !empty($_GET['CustomerID']) ) {
 $table = 'Customer';
 $field = 'CustomerID';
 $values = array($value);
-$rows = array('CustomerID', 'companyName', 'customerTaxId', 'email', 'addressDetail', 'cityName', 'countryName', 'postalCode' );
+$rows = array('customerID', 'companyName', 'customerTaxId', 'email', 'addressDetail', 'cityName', 'countryName', 'postalCode' );
 $joins = array( 'Customer' => 'BillingAddress', 'BillingAddress' => array('City', 'Country') );
 
 $search = new EqualSearch($table, $field, $values, $rows, $joins);
 $result = $search->getResults();
 
 if (!$result) {
-    $error = new InvalidSearch(404, "Product not found");
+    $error = new InvalidSearch(404, "Customer not found");
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 

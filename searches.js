@@ -2,7 +2,8 @@ function submitForm() {
 
     var form = "?";
     form += $('form').serialize();
-    console.log(form);
+
+    if (form.indexOf("op") < 0) return;
 
     $.ajax($('#content form').attr('action') + form, {
         type: "GET",
@@ -110,19 +111,38 @@ function drawSearchResults(data, fieldNames) {
     });
 }
 
-function getValueBoxes(operation) {
+var fieldTypes = {
+    'invoiceDate' : 'type="date"',
+    'taxPayable' : 'type="number"',
+    'netTotal' : 'type="number"',
+    'grossTotal' : 'type="number"',
+    'customerId' : 'type="number"',
+    'customerTaxId' : 'type="number',
+    'unitPrice' : 'type="number"',
+    'email' : 'type="email"'
+};
+
+function getValueBoxes(operation, field) {
     var valueBoxes = "";
+
+    var input = "";
+    if (field in fieldTypes && operation != 'contains') {
+        input = '<input name="value[]"';
+        input += fieldTypes[field]; input += ">";
+    } else
+        input = '<input name="value[]" type="text">';
+
     $( "#fieldSelect" ).show();
     if(operation == "range") {
         valueBoxes +=("<label>From: </label>");
-        valueBoxes +=('<input name="value[]" type="text">');
+        valueBoxes +=(input);
 
         valueBoxes +=("   <label>To: </label>");
-        valueBoxes +=('<input name="value[]" type="text">');
+        valueBoxes +=(input);
     }
     else if(operation != "min" && operation != "max" && operation != "listall") {
         valueBoxes +=('<label>Search for: </label>');
-        valueBoxes +=('<input name="value[]" type="text">');
+        valueBoxes +=(input);
     }
 
     if(operation == "listall") {
@@ -132,11 +152,8 @@ function getValueBoxes(operation) {
     return valueBoxes;
 }
 
-function getOperation() {
+function updateValueBoxes() {
     var op = $( "#op option:selected" ).val();
-    $( "#queryBoxes" ).html( getValueBoxes(op) );
-}
-
-function displayResults(data) {
-    $("#searchResults").html(data);
+    var field = $("#field option:selected").val();
+    $( "#valueBoxes" ).html( getValueBoxes(op, field) );
 }

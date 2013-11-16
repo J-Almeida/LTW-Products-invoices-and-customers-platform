@@ -14,7 +14,7 @@ if ( isset($_GET['InvoiceNo']) && !empty($_GET['InvoiceNo']) ) {
 $table = 'Invoice';
 $field = 'invoiceNo';
 $values = array($value);
-$rows = array('invoiceId','invoiceNo', 'invoiceDate', 'customerID', 'taxPayable', 'netTotal', 'grossTotal');
+$rows = array('invoiceId', 'invoiceNo', 'invoiceDate', 'customerId', 'supplierId', 'taxPayable', 'netTotal', 'grossTotal');
 $joins = array();
 
 $invoiceSearch = new EqualSearch($table, $field, $values, $rows, $joins);

@@ -33,13 +33,29 @@
         return params;
     }
 
+    function drawCustomerDetails(customerId, content) {
+        $.getJSON("./api/getCustomer.php?CustomerID=" + customerId, function(data) {
+            var details = data.companyName + " (T.ID  " + data.customerTaxId +  ")<br>";
+            details += data.addressDetail + "<br>" + data.postalCode + " " + data.cityName + ", " + data.countryName;
+            content.html(details);
+        });
+    }
+
+    function drawSupplierDetails(supplierId, content) {
+        $.getJSON("./api/getSupplier.php?SupplierID=" + supplierId, function(data) {
+            var details = data.companyName + "    (T.ID  " + data.supplierTaxId +  ")<br>";
+            details += data.addressDetail + "<br>" + data.postalCode + " " + data.cityName + ", " + data.countryName;
+            content.html(details);
+        });
+    }
+
     function drawInvoiceStructure(invoiceData) {
         var json = JSON.parse(invoiceData);
 
         $("#invoiceNo").html(json.invoiceNo);
         $("#invoiceDate").html(json.invoiceDate);
-        $("#invoiceToName").html(json.customerId);
-        $("#invoiceFromName").html(json.companyName);
+        drawCustomerDetails(json.customerId, $("#invoiceToName"));
+        drawSupplierDetails(json.supplierId, $("#invoiceFromName"));
 
         var lines = "";
         for(result in json.Line) {
