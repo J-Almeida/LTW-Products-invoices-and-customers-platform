@@ -71,25 +71,42 @@ function drawSearchResults(data, fieldNames) {
     // paginate the table
     $('table.paginated').each(function() {
         var currentPage = 0;
-        var numPerPage = 5;
+        var numPerPage = 10;
         var $table = $(this);
+        var $pageNumber = $('<span class="page-number"></span>');
         $table.bind('repaginate', function() {
             $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+            $pageNumber.text(currentPage+1);
         });
         $table.trigger('repaginate');
         var numRows = $table.find('tbody tr').length;
         var numPages = Math.ceil(numRows / numPerPage);
+
+        if (numPages == 1 ) // cancel the paginator
+            return;
+
         var $pager = $('<div class="pager"></div>');
-        for (var page = 0; page < numPages; page++) {
-            $('<span class="page-number"></span>').text(page + 1).bind('click', {
-                newPage: page
-            }, function(event) {
-                currentPage = event.data['newPage'];
+        $pageNumber.appendTo($pager);
+
+        $('<span class="page-change-button"></span>').text("Previous").bind('click', {
+            newPage: -1
+        }, function(event) {
+            if ( currentPage > 0) {
+                currentPage += event.data['newPage'];
                 $table.trigger('repaginate');
-                $(this).addClass('active').siblings().removeClass('active');
-            }).appendTo($pager).addClass('clickable');
-        }
-        $pager.insertBefore($table).find('span.page-number:first').addClass('active');
+            }
+        }).appendTo($pager).addClass('clickable');
+
+        $('<span class="page-change-button"></span>').text("Next").bind('click', {
+            newPage: 1
+        }, function(event) {
+            if ( currentPage < numPages - 1) {
+                currentPage += event.data['newPage'];
+                $table.trigger('repaginate');
+            }
+        }).appendTo($pager).addClass('clickable');
+
+        $pager.insertBefore($table);
     });
 }
 
