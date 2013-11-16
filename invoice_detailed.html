@@ -73,6 +73,8 @@
         $("#taxPay").html("€ " + documentTotals.taxPayable);
         $("#netTotal").html("€ " + documentTotals.netTotal);
         $("#grossTotal").html("€ " + documentTotals.grossTotal);
+
+        $("#invoiceFooter").html(json.invoiceNo + "     |     " + json.invoiceDate);
     }
 
     function displayInvoice(invoiceNo) {
@@ -104,7 +106,7 @@
     <header id="invoiceHeader">
         <ul class="invoiceInfo">
             <li>Invoice no: <span id="invoiceNo"></span></li>
-            
+
             <li>Invoice date: <span id="invoiceDate"></span></li>
         </ul>
     </header>
@@ -124,7 +126,6 @@
             </div>
         </div>
     </section>
-
 
     <section class="invoiceFinances">
         <div class="invoiceLines">
@@ -170,6 +171,8 @@
         </div>
 
     </section>
+
+    <br><br><div id="invoiceFooter"></div>
 
 </div>
 
