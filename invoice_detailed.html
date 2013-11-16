@@ -2,7 +2,7 @@
 <html dir="ltr" lang="en" class="no-js">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
+    <link rel="stylesheet" href="invoiceStyle.css">
     <title>Invoice</title>
 
 
@@ -102,17 +102,11 @@
     </div>
 
     <header id="invoiceHeader">
-        <div class="invoiceIntro">
-            <h1>Invoice Database</h1>
-            <p>Where college projects meet financial applications</p>
-        </div>
-
-        <dl class="invoiceInfo">
-            <dt class="invoiceNumber">Invoice no: </dt>
-            <dd id="invoiceNo"></dd>
-            <dt class="invoiceDate">Invoice date: </dt>
-            <dd id="invoiceDate"></dd>
-        </dl>
+        <ul class="invoiceInfo">
+            <li>Invoice no: <span id="invoiceNo"></span></li>
+            
+            <li>Invoice date: <span id="invoiceDate"></span></li>
+        </ul>
     </header>
 
     <section id="invoiceConcerned">
@@ -150,7 +144,7 @@
 
                 </tbody>
             </table>
-        </div>
+        </div><br><br>
 
 
         <div class="invoiceTotals">
