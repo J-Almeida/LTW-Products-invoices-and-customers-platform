@@ -51,18 +51,18 @@ CREATE TABLE Invoice (
 	invoiceDate DATE NOT NULL,
 	customerId INTEGER REFERENCES Customer(customerId) ON DELETE CASCADE,
 	/* Document Totals */
-	taxPayable REAL NOT NULL, /* Sum of taxes of all lines */ 
-	netTotal REAL NOT NULL,   /* Sum of price of all lines w/o tax */ 
-	grossTotal REAL NOT NULL /* netTotal + taxPayable */
+	taxPayable REAL DEFAULT 0, /* Sum of taxes of all lines */ 
+	netTotal REAL DEFAULT 0,   /* Sum of price of all lines w/o tax */ 
+	grossTotal REAL DEFAULT 0  /* netTotal + taxPayable */
 );
 
 CREATE TABLE InvoiceLine (
 	invoiceLineId INTEGER PRIMARY KEY AUTOINCREMENT,
 	invoiceId INTEGER REFERENCES Invoice(invoiceId) ON DELETE CASCADE,
-	lineNumber INTEGER NOT NULL,
+	lineNumber INTEGER DEFAULT 0,
 	productId INTEGER REFERENCES Product(productId) ON DELETE CASCADE,
 	quantity INTEGER NOT NULL,
-	creditAmount REAL NOT NULL,
+	creditAmount REAL,
 	taxId INTEGER REFERENCES Tax(taxId) ON DELETE CASCADE
 );
 
@@ -79,6 +79,32 @@ CREATE TABLE Permission (
 	permissionWrite INTEGER NOT NULL,
 	promote INTEGER NOT NULL
 );
+
+CREATE TRIGGER updateInvoiceTotals
+AFTER INSERT ON InvoiceLine
+FOR EACH ROW
+BEGIN
+	UPDATE InvoiceLine SET lineNumber = 
+	1 + (SELECT max(lineNumber) FROM InvoiceLine WHERE invoiceLine.invoiceId = NEW.invoiceId)
+	WHERE invoiceLine.invoiceLineId = NEW.invoiceLineId;
+
+	UPDATE InvoiceLine SET creditAmount = NEW.quantity * (SELECT unitPrice FROM Product WHERE productId = NEW.productId)
+	WHERE invoiceLine.invoiceLineId = NEW.invoiceLineId;
+
+	UPDATE Invoice SET taxPayable = 
+	taxPayable + (SELECT taxPercentage FROM Tax WHERE taxId = NEW.taxId) * 0.01
+	* (SELECT creditAmount FROM InvoiceLine WHERE InvoiceLine.invoiceLineId = NEW.invoiceLineId) 
+	WHERE Invoice.invoiceId = NEW.invoiceId; 
+
+	UPDATE Invoice SET netTotal = 
+	netTotal + (SELECT creditAmount FROM InvoiceLine WHERE InvoiceLine.invoiceLineId = NEW.invoiceLineId)
+	WHERE Invoice.invoiceId = NEW.invoiceId;
+
+	UPDATE Invoice SET grossTotal =
+	(SELECT taxPayable FROM Invoice WHERE Invoice.invoiceId = NEW.invoiceId) 
+	+ (SELECT netTotal FROM Invoice WHERE Invoice.invoiceId = NEW.invoiceId)
+	WHERE Invoice.invoiceId = NEW.invoiceId;
+END;
 
 INSERT INTO Permission(permissionType, permissionRead, permissionWrite, promote) VALUES ( "admin", 1, 1, 1);
 INSERT INTO Permission(permissionType, permissionRead, permissionWrite, promote) VALUES ("editor", 1, 1, 0);
@@ -171,32 +197,32 @@ INSERT INTO Customer(customerTaxId, companyName, billingAddressId, email, permis
             VALUES (9875669, "La Tienda", 4, "tienda@lojita.com", 3);
 
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, taxPayable, netTotal, grossTotal)
-            VALUES ("FT SEQ/1", "2013-09-27", 1, 165.6, 720, 885.6);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/1", "2013-09-27", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, taxPayable, netTotal, grossTotal)
-            VALUES ("FT SEQ/12", "2013-09-29", 2, 0.0, 0.0, 432.5);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/12", "2013-09-29", 2);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, taxPayable, netTotal, grossTotal)
-            VALUES ("FT SEQ/3", "2013-10-11", 3, 3.25, 12.5, 15.75);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/3", "2013-10-11", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, taxPayable, netTotal, grossTotal)
-            VALUES ("FT SEQ/14", "2013-09-30", 2, 78.13, 300.50, 378.63);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/14", "2013-09-30", 2);
 
 
 INSERT INTO Tax(taxType, taxPercentage) VALUES ("IVA", 23.00);
 
-INSERT INTO InvoiceLine(invoiceId, lineNumber, productId, quantity, creditAmount, taxId)
-            VALUES (1, 1, 1, 3, 270.0, 1);
+INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
+            VALUES (1, 1, 3, 1);
 
-INSERT INTO InvoiceLine(invoiceId, lineNumber, productId, quantity, creditAmount, taxId)
-            VALUES (1, 2, 2, 1, 450.0, 1);
+INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
+            VALUES (1, 2, 1, 1);
 
-INSERT INTO InvoiceLine(invoiceId, lineNumber, productId, quantity, creditAmount, taxId)
-            VALUES (3, 1, 10, 5, 7.5, 1);
+INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
+            VALUES (3, 10, 5, 1);
 
-INSERT INTO InvoiceLine(invoiceId, lineNumber, productId, quantity, creditAmount, taxId)
-            VALUES (3, 2, 17, 2, 5, 1);
+INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
+            VALUES (3, 17, 2, 1);
 
-INSERT INTO InvoiceLine(invoiceId, lineNumber, productId, quantity, creditAmount, taxId)
-            VALUES (4, 1, 18, 1, 300.50, 1);
+INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
+            VALUES (4, 18, 1, 1);
