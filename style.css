@@ -117,7 +117,8 @@ body {
 
 #content option,select {
 	color: #676767;
-	background-color: #E5E5E5;
+	background-color: #FFF;
+	width: 140px;
 }
 
 #content input {
@@ -310,7 +311,7 @@ div.pager span {
 
     padding-top: 1px;
     padding-bottom: 1px;
-    background-color: #F8F8F8;
+    background-color: #F3F3F3;
 }
 
 #searchMenu ul:first-child {
