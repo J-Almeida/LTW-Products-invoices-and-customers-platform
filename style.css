@@ -131,9 +131,11 @@ body {
 }
 
 #results table {
+	width: 100%;
 	margin: auto;
 	background-color: #F8F8F8;
 	border-radius: 5px;
+	border-collapse:collapse;
 }
 
 #results table thead {
@@ -149,11 +151,13 @@ body {
 	text-align: center;
 }
 
-#results table tr a {
+#results table td {
+	border-bottom: 1px solid #9F9F9F
+}
 
+#results table tr a {
 	text-decoration: none;
 	color: #676767;
-	padding: 3px;
 	border-radius: 3px;
 }
 
@@ -162,6 +166,12 @@ body {
 	background-color: #C4C4C4;
 	color: #218B9E;
 	padding: 3px;
+}
+
+#results table tr:hover a {
+	cursor: pointer;
+	background-color: #C4C4C4;
+	color: #218B9E;
 }
 
 /****************************************************************************************************************************************/
