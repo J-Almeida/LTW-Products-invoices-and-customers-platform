@@ -8,7 +8,7 @@ function submitForm() {
         return;
     }
 
-    $.ajax($('#content form').attr('action') + form, {
+    $.ajax($('#searchMenu form').attr('action') + form, {
         type: "GET",
         data: "",
         success: function(data)
@@ -27,7 +27,7 @@ function drawSearchResults(data, fieldNames) {
     var tables = "<table class=\"paginated\">";
 
     if (json.length == 0) {
-        tables = "<div>Got no results</div>";
+        tables = "<div id=\"noResults\">No results found.</div>";
         $("#results").html(tables);
         return;
     }
@@ -78,16 +78,17 @@ function drawSearchResults(data, fieldNames) {
         var numPerPage = 10;
         var $table = $(this);
         var $pageNumber = $('<span class="page-number"></span>');
-        $table.bind('repaginate', function() {
-            $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
-            $pageNumber.text(currentPage+1);
-        });
-        $table.trigger('repaginate');
         var numRows = $table.find('tbody tr').length;
         var numPages = Math.ceil(numRows / numPerPage);
-
         if (numPages == 1 ) // cancel the paginator
             return;
+
+        $table.bind('repaginate', function() {
+            $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+            $pageNumber.text('Page: ' + (currentPage+1).toString() + " / " + numPages.toString());
+        });
+
+        $table.trigger('repaginate');
 
         var $pager = $('<div class="pager"></div>');
         $pageNumber.appendTo($pager);

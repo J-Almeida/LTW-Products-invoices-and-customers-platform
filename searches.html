@@ -3,7 +3,7 @@
 <head>
     <title>{{title}}</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="generalStyle.css">
+    <link rel="stylesheet" href="style.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="searches.js"></script>
@@ -35,46 +35,47 @@
     </ul>
 </div>
 
-<div id="content">
+<div id="searchMenu">
     <form action="./api/search{{title}}ByField.php" method="GET" autocomplete="off">
+        <ul>
+            <li id="operationSelect" >
+                <label for="op">Operation</label>
+                <select id="op" name="op" onchange="updateValueBoxes()">
+                    <option value="" disabled selected style="display:none;">Please select one</option>
+                    <option value="listall">List all</option>
+                    <option value="range">Between</option>
+                    <option value="equal">Equals to</option>
+                    <option value="contains">Contains</option>
+                    <option value="min">Minimum</option>
+                    <option value="max">Maximum</option>
+                </select>
+            </li>
 
-        <div id="operationSelect" >
-            <label for="op">Operation</label>
-            <select id="op" name="op" onchange="updateValueBoxes()">
-                <option value="" disabled selected style="display:none;">Please select one</option>
-                <option value="listall">List all</option>
-                <option value="range">Between</option>
-                <option value="equal">Equals to</option>
-                <option value="contains">Contains</option>
-                <option value="min">Minimum</option>
-                <option value="max">Maximum</option>
-            </select><br><br>
-        </div>
+            <li id="valueBoxes">
+                <script>
+                    $(this).keypress(function(e) {
+                        if (e.keyCode == '13') {
+                            e.preventDefault();
+                        }
+                    });
+                </script>
+            </li>
 
-        <div id="valueBoxes">
-            <script>
-                $(this).keypress(function(e) {
-                    if (e.keyCode == '13') {
-                        e.preventDefault();
-                    }
-                });
-            </script>
-        </div><br>
+            <li id="fieldSelect" >
+                <label for="field">Field</label>
+                <select id="field" name="field" onchange="updateValueBoxes()">
+                    <!-- <option value="none" disabled selected style="display:none;">Please select one</option> -->
+                    {{searchFields}}
+                </select>
+            </li>
 
-        <div id="fieldSelect" >
-            <label for="field">Field</label>
-            <select id="field" name="field" onchange="updateValueBoxes()">
-                <option value="none" selected style="display:none;">Please select one</option>
-                {{searchFields}}
-            </select><br>
-        </div>
-
-        <input type="button" value="Submit" onclick="submitForm(); return false;">
+            <li><input type="button" value="Submit" onclick="submitForm(); return false;"></li>
+        </ul>
     </form>
+</div>
 
+<div id="content">
     <div id="results"></div>
-
-
 </div>
 
 </body>

@@ -1,111 +1,224 @@
-/*
-html {
+/*html {
 	width:100%;
 	margin: 0;
 	width: 0;
-}
-*/
+}*/
 
 body {
-	background-color:#d0e4fe;
-	width: 800px;
+	font-family: Helvetica, Arial, sans-serif;
+	background-color:#F8F8F8;
+	width: 1000px;
 	margin: 0 auto;
+	margin-top: 10px;
 }
 
-h1,h2 {
-	color:white;
-	text-align: left;
-	margin-left: 20px;
-}
-
+/****************************************************************************************************************************************/
+/*																		 HEADER 														*/
+/****************************************************************************************************************************************/
 #header {
-	font-family:"Helvetica";
-	font-size:17px;
-	background-color: #838383;
-	padding: 10px 0px 10px 0px;
+
+	background-color: #3E3D37;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 0px;
+	border: 10px;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
 
 }
 
-#menu li a {
-	color: inherit;
-	text-decoration: none;
-	font-family: "Helvetica";
+#header h1 {
+	color:white;
+	text-align: center;
+	margin-bottom: 0px;
+
+}
+
+#header h2 {
+	color:white;
+	text-align: center;
+	padding-top: 0px;
+}
+
+/****************************************************************************************************************************************/
+/*																		 MENU	 														*/
+/****************************************************************************************************************************************/
+#menu {
+
+	padding-top: 1px;
+	padding-bottom: 1px;
+	background-color: #E5E5E5;
 }
 
 #menu ul {
-	color: white;
-  	overflow: auto;
-  	list-style-type: none;
-  	padding-left: 5px
+
+	padding-left: 7px;
 }
- 
-#menu li {
-  	height: 20px;
-  	float: left;
-  	border-right: 1px solid #aaa;
-  	padding: 0px 10px;
-}
- 
-#menu li:last-child {
-  	border-right: none;
+#menu ul li {
+
+	display: inline-block;
 }
 
-#menu {
-	background-color: black;
-	padding: 1px 0px 1px 0px;
+#menu ul li:after {
+
+	content: "|";
+	color: #218B9E;
 }
 
-#content {
-	background-color: white;
-	padding: 1px 10px 1px 10px;
-	font-family: "Helvetica";
+#menu ul li:last-child:after {
+
+	content: "";
 }
 
-.news {
-	border-bottom: 2px solid black;
-}
 
-.news h3 {
-	font-family: "Helvetica";
-}
+#menu ul li a {
 
-.news img {
-	float: left;
-	padding-right: 10px;
-}
-
-.introduction {
-	font-style: italic;
-}
-
-.noticia ul {
-	color: white;
-  	overflow: auto;
-  	list-style-type: none;
-  	padding: 0px
-}
-
-.noticia li a {
-	color: inherit;
 	text-decoration: none;
-	font-family: "Helvetica";
+	padding-right: 5px;
+	padding-left: 5px;
+	/*padding-left: 5px;*/
+	border-radius: 10px;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+	background-color: #E5E5E5;
+	border: 5px solid #E5E5E5;
+	/*border: 5px solid black;
+	background-color: black;*/
+	color: #939393;
 }
 
-.noticia li {
-  	height: 20px;
-  	float: left;
-  	border: 1px solid black;
-  	padding: 5px 10px;
-  	margin: 5px;
-  	margin-left: 0px;
-  	background-color: black;
+#menu ul li a:hover {
+
+	color: #218B9E;
+	background-color: #C4C4C4;
 }
 
-#rodape {
-	font-family: "Helvetica";
+/****************************************************************************************************************************************/
+/*																		content: 														*/
+/****************************************************************************************************************************************/
+#content {
+
 	background-color: white;
-	padding: 1px 10px;
+	padding: 15px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
+
+#content label {
+
+	color: #218B9E;
+	/*background-color: #C4C4C4;
+	border: 10px;
+	padding: 3px;
+	padding-left: 5px;
+	padding-right: 5px;*/
+	border-radius: 10px;
+}
+
+#content option,select {
+	color: #676767;
+	background-color: #E5E5E5;
+}
+
+#content input {
+	background-color: #E5E5E5;
+	color: #676767;
+}
+
+#content input:hover {
+	background-color: #C4C4C4;
+	color: #218B9E;
+}
+
+#results table {
+	margin: auto;
+	background-color: #F8F8F8;
+	border-radius: 5px;
+}
+
+#results table thead {
+
+	background-color: #E5E5E5;
+	border-radius: 10px;
+	padding: 5px;
+	color: #939393;
+}
+
+#results table tr {
+
+	text-align: center;
+}
+
+#results table tr a {
+
+	text-decoration: none;
+	color: #676767;
+	padding: 3px;
+	border-radius: 3px;
+}
+
+#results table tr a:hover {
+
+	background-color: #C4C4C4;
+	color: #218B9E;
+	padding: 3px;
+}
+
+/****************************************************************************************************************************************/
+/*												costumer_detailed, product_detailed														*/
+/****************************************************************************************************************************************/
+
+#customer, #product {
+
+	border: 10px solid #fff;
+	box-shadow: 0 0 1px #888888;
+	padding: 10px;
+	margin: 0px;
+}
+
+#customer .customerTitle, #product .productTitle {
+
+	text-align: center;
+	font-size:  16px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #C4C4C4;
+	border-top: 1px solid #C4C4C4;
+	padding-top: 10px;
+}
+
+#customer .customerID,.customerTaxID,.customerTaxID {
+
+	font-weight: bold;
+	border-bottom: 1px solid #C4C4C4;
+	float: left;
+}
+
+#customer #customerID,#customerTaxID {
+
+	margin: 0;
+    padding: 0 0 0.5em 0;
+}
+
+#customer .companyName,.billingAddress,.emailAddress, #productDetail dt {
+
+	background-color: white;
+	border-radius: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font-weight: bold;
+	float: left;
+}
+
+#customer #companyName,#billingAddress,#emailAddress, #productDetail dd{
+	margin: 0;
+    padding: 0 0 0.5em 0;
+   /* background-color: white;*/
+}
+
+/****************************************************************************************************************************************/
+/*												paginator buttons and general buttons             										*/
+/****************************************************************************************************************************************/
+
 
 div.pager {
     text-align: center;
@@ -119,17 +232,81 @@ div.pager {
     user-select: none;
 }
 
+input[type="button"], div.pager span {
+    cursor: default;
+    -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+    box-shadow:inset 0px 1px 0px 0px #ffffff;
+
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
+    background:-moz-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
+    background:-webkit-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
+    background:-o-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
+    background:-ms-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
+    background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+
+    background-color:#ededed;
+
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+
+    border:1px solid #dcdcdc;
+    display:inline-block;
+    color:#777777;
+    font-size:13px;
+    font-weight:bold;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #ffffff;
+}
+
 div.pager span {
-    display: inline-block;
-    line-height: 1.8;
-    text-align: center;
+    margin-right: 0.8em;
+
+    color:#777777;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+
+    text-shadow:0px 1px 0px #ffffff;
+}
+
+.page-change-button:hover, input[type="button"]:hover {
     cursor: pointer;
-    background: #000;
-    color: #fff;
-    margin-right: 0.5em;
+
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
+    background:-moz-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
+    background:-webkit-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
+    background:-o-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
+    background:-ms-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
+    background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+
+    background-color:#dfdfdf;
 }
 
-div.pager span:hover {
-    background: #c00;
+/****************************************************************************************************************************************/
+/*												search menu                                     										*/
+/****************************************************************************************************************************************/
+
+
+#searchMenu {
+
+    padding-top: 1px;
+    padding-bottom: 1px;
+    background-color: #F8F8F8;
 }
 
+#searchMenu ul {
+
+    padding-left: 7px;
+}
+
+#searchMenu ul li {
+    margin-left: 10px;
+    display: inline-block;
+    text-decoration: none;
+    padding-right: 5px;
+    padding-left: 5px;
+    color: #939393;
+}
