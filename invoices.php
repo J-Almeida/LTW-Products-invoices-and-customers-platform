@@ -6,7 +6,7 @@ $fields = array(
     'invoiceNo' => 'Invoice Number',
     'invoiceDate' => 'Invoice Date',
     'companyName' => 'Company Name',
-    'taxPayable' => 'Tax payable',
+    'taxPayable' => 'Payable tax',
     'netTotal' => 'Net Total',
     'grossTotal' => 'Gross total');
 

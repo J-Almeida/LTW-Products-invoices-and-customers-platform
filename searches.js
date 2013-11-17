@@ -76,6 +76,7 @@ function drawSearchResults(data, fieldNames) {
     $("#results tbody tr").click( function() {
         var $link = $(this).find('a');
         window.open($link.attr('href'), $link.attr('target') );
+        return false;
     }).hover( function() {
             $(this).toggleClass('hover');
         });
