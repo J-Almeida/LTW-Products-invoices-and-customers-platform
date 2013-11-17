@@ -1,15 +1,9 @@
-/*html {
-	width:100%;
-	margin: 0;
-	width: 0;
-}*/
 
 body {
 	font-family: Helvetica, Arial, sans-serif;
 	background-color:#F8F8F8;
 	width: 1000px;
-	margin: 0 auto;
-	margin-top: 10px;
+	margin: auto;
 }
 
 /****************************************************************************************************************************************/
@@ -261,6 +255,7 @@ div.pager {
 }
 
 input[type="button"], div.pager span {
+	width: 70px;
     cursor: default;
     -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
     -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
