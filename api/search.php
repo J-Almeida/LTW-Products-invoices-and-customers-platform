@@ -98,7 +98,7 @@ class MinSearch extends Search {
         if ( count($values) != 0 )
             throw new InvalidSearch(700, "Expected no values");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
-        $this->sql = "SELECT $this->rows from $this->table $this->joins WHERE $this->field = (SELECT min($this->field) FROM $this->table)";
+        $this->sql = "SELECT $this->rows from $this->table $this->joins WHERE $this->field = (SELECT min($this->field) FROM $this->table $this->joins)";
     }
 }
 
@@ -107,7 +107,7 @@ class MaxSearch extends Search {
         if ( count($values) != 0 )
             throw new InvalidSearch(700, "Expected no values");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
-        $this->sql = "SELECT $this->rows from $this->table $this->joins WHERE $this->field = (SELECT max($this->field) FROM $this->table)";
+        $this->sql = "SELECT $this->rows from $this->table $this->joins WHERE $this->field = (SELECT max($this->field) FROM $this->table $this->joins)";
     }
 }
 
