@@ -61,24 +61,27 @@
         </div>
 
         <header id="customerHeader">
+            <ul class="customerInfo">
+                <li>ID Number: <span id="customerID"></span></li>
 
-            <dl class="customerInfo">
-                <dt class="customerID">customer ID: </dt>
-                <dd id="customerID"></dd>
-                <dt class="customerTaxID">Tax ID: </dt>
-                <dd id="customerTaxID"></dd>
-            </dl>
+                <li>Tax identification: <span id="customerTaxID"></span></li>
+            </ul>
         </header>
 
         <section id="customerDetail">
+            <ul class="customerDetail">
+                <li>Name:
+                    <p id="companyName"></p>
+                </li>
 
-            <dt class="companyName">Name: </dt>
-            <dd id="companyName"></dd><br>
-            <dt class="billingAddress">Billing address: </dt>
-            <dd id="billingAddress"></dd>
-            <dt class="emailAddress">Email address: </dt>
-            <dd id="emailAddress"></dd>
+                <li>Billing Address:
+                    <p id="billingAddress"></p>
+                </li>
 
+                <li>Email Address:
+                    <p id="emailAddress"></p>
+                </li>
+            </ul>
         </section>
 
     </div>

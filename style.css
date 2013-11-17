@@ -178,7 +178,6 @@ body {
 /****************************************************************************************************************************************/
 
 #customer, #product {
-
 	border: 10px solid #fff;
 	box-shadow: 0 0 1px #888888;
 	padding: 10px;
@@ -186,42 +185,62 @@ body {
 }
 
 #customer .customerTitle, #product .productTitle {
-
 	text-align: center;
-	font-size:  16px;
+	font-size:  15px;
 	padding-bottom: 10px;
 	border-bottom: 1px solid #C4C4C4;
 	border-top: 1px solid #C4C4C4;
 	padding-top: 10px;
 }
 
-#customer .customerID,.customerTaxID,.customerTaxID {
-
-	font-weight: bold;
-	border-bottom: 1px solid #C4C4C4;
-	float: left;
-}
-
-#customer #customerID,#customerTaxID {
-
-	margin: 0;
-    padding: 0 0 0.5em 0;
-}
-
-#customer .companyName,.billingAddress,.emailAddress, #productDetail dt {
-
+.customerInfo, .productInfo {
 	background-color: white;
-	border-radius: 5px;
-	padding-left: 5px;
-	padding-right: 5px;
-	font-weight: bold;
-	float: left;
+	padding-top: 15px;
+	overflow: hidden;
+	list-style: none;
+	text-align: right;
+	line-height: 2em;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	margin-left: 65%;
+	width: 30%;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #C4C4C4;
+	border-top: 1px solid #C4C4C4;
+	border-radius: 10px;
 }
 
-#customer #companyName,#billingAddress,#emailAddress, #productDetail dd{
-	margin: 0;
-    padding: 0 0 0.5em 0;
-   /* background-color: white;*/
+.customerInfo li, .productInfo li {
+	font-weight: bold;
+	text-align: left;
+	clear: both;
+}
+
+.customerInfo span, .productInfo span {
+	font-weight: normal;
+	float: right;
+}
+
+.customerDetail, .productDetail {
+	background-color: #FFF;
+	list-style: none;
+	text-align: left;
+	font-size:  16px;
+	border-bottom: 1px solid #C4C4C4;
+	border-top: 1px solid #C4C4C4;
+	padding-top: 25px;
+}
+
+.customerDetail li, .productDetail li {
+	font-weight: bold;
+	padding-bottom: 25px;
+}
+
+.customerDetail li p, .productDetail li p{
+	font-size: 14px;
+	font-weight: normal;
 }
 
 /****************************************************************************************************************************************/

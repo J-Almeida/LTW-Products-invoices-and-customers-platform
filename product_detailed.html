@@ -29,7 +29,7 @@
 
         $("#productCode").html(json.productCode);
         $("#productDescription").html(json.productDescription);
-        $("#unitPrice").html(json.unitPrice);
+        $("#unitPrice").html("€" + json.unitPrice);
         $("#unitOfMeasure").html(json.unitOfMeasure);
     }
 
@@ -59,19 +59,27 @@
             <strong>Product</strong>
         </div>
 
+        <header id="productHeader">
+            <ul class="productInfo">
+                <li>Product code: <span id="productCode"></span></li>
+            </ul>
+        </header>
+
         <section id="productDetail">
+            <ul class="productDetail">
+                <li>Description:
+                    <p id="productDescription"></p>
+                </li>
 
-            <dt class="productCode">Product code: </dt>
-            <dd id="productCode"></dd><br>
-            <dt class="productDescription">Description: </dt>
-            <dd id="productDescription"></dd>
-            <dt class="unitPrice">Unit Price: </dt>
-            <dd id="unitPrice"></dd>
-            <dt class="unitOfMeasure">Unit of Measure: </dt>
-            <dd id="unitOfMeasure"></dd>
+                <li>Unit Price:
+                    <p id="unitPrice"></p>
+                </li>
 
+                <li>Unit of measure:
+                    <p id="unitOfMeasure"></p>
+                </li>
+            </ul>
         </section>
-
     </div>
 
 </body>
