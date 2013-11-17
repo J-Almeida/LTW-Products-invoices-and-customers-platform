@@ -87,7 +87,16 @@ h2, h3 {
 	width: 45%;
 	float: left;
 	text-align: left;
-	padding-bottom: 30px;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+.invoiceCustomer:hover h2 {
+	color: #218B9E;
+}
+
+.invoiceCustomer:hover {
+	cursor: pointer;
 }
 
 /* Finances tables */
@@ -129,8 +138,24 @@ h2, h3 {
 	border-bottom: 2px solid #272727;
 }
 
+.invoiceLines th:nth-child(1) {
+	width: 32%;
+}
+
+.invoiceLines th:nth-child(2) {
+	width: 12%;
+}
+
+.invoiceLines th:nth-child(3) {
+	width: 10%;
+}
+
+
 .invoiceLines tbody td {
 	border-bottom: 1px solid #D3E1F1;
+	text-align: left;
+	width: auto;
+	word-break: break-all;
 }
 
 .invoiceTotals tbody td {
@@ -144,6 +169,10 @@ h2, h3 {
 
 .invoiceLines tbody tr:hover, .invoiceTotals tbody tr:hover {
 	color: #218B9E;
+}
+
+.invoiceLines tbody tr:hover {
+	cursor: pointer;
 }
 
 @media screen {
@@ -192,4 +221,16 @@ h2, h3 {
 	td    { page-break-inside:avoid; page-break-after:auto; }
 	thead { display:table-header-group; }
 	tfoot { display:table-footer-group; }
+
+	.invoiceLines tbody td {
+		border-bottom: 1px solid #D3E1F1;
+		overflow: hidden;
+		width: auto;
+	}
+
+	.invoiceTotals tbody td {
+		border-bottom: 1px solid #D3E1F1;
+		text-align: right;
+		overflow: hidden;
+	}
 }

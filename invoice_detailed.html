@@ -12,6 +12,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
     <script type="text/javascript">
+    var customerIDGlobal;
 
     var invoiceFieldNames = { "invoiceNo" : "invoiceNo",
     "costumerId": "costumerId",
@@ -55,8 +56,7 @@
         });
         var details = "";
         $.getJSON("./api/getProduct.php?ProductCode=" + productCode, function(data) {
-            var description = data.productDescription;
-            details += "[" + productCode + "] " + description;
+            details = data;
         });
 
         $.ajaxSetup({
@@ -73,10 +73,17 @@
         drawCustomerDetails(json.customerId, $("#invoiceToName"));
         drawSupplierDetails(json.supplierId, $("#invoiceFromName"));
 
+        $("#invoiceCustomer").click(function() {
+            window.open("customer_detailed.html?CustomerID=" + json.customerId);
+        });
+
         var lines = "";
         for(result in json.Line) {
-            lines += "<tr>";
             var object = json.Line[result];
+            var productData;
+            lines += "<tr id=";
+            lines += object.lineNumber;
+            lines += ">";
             for(field in object) {
                 if(field != "lineNumber") {
                     if(field == "tax") {
@@ -87,9 +94,12 @@
                         }
                     }
                     else if(field == "productCode") {
-                        var produtDescription = getProductDetails(object[field]);
+                        productData = getProductDetails(object[field]);
                         lines += "<td>";
-                        lines += produtDescription;
+                        lines += "[";
+                        lines += productData.productCode;
+                        lines += "] ";
+                        lines += productData.productDescription;
                         lines += "</td>";
                     }
                     else {
@@ -100,11 +110,29 @@
                         lines += "</td>";
                     }
                 }
+
+                if(field == "quantity") {
+                    lines += "<td>";
+                    lines += productData.unitOfMeasure;
+                    lines += "</td>";
+                }
             }
             lines += "</tr>";
         }
 
         $("#invoiceLines").html(lines);
+
+        //Load onClick events for table rows
+        var rowProd = {};
+        for(result in json.Line) {
+            var object = json.Line[result];
+            var rowID = "#" + object.lineNumber;
+            var pCode = object.productCode;
+            rowProd[object.lineNumber] = pCode;
+            $(rowID).click(function() {
+                window.open("product_detailed.html?ProductCode=" + rowProd[this.id]);
+            });
+        }
 
         var documentTotals = json.DocumentTotals;
 
@@ -130,6 +158,7 @@
                 console.log(a + ", " + b + ", " + c);
             }
         })
+
         $("#loadingInvoice").fadeOut(400, function() {
             $("#invoice").fadeIn('slow', function() {});
         });
@@ -160,7 +189,7 @@
         </header>
 
         <section id="invoiceConcerned">
-            <div class="invoiceCustomer">
+            <div class="invoiceCustomer" id="invoiceCustomer">
                 <h2>Invoice To:</h2>
                 <div id="invoiceTo" class="concernedInfo">
                     <div class="concerned" id="invoiceToName"></div>
@@ -178,11 +207,12 @@
         <section class="invoiceFinances">
             <div class="invoiceLines">
                 <table>
-                    <caption>Invoice details: </caption>
+                    <caption>Invoice details:</caption>
                     <thead>
                         <tr>
                             <th>[code] Product</th>
                             <th>Quantity</th>
+                            <th>Unit</th>
                             <th>Unit price</th>
                             <th>Credit amount</th>
                             <th>Tax type</th>
