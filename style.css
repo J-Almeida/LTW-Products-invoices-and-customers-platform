@@ -157,8 +157,8 @@ body {
 	border-radius: 3px;
 }
 
-#results table tr a:hover {
-
+#results table tbody tr:hover {
+    cursor: pointer;
 	background-color: #C4C4C4;
 	color: #218B9E;
 	padding: 3px;
