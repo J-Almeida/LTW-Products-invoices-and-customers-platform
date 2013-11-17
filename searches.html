@@ -3,7 +3,7 @@
 <head>
     <title>{{title}}</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="generalStyle.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="searches.js"></script>
@@ -64,7 +64,7 @@
         <div id="fieldSelect" >
             <label for="field">Field</label>
             <select id="field" name="field" onchange="updateValueBoxes()">
-                <option value="" disabled selected style="display:none;">Please select one</option>
+                <option value="none" selected style="display:none;">Please select one</option>
                 {{searchFields}}
             </select><br>
         </div>

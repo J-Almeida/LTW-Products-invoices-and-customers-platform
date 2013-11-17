@@ -3,7 +3,10 @@ function submitForm() {
     var form = "?";
     form += $('form').serialize();
 
-    if (form.indexOf("op") < 0) return;
+    if (form.indexOf("op") < 0) {
+        alert("Please specify an operation!");
+        return;
+    }
 
     $.ajax($('#content form').attr('action') + form, {
         type: "GET",
