@@ -203,7 +203,8 @@ h2, h3 {
 
 @media print {
 	body {
-		font-size: 12px;
+		display: table;
+		font-size: 13px;
 		margin: 0px;
 		text-align: center;
 		background: #FFF;
@@ -216,7 +217,6 @@ h2, h3 {
 	}  
 
 	#invoice {
-		display: table;
 		width: 100%;
 		position: relative;
 		padding: 20px;
