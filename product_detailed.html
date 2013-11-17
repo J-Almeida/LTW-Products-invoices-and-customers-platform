@@ -3,55 +3,20 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/ico" href="favicon.ico"/>
 
     <title>Product</title>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-    <script type="text/javascript">
-
-    function getParameter(urlQuery) {
-        urlQuery = urlQuery.split("+").join(" ");
-
-        var params = {};
-        var tokens;
-        var regex = /[?&]?([^=]+)=([^&]*)/g;
-
-        while (tokens = regex.exec(urlQuery)) {
-            params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-        }
-
-        return params;
-    }
-
-    function drawProductStructure(productData) {
-        var json = JSON.parse(productData);
-
-        $("#productCode").html(json.productCode);
-        $("#productDescription").html(json.productDescription);
-        $("#unitPrice").html("€" + json.unitPrice);
-        $("#unitOfMeasure").html(json.unitOfMeasure);
-    }
-
-    function displayProduct(productCode) {
-        $.ajax("./api/getProduct.php?ProductCode=" + productCode, {
-            type: "GET",
-            data: "",
-            success: function(data)
-            {
-                drawProductStructure(data);
-            },
-            error: function(a, b, c)
-            {
-                console.log(a + ", " + b + ", " + c);
-            }
-        })
-    }
-
-    </script>
+    <script src="product_detailed.js"></script>
 
 </head>
 <body onload="displayProduct(getParameter(document.location.search).ProductCode)" >
+
+    <div id="loadingProduct">
+        <span>Loading product</span><br>
+        <img src='ajax-loader.gif' alt='loading' />
+    </div>
 
     <div id="product">
 
