@@ -148,99 +148,99 @@ INSERT INTO City(cityName) VALUES ("Londres");
 INSERT INTO City(cityName) VALUES ("Lisboa");
 
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-            VALUES(125, "Carimbos MIEIC", 90.0, "unidades");
+            VALUES(125, "Carimbos MIEIC", 90.0, "Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-            VALUES(126, "Camisola FEUP", 450.0, "unidades");
+            VALUES(126, "Camisola FEUP", 450.0, "Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (110,"Caderno Capa Preta",9.0,"unidades");
+			VALUES (110,"Caderno Capa Preta",9.0,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (115,"Caderno Capa Branca",15.0,"unidades");
+			VALUES (115,"Caderno Capa Branca",15.0,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (116,"Caderno Capa Pokemon",5.0,"unidades");
+			VALUES (116,"Caderno Capa Pokemon",5.0,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (117,"Caneta BIC",1.0,"unidades");
+			VALUES (117,"Caneta BIC",1.0,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (099,"Borracha Seriva - PVC-Free",0.7,"unidades");
+			VALUES (099,"Borracha Seriva - PVC-Free",0.7,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (100,"Borracha Seriva - PVC Included",0.5,"unidades");
+			VALUES (100,"Borracha Seriva - PVC Included",0.5,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (101,"Lapis Staedtler HB 2",0.9,"unidades");
+			VALUES (101,"Lapis Staedtler HB 2",0.9,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (048,"Caneta Reynolds - Azul",1.50,"unidades");
+			VALUES (048,"Caneta Reynolds - Azul",1.50,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (049,"Caneta Reynolds - Preta",1.50,"unidades");
+			VALUES (049,"Caneta Reynolds - Preta",1.50,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (050,"Caneta Reynolds - Vermelha",1.50,"unidades");
+			VALUES (050,"Caneta Reynolds - Vermelha",1.50,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (051,"Caneta Reynolds - Verde",1.50,"unidades");
+			VALUES (051,"Caneta Reynolds - Verde",1.50,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (052,"Caneta Reynolds - Azul Claro",1.50,"unidades");
+			VALUES (052,"Caneta Reynolds - Azul Claro",1.50,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (053,"Caneta Reynolds - Roxa",1.50,"unidades");
+			VALUES (053,"Caneta Reynolds - Roxa",1.50,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (054,"Caneta Reynolds - Amarela",1.52,"unidades");
+			VALUES (054,"Caneta Reynolds - Amarela",1.52,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (001,"Borracha Quenaoapaga",2.50,"unidades");
+			VALUES (001,"Borracha Quenaoapaga",2.50,"Un");
 INSERT INTO Product(productCode,productDescription,unitPrice,unitOfMeasure)
-			VALUES (335,"Camisola FEUP Autografada",300.50,"unidades");
+			VALUES (335,"Camisola FEUP Autografada",300.50,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (330,"Panuelos Renova - 6 unidades",1.50,"unidades");
+			VALUES (330,"Panuelos Renova - 6 Un",1.50,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (339,"Nada",0.10,"kilo");
+			VALUES (339,"Nada",0.10,"Kg");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (340,"Tinteiro Pelican (cor preta) - A melhor tinta para canetas, nao seca",11999.99,"unidades");
+			VALUES (340,"Tinteiro Pelican (cor preta) - A melhor tinta para canetas, nao seca",11999.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (341,"Tinteiro Pelican (cor azul) - A melhor tinta para canetas, nao seca",99.99,"unidades");
+			VALUES (341,"Tinteiro Pelican (cor azul) - A melhor tinta para canetas, nao seca",99.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (342,"Tinteiro Pelican (cor vermelha) - A melhor tinta para canetas, nao seca",11.99,"unidades");
+			VALUES (342,"Tinteiro Pelican (cor vermelha) - A melhor tinta para canetas, nao seca",11.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (343,"Tinteiro Pelican (cor amarela) - A melhor tinta para canetas, nao seca",11.99,"unidades");
+			VALUES (343,"Tinteiro Pelican (cor amarela) - A melhor tinta para canetas, nao seca",11.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (344,"Tinteiro Pelican (cor roxa) - A melhor tinta para canetas, nao seca",11.99,"unidades");
+			VALUES (344,"Tinteiro Pelican (cor roxa) - A melhor tinta para canetas, nao seca",11.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (345,"Tinteiro Pelican (cor dourada) - A melhor tinta para canetas, nao seca",11.99,"unidades");
+			VALUES (345,"Tinteiro Pelican (cor dourada) - A melhor tinta para canetas, nao seca",11.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (346,"Tinteiro Pelican (cor verde) - A melhor tinta para canetas, nao seca",111.99,"unidades");
+			VALUES (346,"Tinteiro Pelican (cor verde) - A melhor tinta para canetas, nao seca",111.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (347,"Tinteiro Pelican (cor castanha) - A melhor tinta para canetas, nao seca",11.99,"unidades");
+			VALUES (347,"Tinteiro Pelican (cor castanha) - A melhor tinta para canetas, nao seca",11.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (348,"Tinteiro Pelican (cor prateada) - A melhor tinta para canetas, nao seca",0.99,"unidades");
+			VALUES (348,"Tinteiro Pelican (cor prateada) - A melhor tinta para canetas, nao seca",0.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (349,"Tinteiro Pelican (cor laranja) - A melhor tinta para canetas, nao seca",211.99,"unidades");
+			VALUES (349,"Tinteiro Pelican (cor laranja) - A melhor tinta para canetas, nao seca",211.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (350,"Tinteiro Pelican (cor-de-rosa) - A melhor tinta para canetas, nao seca",11.99,"unidades");
+			VALUES (350,"Tinteiro Pelican (cor-de-rosa) - A melhor tinta para canetas, nao seca",11.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (351,"Tinteiro Pelican (cor cinzenta) - A melhor tinta para canetas, nao seca",11.99,"unidades");
+			VALUES (351,"Tinteiro Pelican (cor cinzenta) - A melhor tinta para canetas, nao seca",11.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (352,"Caneta FEUP - Autografada",98607879.99,"unidades");
+			VALUES (352,"Caneta FEUP - Autografada",98607879.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (353,"Caneta FEUP - Sem Autografos",999999.99,"unidades");
+			VALUES (353,"Caneta FEUP - Sem Autografos",999999.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (354,"Saquinho de Compras FEUP - Autografado",98607.99,"unidades");
+			VALUES (354,"Saquinho de Compras FEUP - Autografado",98607.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (355,"Folhas A4 (250 unidades) - Marca AEFEUP, lapis gratis",30.56,"embalagem");
+			VALUES (355,"Folhas A4 (250 Un) - Marca AEFEUP, lapis gratis",30.56,"Emb");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (356,"Folhas A5 (250 unidades) - Marca AEFEUP, lapis gratis",20.56,"embalagem");
+			VALUES (356,"Folhas A5 (250 Un) - Marca AEFEUP, lapis gratis",20.56,"Emb");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (357,"Queijos FEUP",999999.99,"kilo");
+			VALUES (357,"Queijos FEUP",999999.99,"Kg");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (358,"Calculadora Texas TI-84",300.99,"unidades");
+			VALUES (358,"Calculadora Texas TI-84",300.99,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (359,"Calculadora Texas TI-84 Plus",301.00,"unidades");
+			VALUES (359,"Calculadora Texas TI-84 Plus",301.00,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (360,"Régua Staples - 15 cm",0.50,"unidades");
+			VALUES (360,"Régua Staples - 15 cm",0.50,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (361,"Régua Staples - 20 cm",0.60,"unidades");
+			VALUES (361,"Régua Staples - 20 cm",0.60,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (362,"Régua Staples - 30 cm",0.70,"unidades");
+			VALUES (362,"Régua Staples - 30 cm",0.70,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (363,"Esquadro Staples - Inquebravel, 45graus, 25cm",1.00,"unidades");
+			VALUES (363,"Esquadro Staples - Inquebravel, 45graus, 25cm",1.00,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (364,"Esquadro Staples - Inquebravel, 60graus, 25cm",1.01,"unidades");
+			VALUES (364,"Esquadro Staples - Inquebravel, 60graus, 25cm",1.01,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (365,"Transferidor Staples",1.00,"unidades");
+			VALUES (365,"Transferidor Staples",1.00,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (366,"Esquadro Plastico Cristal Liderpapel - 60graus, 25cm",1.05,"unidades");
+			VALUES (366,"Esquadro Plastico Cristal Liderpapel - 60graus, 25cm",1.05,"Un");
 
 INSERT INTO BillingAddress(addressDetail, cityId, countryId, postalCode)
             VALUES ("Rua Doutor Roberto Frias", 1, 1, "4200-465");
@@ -315,9 +315,6 @@ INSERT INTO Supplier(supplierTaxId, companyName, billingAddressId, email)
 
 INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
             VALUES ("FT SEQ/1", "2013-09-27", 1, 1);
-
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/12", "2013-09-29", 2, 1);
 
 INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
             VALUES ("FT SEQ/3", "2013-10-11", 3, 1);
@@ -517,6 +514,15 @@ INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
             VALUES (1, 45, 2, 1);
 INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
             VALUES (1, 46, 1, 1);
+
+INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
+            VALUES (2, 43, 2, 1);
+INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
+            VALUES (2, 44, 2, 1);
+INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
+            VALUES (2, 45, 2, 1);
+INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
+            VALUES (2, 46, 1, 1);
 
 INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
             VALUES (3, 10, 5, 1);
@@ -756,8 +762,7 @@ INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
 
 INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
             VALUES (35, 14, 50, 1);
-
 INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
-            VALUES (36, 14, 5, 1);
+            VALUES (35, 14, 5, 1);
 INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
-            VALUES (36, 5, 14, 1);
+            VALUES (35, 5, 14, 1);
