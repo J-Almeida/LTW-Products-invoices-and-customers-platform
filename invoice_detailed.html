@@ -14,10 +14,10 @@
     <script type="text/javascript">
 
     var invoiceFieldNames = { "invoiceNo" : "invoiceNo",
-            "costumerId": "costumerId",
-            "invoiceDate": "invoiceDate",
-            "grossTotal": "grossTotal",
-            "companyName": "companyName"};
+    "costumerId": "costumerId",
+    "invoiceDate": "invoiceDate",
+    "grossTotal": "grossTotal",
+    "companyName": "companyName"};
 
     function getParameter(urlQuery) {
         urlQuery = urlQuery.split("+").join(" ");
@@ -49,6 +49,22 @@
         });
     }
 
+    function getProductDetails(productCode) {
+        $.ajaxSetup({
+            async: false
+        });
+        var details = "";
+        $.getJSON("./api/getProduct.php?ProductCode=" + productCode, function(data) {
+            var description = data.productDescription;
+            details += "[" + productCode + "] " + description;
+        });
+
+        $.ajaxSetup({
+            async: true
+        });
+        return details;
+    }
+
     function drawInvoiceStructure(invoiceData) {
         var json = JSON.parse(invoiceData);
 
@@ -69,6 +85,12 @@
                             lines += object[field][taxField];
                             lines += "</td>";
                         }
+                    }
+                    else if(field == "productCode") {
+                        var produtDescription = getProductDetails(object[field]);
+                        lines += "<td>";
+                        lines += produtDescription;
+                        lines += "</td>";
                     }
                     else {
                         lines += "<td>";
@@ -94,18 +116,23 @@
     }
 
     function displayInvoice(invoiceNo) {
+        $("#invoice").hide();
         $.ajax("./api/getInvoice.php?InvoiceNo=" + invoiceNo, {
-                type: "GET",
-                data: "",
-                success: function(data)
-                {
-                    drawInvoiceStructure(data);
-                },
-                error: function(a, b, c)
-                {
-                    console.log(a + ", " + b + ", " + c);
-                }
+            async: false,
+            type: "GET",
+            data: "",
+            success: function(data)
+            {
+                drawInvoiceStructure(data);
+            },
+            error: function(a, b, c)
+            {
+                console.log(a + ", " + b + ", " + c);
+            }
         })
+        $("#loadingInvoice").fadeOut(400, function() {
+            $("#invoice").fadeIn('slow', function() {});
+        });
     }
 
     </script>
@@ -113,84 +140,89 @@
 </head>
 <body onload="displayInvoice(getParameter(document.location.search).InvoiceNo)">
 
-<div id="invoice">
-
-    <div class="invoiceTitle">
-        <strong>Invoice</strong>
+    <div id="loadingInvoice">
+        <span>Loading invoice</span><br>
+        <img src='ajax-loader.gif' alt='loading' />
     </div>
 
-    <header id="invoiceHeader">
-        <ul class="invoiceInfo">
-            <li>Invoice no: <span id="invoiceNo"></span></li>
+    <div id="invoice">
 
-            <li>Invoice date: <span id="invoiceDate"></span></li>
-        </ul>
-    </header>
+        <div class="invoiceTitle">
+            <strong>Invoice</strong>
+        </div>
 
-    <section id="invoiceConcerned">
-        <div class="invoiceCustomer">
-            <h2>Invoice To:</h2>
-            <div id="invoiceTo" class="concernedInfo">
-                <div class="concerned" id="invoiceToName"></div>
+        <header id="invoiceHeader">
+            <ul class="invoiceInfo">
+                <li>Invoice no: <span id="invoiceNo"></span></li>
+
+                <li>Invoice date: <span id="invoiceDate"></span></li>
+            </ul>
+        </header>
+
+        <section id="invoiceConcerned">
+            <div class="invoiceCustomer">
+                <h2>Invoice To:</h2>
+                <div id="invoiceTo" class="concernedInfo">
+                    <div class="concerned" id="invoiceToName"></div>
+                </div>
             </div>
-        </div>
 
-        <div class="invoiceCompany">
-            <h2>Invoice From:</h2>
-            <div id="invoiceFrom" class="concernedInfo">
-                <div class="concerned" id="invoiceFromName"></div>
+            <div class="invoiceCompany">
+                <h2>Invoice From:</h2>
+                <div id="invoiceFrom" class="concernedInfo">
+                    <div class="concerned" id="invoiceFromName"></div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="invoiceFinances">
-        <div class="invoiceLines">
-            <table>
-                <caption>Invoice details: </caption>
-                <thead>
-                    <tr>
-                        <th>Product code</th>
-                        <th>Quantity</th>
-                        <th>Unit price</th>
-                        <th>Credit amount</th>
-                        <th>Tax type</th>
-                        <th>Tax Percentage</th>
-                    </tr>
-                </thead>
-                <tbody id="invoiceLines">
+        <section class="invoiceFinances">
+            <div class="invoiceLines">
+                <table>
+                    <caption>Invoice details: </caption>
+                    <thead>
+                        <tr>
+                            <th>[code] Product</th>
+                            <th>Quantity</th>
+                            <th>Unit price</th>
+                            <th>Credit amount</th>
+                            <th>Tax type</th>
+                            <th>Tax Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoiceLines">
 
-                </tbody>
-            </table>
-        </div><br><br>
+                    </tbody>
+                </table>
+            </div><br><br>
 
 
-        <div class="invoiceTotals">
-            <table>
-                <caption>Totals: </caption>
-                <tbody>
-                    <tr>
-                        <th>Payable tax:</th>
-                        <td id="taxPay"></td>
-                    </tr>
+            <div class="invoiceTotals">
+                <table>
+                    <caption>Totals: </caption>
+                    <tbody>
+                        <tr>
+                            <th>Payable tax:</th>
+                            <td id="taxPay"></td>
+                        </tr>
 
-                    <tr>
-                        <th>Net total:</th>
-                        <td id="netTotal"></td>
-                    </tr>
+                        <tr>
+                            <th>Net total:</th>
+                            <td id="netTotal"></td>
+                        </tr>
 
-                    <tr>
-                        <th>Gross total:</th>
-                        <td id="grossTotal"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                        <tr>
+                            <th>Gross total:</th>
+                            <td id="grossTotal"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-    </section>
+        </section>
 
-    <br><br><div id="invoiceFooter"></div>
+        <br><br><div id="invoiceFooter"></div>
 
-</div>
+    </div>
 
 </body>
 
