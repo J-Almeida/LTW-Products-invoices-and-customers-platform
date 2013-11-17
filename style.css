@@ -76,14 +76,11 @@ body {
 	text-decoration: none;
 	padding-right: 5px;
 	padding-left: 5px;
-	/*padding-left: 5px;*/
 	border-radius: 10px;
 	border-top-right-radius: 10px;
 	border-top-left-radius: 10px;
 	background-color: #E5E5E5;
 	border: 5px solid #E5E5E5;
-	/*border: 5px solid black;
-	background-color: black;*/
 	color: #6A6A6A;
 }
 
@@ -107,11 +104,6 @@ body {
 #content label {
 
 	color: #218B9E;
-	/*background-color: #C4C4C4;
-	border: 10px;
-	padding: 3px;
-	padding-left: 5px;
-	padding-right: 5px;*/
 	border-radius: 10px;
 }
 
@@ -132,6 +124,7 @@ body {
 }
 
 #results table {
+	font-size: 15px;
 	width: 100%;
 	margin: auto;
 	background-color: #F8F8F8;
@@ -142,7 +135,7 @@ body {
 #results table thead {
 
 	background-color: #E5E5E5;
-    border-bottom: solid #000000 2px;
+    border-bottom: 2px solid #9F9F9F;
 	border-radius: 10px;
 	padding: 5px;
     color: #218B9E;
