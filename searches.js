@@ -93,13 +93,12 @@ function drawSearchResults(data, fieldNames) {
 
         $table.bind('repaginate', function() {
             $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
-            $pageNumber.text('Page: ' + (currentPage+1).toString() + " / " + numPages.toString());
+            $pageNumber.text((currentPage+1).toString() + " / " + numPages.toString());
         });
 
         $table.trigger('repaginate');
 
         var $pager = $('<div class="pager"></div>');
-        $pageNumber.appendTo($pager);
 
         $('<span class="page-change-button"></span>').text("Previous").bind('click', {
             newPage: -1
@@ -109,6 +108,8 @@ function drawSearchResults(data, fieldNames) {
                 $table.trigger('repaginate');
             }
         }).appendTo($pager).addClass('clickable');
+
+        $pageNumber.appendTo($pager);
 
         $('<span class="page-change-button"></span>').text("Next").bind('click', {
             newPage: 1

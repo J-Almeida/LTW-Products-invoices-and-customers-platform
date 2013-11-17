@@ -3,9 +3,9 @@
 include "searches.php";
 
 $fields = array(
-    'customerId' => "Customer ID",
-    'customerTaxId' => 'Customer Tax ID',
-    'companyName' => 'Company Name',
+    'customerId' => "ID",
+    'customerTaxId' => 'Tax ID',
+    'companyName' => 'Name',
     'email' => 'Email',
     'permissionType' => 'Permissions',
     'addressDetail' => 'Address',
