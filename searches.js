@@ -131,7 +131,7 @@ var fieldTypes = {
     'netTotal' : 'type="number"',
     'grossTotal' : 'type="number"',
     'customerId' : 'type="number"',
-    'customerTaxId' : 'type="number',
+    'customerTaxId' : 'type="number"',
     'unitPrice' : 'type="number"',
     'email' : 'type="email"'
 };
