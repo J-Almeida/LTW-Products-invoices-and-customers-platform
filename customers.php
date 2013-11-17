@@ -7,7 +7,6 @@ $fields = array(
     'customerTaxId' => 'Tax ID',
     'companyName' => 'Name',
     'email' => 'Email',
-    'permissionType' => 'Permissions',
     'addressDetail' => 'Address',
     'cityName' => 'City',
     'countryName' => 'Country');
