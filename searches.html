@@ -51,25 +51,25 @@
                 </select>
             </li>
 
+            <li id="fieldSelect" >
+                <label for="field">Field</label>
+                <select id="field" name="field" onchange="updateValueBoxes()">
+                    {{searchFields}}
+                </select>
+            </li>
+
             <li id="valueBoxes">
                 <script>
                     $(this).keypress(function(e) {
                         if (e.keyCode == '13') {
                             e.preventDefault();
+                            submitForm();
                         }
                     });
                 </script>
             </li>
 
-            <li id="fieldSelect" >
-                <label for="field">Field</label>
-                <select id="field" name="field" onchange="updateValueBoxes()">
-                    <!-- <option value="none" disabled selected style="display:none;">Please select one</option> -->
-                    {{searchFields}}
-                </select>
-            </li>
-
-            <li><input type="button" value="Submit" onclick="submitForm(); return false;"></li>
+            <br><br><li><input type="button" value="Submit" onclick="submitForm(); return false;"></li>
         </ul>
     </form>
 </div>
