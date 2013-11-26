@@ -15,7 +15,7 @@ $table = 'Customer';
 $field = 'CustomerID';
 $values = array($value);
 $rows = array('customerID', 'companyName', 'customerTaxId', 'email', 'addressDetail', 'cityName', 'countryName', 'postalCode' );
-$joins = array( 'Customer' => 'BillingAddress', 'BillingAddress' => array('City', 'Country') );
+$joins = array();
 
 $search = new EqualSearch($table, $field, $values, $rows, $joins);
 $result = $search->getResults();

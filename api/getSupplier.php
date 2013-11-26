@@ -15,7 +15,7 @@ $table = 'Supplier';
 $field = 'SupplierID';
 $values = array($value);
 $rows = array('supplierID', 'companyName', 'supplierTaxId', 'email', 'addressDetail', 'cityName', 'countryName', 'postalCode' );
-$joins = array( 'Supplier' => 'BillingAddress', 'BillingAddress' => array('City', 'Country') );
+$joins = array();
 
 $search = new EqualSearch($table, $field, $values, $rows, $joins);
 $result = $search->getResults();
