@@ -51,16 +51,14 @@ body {
 }
 
 #menu ul {
-
-	padding-left: 7px;
+	display: inline-block;
+	padding-left: 0;
 }
 #menu ul li {
-
 	display: inline-block;
 }
 
-#menu ul li:after {
-
+#menuList li:after {
 	content: "|";
 	color: #218B9E;
 }
@@ -72,7 +70,6 @@ body {
 
 
 #menu ul li a {
-
 	text-decoration: none;
 	padding-right: 5px;
 	padding-left: 5px;
@@ -88,6 +85,32 @@ body {
 
 	color: #218B9E;
 	background-color: #C4C4C4;
+}
+
+/** Login form **/
+.login {
+	display: inline-block;
+	width: 64%;
+	text-align: right;
+}
+
+#loginMenu {
+	display: inline-block;
+
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	-webkit-padding-start: 0px;
+	padding-left: 0;
+}
+
+.loginHelp {
+	font-size: 12px;
+	/* center this */
+	min-height: 1.5em;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 /****************************************************************************************************************************************/
