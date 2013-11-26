@@ -6,7 +6,7 @@ $value = NULL;
 if ( isset($_GET['SupplierID']) && !empty($_GET['SupplierID']) ) {
     $value = $_GET['SupplierID'];
 } else {
-    $error = new InvalidSearch(700, "Expected SupplierID parameter");
+    $error = new Error(700, "Expected SupplierID parameter");
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 
@@ -21,7 +21,7 @@ $search = new EqualSearch($table, $field, $values, $rows, $joins);
 $result = $search->getResults();
 
 if (!$result) {
-    $error = new InvalidSearch(404, "Supplier not found");
+    $error = new Error(404, "Supplier not found");
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 
