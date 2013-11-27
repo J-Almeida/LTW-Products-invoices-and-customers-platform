@@ -2,6 +2,7 @@
 
 include 'update.php';
 include 'error.php';
+include 'utilities.php';
 
 $jsonInvoice = NULL;
 // TODO switch to $_POST
@@ -18,3 +19,12 @@ $table = 'Invoice';
 $field = 'InvoiceNo';
 $value = $invoiceInfo['invoiceNo'];
 $update = new Update($table, $invoiceInfo, $field, $value);
+
+// call getInvoice to return the updated contents
+$invoiceUrl = getCurrentPageUrl();
+$invoiceUrl = substr($invoiceUrl, 0, strpos($invoiceUrl, 'updateInvoice'));
+$invoiceUrl .= 'getInvoice.php?InvoiceNo=';
+$invoiceUrl .= urlencode($value);
+
+$invoiceUpdated = file_get_contents($invoiceUrl);
+echo $invoiceUpdated;
