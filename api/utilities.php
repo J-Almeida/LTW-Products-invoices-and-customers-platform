@@ -64,3 +64,16 @@ function setValuesAsArray($newValue, $values, &$array) {
     }
     $array[$newValue] = $attributesArray;
 }
+
+function itemExists($table, $itemValue, $itemType) {
+   $db = new PDO("sqlite:../database.db");
+   $query = $db->query("SELECT * FROM $table WHERE $itemType = '$itemValue'");
+   $query->setFetchMode(PDO::FETCH_ASSOC);
+   $result = $query->fetch();
+   if($result[$itemType]) {
+     return true;
+   } 
+   else {
+     return false;
+   }
+}

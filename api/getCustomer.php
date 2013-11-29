@@ -10,7 +10,7 @@ if ( isset($_GET['CustomerID']) && !empty($_GET['CustomerID']) ) {
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 
-// Fetch the invoice we are looking for
+// Fetch the customer we are looking for
 $table = 'Customer';
 $field = 'CustomerID';
 $values = array($value);

@@ -23,14 +23,23 @@
         </ul>
 
         <div class="login">
-            <form method="post" action="index.html">
-                <ul id="loginMenu">
-                    <li><input type="text" name="login" value="" placeholder="Username or Email"></li>
-                    <li><input type="password" name="password" value="" placeholder="Password"></li>
-                    <li class="submit"><input type="submit" name="commit" value="Login"></li>
-                    <li class="loginHelp"> <a href="index.html">Forgot password?</a></li>
-                <ul>
-            </form>
+            <?php
+            $sessionEmpty = empty($_SESSION["username"]);
+                if($sessionEmpty) {
+                    echo '<form method="post" action="api/login.php">';
+                        echo '<ul id="loginMenu">';
+                            echo '<li><input type="text" name="login" value="" placeholder="Username or Email"></li>';
+                            echo '<li><input type="password" name="password" value="" placeholder="Password"></li>';
+                            echo '<li class="submit"><input type="submit" name="commit" value="Login"></li>';
+                            echo '<li class="loginHelp"> <a href="index.html">Forgot password?</a></li>';
+                        echo '</ul>';
+                    echo '</form>';
+                }
+                else {
+                    echo 'Welcome back, <strong>' . $_SESSION["username"] . '</strong>!';
+                    echo ' <a href="api/logout.php">Logout</a>';
+                }
+            ?>
         </div>
 </div>
 

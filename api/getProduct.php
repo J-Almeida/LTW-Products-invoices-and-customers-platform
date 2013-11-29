@@ -10,7 +10,7 @@ if ( isset($_GET['ProductCode']) && !empty($_GET['ProductCode']) ) {
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 
-// Fetch the invoice we are looking for
+// Fetch the product we are looking for
 $table = 'Product';
 $field = 'productCode';
 $values = array($value);

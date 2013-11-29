@@ -10,7 +10,7 @@ if ( isset($_GET['SupplierID']) && !empty($_GET['SupplierID']) ) {
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 
-// Fetch the invoice we are looking for
+// Fetch the supplier we are looking for
 $table = 'Supplier';
 $field = 'SupplierID';
 $values = array($value);
