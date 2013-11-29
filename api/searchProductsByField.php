@@ -10,6 +10,10 @@ $parameters['joins'] = array();
 
 $result = executeSearch($parameters);
 
+foreach($result as &$product) {
+    roundProductTotals($product);
+}
+
 if (!$result)
     echo '[]';
 else

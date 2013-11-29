@@ -33,7 +33,7 @@ CREATE TABLE Supplier (
 
 CREATE TABLE Product (
 	productId INTEGER PRIMARY KEY AUTOINCREMENT,
-	productCode TEXT,
+	productCode TEXT UNIQUE,
 	productDescription TEXT NOT NULL,
 	unitPrice REAL NOT NULL,
 	unitOfMeasure TEXT NOT NULL
@@ -125,9 +125,9 @@ INSERT INTO User(username, name, userPassword, userEmail, userPermissionId) VALU
 
 
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-            VALUES(125, "Carimbos MIEIC", 90.0, "Un");
+            VALUES(125, "Carimbos MIEIC", 90.0123, "Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-            VALUES(126, "Camisola FEUP", 450.0, "Un");
+            VALUES(126, "Camisola FEUP", 450.055, "Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
 			VALUES (110,"Caderno Capa Preta",9.0,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)

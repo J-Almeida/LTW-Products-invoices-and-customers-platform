@@ -27,6 +27,8 @@ if (!$invoice) {
 
 $invoice = $invoice[0];
 
+roundDocumentTotals($invoice);
+
 // Fetch the invoice lines associated with the invoice found
 $table = 'InvoiceLine';
 $field = 'invoiceId';
@@ -37,6 +39,7 @@ $joins = array('InvoiceLine' => array('Tax', 'Product'));
 $invoiceLinesSearch = new EqualSearch($table, $field, $values, $rows, $joins);
 $invoiceLines = $invoiceLinesSearch->getResults();
 foreach($invoiceLines as &$invoiceLine){
+    roundLineTotals($invoiceLine);
     setValuesAsArray('tax', array('taxType', 'taxPercentage'), $invoiceLine);
 }
 

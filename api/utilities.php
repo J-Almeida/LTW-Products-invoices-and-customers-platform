@@ -89,3 +89,22 @@ function getCurrentPageUrl() {
     }
     return $pageURL;
 }
+
+function roundMoneyAmount(&$amount) {
+    $amount = round($amount, 2, PHP_ROUND_HALF_UP);
+}
+
+function roundDocumentTotals(&$invoice) {
+    roundMoneyAmount($invoice['taxPayable']);
+    roundMoneyAmount($invoice['netTotal']);
+    roundMoneyAmount($invoice['grossTotal']);
+}
+
+function roundLineTotals(&$line) {
+    roundMoneyAmount($line['unitPrice']);
+    roundMoneyAmount($line['creditAmount']);
+}
+
+function roundProductTotals(&$product) {
+    roundMoneyAmount($product['unitPrice']);
+}

@@ -27,4 +27,6 @@ if (!$result) {
 
 $result = $result[0];
 
+roundProductTotals($result);
+
 echo json_encode($result, JSON_NUMERIC_CHECK);
