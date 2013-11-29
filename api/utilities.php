@@ -76,6 +76,8 @@ function itemExists($table, $itemValue, $itemType) {
    else {
      return false;
    }
+}
+
 function getCurrentPageUrl() {
     $pageURL = 'http';
     if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}

@@ -16,7 +16,7 @@
 
     <div id="menu">
         <ul id="menuList">
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.php">Home</a></li>
             <li><a href="invoices.php">Invoices</a></li>
             <li><a href="customers.php">Customers</a></li>
             <li><a href="products.php">Products</a></li>
