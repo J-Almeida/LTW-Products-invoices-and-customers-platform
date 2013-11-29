@@ -6,7 +6,7 @@ $value = NULL;
 if ( isset($_GET['CustomerID']) && !empty($_GET['CustomerID']) ) {
     $value = $_GET['CustomerID'];
 } else {
-    $error = new InvalidSearch(700, "Expected CustomerID parameter");
+    $error = new Error(700, "Expected CustomerID parameter");
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 
@@ -21,7 +21,7 @@ $search = new EqualSearch($table, $field, $values, $rows, $joins);
 $result = $search->getResults();
 
 if (!$result) {
-    $error = new InvalidSearch(404, "Customer not found");
+    $error = new Error(404, "Customer not found");
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 

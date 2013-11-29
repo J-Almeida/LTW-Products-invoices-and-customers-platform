@@ -5,7 +5,7 @@ function getSearchParametersFromURL() {
     if ( isset($_GET['field']) && !empty($_GET['field']) ) {
         $field = $_GET['field'];
     } else {
-        $error = new InvalidSearch(700, 'Missing \'field\' field');
+        $error = new Error(700, 'Missing \'field\' field');
         die( json_encode($error->getInfo()) );
     }
 
@@ -18,7 +18,7 @@ function getSearchParametersFromURL() {
     if ( isset($_GET['op']) && !empty($_GET['op']) ) {
         $operation = $_GET['op'];
     } else {
-        $error = new InvalidSearch(700, 'Missing \'op\' field');
+        $error = new Error(700, 'Missing \'op\' field');
         die( json_encode($error->getInfo()) );
     }
 
@@ -40,12 +40,12 @@ function executeSearch($parameters) {
         $result = $search->getResults();
         return $result;
     } catch (ReflectionException $exception) {
-        $error = new InvalidSearch(700, 'Invalid \'op\' field');
+        $error = new Error(700, 'Invalid \'op\' field');
         die( json_encode($error->getInfo()) );
-    } catch (InvalidSearch $invalid) {
+    } catch (Error $invalid) {
         die( json_encode($invalid->getInfo()) );
     } catch (Exception $sqlError) {
-        $error = new InvalidSearch($sqlError->getCode(), $sqlError->getMessage());
+        $error = new Error($sqlError->getCode(), $sqlError->getMessage());
         die ( json_encode($error->getInfo()) );
     }
 
@@ -76,4 +76,14 @@ function itemExists($table, $itemValue, $itemType) {
    else {
      return false;
    }
+function getCurrentPageUrl() {
+    $pageURL = 'http';
+    if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+    $pageURL .= "://";
+    if ($_SERVER["SERVER_PORT"] != "80") {
+        $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+    } else {
+        $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+    }
+    return $pageURL;
 }

@@ -1,19 +1,6 @@
 <?php
 
-class InvalidSearch extends Exception {
-    private $info;
-
-    public function __construct($errorCode, $reason) {
-        $errorInfo = array();
-        $errorInfo['code'] = $errorCode;
-        $errorInfo['reason'] = $reason;
-        $this->info = array('error' => $errorInfo);
-    }
-
-    public function getInfo() {
-        return $this->info;
-    }
-}
+include "error.php";
 
 class Search {
     protected $table;
@@ -69,7 +56,7 @@ class Search {
 class RangeSearch extends Search {
     public function __construct($table, $field, $values, $rows, $tableJoins = array()) {
         if ( count($values) != 2 )
-            throw new InvalidSearch(700, "Expected only 2 values");
+            throw new Error(700, "Expected only 2 values");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
         $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field BETWEEN '". $this->values[0] . "' AND '" . $this->values[1] . "'";
     }
@@ -78,7 +65,7 @@ class RangeSearch extends Search {
 class EqualSearch extends Search {
     public function __construct($table, $field, $values, $rows, $tableJoins = array()) {
         if ( count($values) != 1 )
-            throw new InvalidSearch(700, "Expected only 1 value");
+            throw new Error(700, "Expected only 1 value");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
         $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field = '" . $this->values[0] . "'";
     }
@@ -87,7 +74,7 @@ class EqualSearch extends Search {
 class ContainsSearch extends Search {
     public function __construct($table, $field, $values, $rows, $tableJoins = array()) {
         if ( count($values) != 1 )
-            throw new InvalidSearch(700, "Expected only 1 value");
+            throw new Error(700, "Expected only 1 value");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
         $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field LIKE ('%" . $this->values[0] ."%')";
     }
@@ -96,7 +83,7 @@ class ContainsSearch extends Search {
 class MinSearch extends Search {
     public function __construct($table, $field, $values, $rows, $tableJoins = array()) {
         if ( count($values) != 0 )
-            throw new InvalidSearch(700, "Expected no values");
+            throw new Error(700, "Expected no values");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
         $this->sql = "SELECT $this->rows from $this->table $this->joins WHERE $this->field = (SELECT min($this->field) FROM $this->table $this->joins)";
     }
@@ -105,7 +92,7 @@ class MinSearch extends Search {
 class MaxSearch extends Search {
     public function __construct($table, $field, $values, $rows, $tableJoins = array()) {
         if ( count($values) != 0 )
-            throw new InvalidSearch(700, "Expected no values");
+            throw new Error(700, "Expected no values");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
         $this->sql = "SELECT $this->rows from $this->table $this->joins WHERE $this->field = (SELECT max($this->field) FROM $this->table $this->joins)";
     }
@@ -114,7 +101,7 @@ class MaxSearch extends Search {
 class ListAllSearch extends Search {
     public function __construct($table, $field, $values, $rows, $tableJoins = array()) {
         if ( count($values) != 0 )
-            throw new InvalidSearch(700, "Expected no values");
+            throw new Error(700, "Expected no values");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
         $this->sql = "SELECT $this->rows from $this->table $this->joins";
     }

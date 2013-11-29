@@ -6,7 +6,7 @@ $value = NULL;
 if ( isset($_GET['InvoiceNo']) && !empty($_GET['InvoiceNo']) ) {
     $value = $_GET['InvoiceNo'];
 } else {
-    $error = new InvalidSearch(700, "Expected InvoiceNo parameter");
+    $error = new Error(700, "Expected InvoiceNo parameter");
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 
@@ -21,7 +21,7 @@ $invoiceSearch = new EqualSearch($table, $field, $values, $rows, $joins);
 $invoice = $invoiceSearch->getResults();
 
 if (!$invoice) {
-    $error = new InvalidSearch(404, "Invoice not found");
+    $error = new Error(404, "Invoice not found");
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 
