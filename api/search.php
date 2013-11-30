@@ -1,20 +1,14 @@
 <?php
 
-include_once "error.php";
+include_once 'error.php';
+include_once 'query.php';
 
-class Search {
+class Search extends Query {
     protected $table;
     protected $field;
     protected $values;
     protected $joins;
     protected $rows;
-    protected $db;
-    protected $sql;
-
-    public function getResults() {
-        $query = $this->db->query($this->sql);
-        return $query->fetchAll(PDO::FETCH_ASSOC);
-    }
 
     protected function initialize($table, $field, $values, $rows, $tableJoins) {
         $this->table = $table;

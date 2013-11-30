@@ -1,17 +1,12 @@
 <?php
 
-class Update {
+include_once 'query.php';
+
+class Update extends Query {
     protected $table;
     protected $updatedInfo;
     protected $field;
     protected $value;
-    protected $db;
-    protected $sql;
-
-    public function executeQuery() {
-        $query = $this->db->prepare($this->sql);
-        $query->execute();
-    }
 
     public function setUpdatedInfo($updatedInfoArray) {
         $this->updatedInfo = "";

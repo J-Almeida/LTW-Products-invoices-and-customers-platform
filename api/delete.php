@@ -1,17 +1,11 @@
 <?php
 
 include_once 'error.php';
+include_once 'query.php';
 
-class Delete {
+class Delete extends Query {
     protected $table;
     protected $fieldsAndValues;
-    protected $db;
-    protected $sql;
-
-    public function executeQuery() {
-        $query = $this->db->prepare($this->sql);
-        $query->execute();
-    }
 
     public function setFieldsAndValues($fieldsAndValues) {
         $this->fieldsAndValues = "";

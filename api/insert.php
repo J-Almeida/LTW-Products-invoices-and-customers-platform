@@ -1,16 +1,11 @@
 <?php
 
-class Insert {
+include_once 'query.php';
+
+class Insert extends Query {
     protected $table;
     protected $fields;
     protected $values;
-    protected $db;
-    protected $sql;
-
-    public function executeQuery() {
-        $query = $this->db->prepare($this->sql);
-        $query->execute();
-    }
 
     public function setFieldsAndValues($fieldsAndValues) {
         $this->fields = '(';

@@ -21,6 +21,8 @@ $table = 'Invoice';
 $field = 'InvoiceNo';
 $invoiceNo = $invoiceInfo['invoiceNo'];
 
+// TODO select only the necessary fields from the json, return error when important fields are missing
+
 if ($invoiceNo == NULL) {
     // create a new invoice with the last invoiceNo + 1
     $invoiceNo = getLastInvoiceNoPlusOne();
