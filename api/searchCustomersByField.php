@@ -1,6 +1,6 @@
 <?php
-include 'utilities.php';
-include 'search.php';
+include_once 'utilities.php';
+include_once 'search.php';
 
 $parameters = getSearchParametersFromURL();
 

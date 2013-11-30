@@ -1,6 +1,6 @@
 <?php
-include 'utilities.php';
-include 'search.php';
+include_once 'utilities.php';
+include_once 'search.php';
 
 $value = NULL;
 if ( isset($_GET['CustomerID']) && !empty($_GET['CustomerID']) ) {

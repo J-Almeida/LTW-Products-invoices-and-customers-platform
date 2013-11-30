@@ -1,6 +1,6 @@
 <?php
 
-include "searches.php";
+include_once "searches.php";
 
 $fields = array(
     'invoiceNo' => 'Invoice Number',

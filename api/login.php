@@ -1,5 +1,6 @@
 <?php
-include 'utilities.php';
+
+include_once 'utilities.php';
 
 function checkPassword($login, $password) {
 	$db = new PDO("sqlite:../database.db");

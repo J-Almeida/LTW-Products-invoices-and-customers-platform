@@ -1,5 +1,7 @@
 <?php
 
+include_once 'search.php';
+
 function getSearchParametersFromURL() {
     $field = NULL;
     if ( isset($_GET['field']) && !empty($_GET['field']) ) {
@@ -107,4 +109,56 @@ function roundLineTotals(&$line) {
 
 function roundProductTotals(&$product) {
     roundMoneyAmount($product['unitPrice']);
+}
+
+function getInvoiceId($invoiceNo) {
+    $table = 'Invoice';
+    $field = 'invoiceNo';
+    $values = array($invoiceNo);
+    $rows = array('invoiceId');
+    $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
+    return $invoiceSearch->getResults()[0]['invoiceId'];
+}
+
+function getProductId($productCode) {
+    $table = 'Product';
+    $field = 'productCode';
+    $values = array($productCode);
+    $rows = array('productId');
+    $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
+    return $invoiceSearch->getResults()[0]['productId'];
+}
+
+function getTaxId($taxType) {
+    $table = 'Tax';
+    $field = 'taxType';
+    $values = array($taxType);
+    $rows = array('taxId');
+    $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
+    return $invoiceSearch->getResults()[0]['taxId'];
+}
+
+function getInvoiceUrl($invoiceNo) {
+    $invoiceUrl = getCurrentPageUrl();
+    $invoiceUrl = substr($invoiceUrl, 0, strpos($invoiceUrl, 'api/'));
+    $invoiceUrl .= '/api/getInvoice.php?InvoiceNo=';
+    $invoiceUrl .= urlencode($invoiceNo);
+    return $invoiceUrl;
+}
+
+function http_post($url, $data, $headers=null) {
+
+    $data = http_build_query($data);
+    $opts = array('http' => array('method' => 'POST', 'content' => $data));
+
+    if($headers) {
+        $opts['http']['header'] = $headers;
+    }
+    $st = stream_context_create($opts);
+    $fp = fopen($url, 'rb', false, $st);
+
+    if(!$fp) {
+        return false;
+    }
+    return stream_get_contents($fp);
 }
