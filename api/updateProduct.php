@@ -6,9 +6,8 @@ include_once 'update.php';
 include_once 'insert.php';
 
 $jsonProduct = NULL;
-// TODO switch to $_POST
-if ( isset($_GET['product']) && !empty($_GET['product']) ) {
-    $jsonProduct = $_GET['product'];
+if ( isset($_POST['product']) && !empty($_POST['product']) ) {
+    $jsonProduct = $_POST['product'];
 } else {
     $error = new Error(700, 'Missing \'product\' field');
     die( json_encode($error->getInfo()) );
