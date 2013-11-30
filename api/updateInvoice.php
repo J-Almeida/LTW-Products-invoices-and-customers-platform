@@ -17,11 +17,11 @@ if ( isset($_GET['invoice']) && !empty($_GET['invoice']) ) {
 
 $invoiceInfo = json_decode($jsonInvoice, true);
 
+// TODO select only the necessary fields from the json, return error when important fields are missing
+
 $table = 'Invoice';
 $field = 'InvoiceNo';
 $invoiceNo = $invoiceInfo['invoiceNo'];
-
-// TODO select only the necessary fields from the json, return error when important fields are missing
 
 if ($invoiceNo == NULL) {
     // create a new invoice with the last invoiceNo + 1
@@ -34,7 +34,7 @@ if ($invoiceNo == NULL) {
     die($response);
 }
 
-$invoiceId = getInvoiceId($invoiceNo);
+$invoiceId = getId('Invoice', 'invoiceNo', $invoiceNo);
 $invoiceLines = $invoiceInfo['Line'];
 
 // ignore and reset document totals and lines
@@ -54,15 +54,15 @@ foreach($invoiceLines as $line) {
     // INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
     $fields = array(
         'invoiceId' => $invoiceId,
-        'productId' => getProductId($line['productCode']),
+        'productId' => getId('Product', 'productCode' ,$line['productCode']),
         'quantity'  => $line['quantity'],
-        'taxId'     => getTaxId($line['tax']['taxType'])
+        'taxId'     => getId('Tax', 'taxType', $line['tax']['taxType'])
     );
     $insertedLines = new Insert('InvoiceLine', $fields);
 }
 
 // call getInvoice to return the updated contents
-$invoiceUrl = getInvoiceUrl($invoiceNo);
+$invoiceUrl = getAPIUrl('Invoice', 'InvoiceNo', $invoiceNo);
 $invoiceUpdated = file_get_contents($invoiceUrl);
 echo $invoiceUpdated;
 

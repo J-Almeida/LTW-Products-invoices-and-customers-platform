@@ -111,39 +111,20 @@ function roundProductTotals(&$product) {
     roundMoneyAmount($product['unitPrice']);
 }
 
-function getInvoiceId($invoiceNo) {
-    $table = 'Invoice';
-    $field = 'invoiceNo';
-    $values = array($invoiceNo);
-    $rows = array('invoiceId');
+function getId($table, $field, $value) {
+    $table = lcfirst($table);
+    $values = array($value);
+    $rows = array($table.'Id');
     $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
-    return $invoiceSearch->getResults()[0]['invoiceId'];
+    return $invoiceSearch->getResults()[0][$table.'Id'];
 }
 
-function getProductId($productCode) {
-    $table = 'Product';
-    $field = 'productCode';
-    $values = array($productCode);
-    $rows = array('productId');
-    $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
-    return $invoiceSearch->getResults()[0]['productId'];
-}
-
-function getTaxId($taxType) {
-    $table = 'Tax';
-    $field = 'taxType';
-    $values = array($taxType);
-    $rows = array('taxId');
-    $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
-    return $invoiceSearch->getResults()[0]['taxId'];
-}
-
-function getInvoiceUrl($invoiceNo) {
-    $invoiceUrl = getCurrentPageUrl();
-    $invoiceUrl = substr($invoiceUrl, 0, strpos($invoiceUrl, 'api/'));
-    $invoiceUrl .= '/api/getInvoice.php?InvoiceNo=';
-    $invoiceUrl .= urlencode($invoiceNo);
-    return $invoiceUrl;
+function getAPIUrl($table, $field, $value) {
+    $url = getCurrentPageUrl();
+    $url = substr($url, 0, strpos($url, 'api/'));
+    $url .= "/api/get$table.php?$field=";
+    $url .= urlencode($value);
+    return $url;
 }
 
 function http_post($url, $data, $headers=null) {

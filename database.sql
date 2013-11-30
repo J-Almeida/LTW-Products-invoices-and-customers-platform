@@ -33,7 +33,7 @@ CREATE TABLE Supplier (
 
 CREATE TABLE Product (
 	productId INTEGER PRIMARY KEY AUTOINCREMENT,
-	productCode TEXT UNIQUE,
+	productCode INTEGER UNIQUE,
 	productDescription TEXT NOT NULL,
 	unitPrice REAL NOT NULL,
 	unitOfMeasure TEXT NOT NULL
@@ -123,25 +123,8 @@ INSERT INTO User(username, name, userPassword, userEmail, userPermissionId) VALU
 INSERT INTO User(username, name, userPassword, userEmail, userPermissionId) VALUES ("HenriqueLuis", "Henrique Luis Pimenta", "1990motocicleta", "henri1990@gmail.com", 3);
 INSERT INTO User(username, name, userPassword, userEmail, userPermissionId) VALUES ("Mikki", "Maria Ines Sousa", "sousaesousa9090", "mari.ines@gmail.com", 3);
 
-
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-            VALUES(125, "Carimbos MIEIC", 90.0123, "Un");
-INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-            VALUES(126, "Camisola FEUP", 450.055, "Un");
-INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (110,"Caderno Capa Preta",9.0,"Un");
-INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (115,"Caderno Capa Branca",15.0,"Un");
-INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (116,"Caderno Capa Pokemon",5.0,"Un");
-INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (117,"Caneta BIC",1.0,"Un");
-INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (099,"Borracha Seriva - PVC-Free",0.7,"Un");
-INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (100,"Borracha Seriva - PVC Included",0.5,"Un");
-INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (101,"Lapis Staedtler HB 2",0.9,"Un");
+			VALUES (001,"Borracha Quenaoapaga",2.50,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
 			VALUES (048,"Caneta Reynolds - Azul",1.50,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
@@ -157,7 +140,23 @@ INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
 			VALUES (054,"Caneta Reynolds - Amarela",1.52,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
-			VALUES (001,"Borracha Quenaoapaga",2.50,"Un");
+			VALUES (099,"Borracha Seriva - PVC-Free",0.7,"Un");
+INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
+			VALUES (100,"Borracha Seriva - PVC Included",0.5,"Un");
+INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
+			VALUES (110,"Caderno Capa Preta",9.0,"Un");
+INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
+			VALUES (115,"Caderno Capa Branca",15.0,"Un");
+INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
+			VALUES (116,"Caderno Capa Pokemon",5.0,"Un");
+INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
+			VALUES (117,"Caneta BIC",1.0,"Un");
+INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
+			VALUES (101,"Lapis Staedtler HB 2",0.9,"Un");
+INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
+      VALUES (125, "Carimbos MIEIC", 90.0123, "Un");
+INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
+      VALUES (126, "Camisola FEUP", 450.055, "Un");
 INSERT INTO Product(productCode,productDescription,unitPrice,unitOfMeasure)
 			VALUES (335,"Camisola FEUP Autografada",300.50,"Un");
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
