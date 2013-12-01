@@ -69,25 +69,49 @@
                     <tr>
                         <th>[code] Product</th>
                         <th>Quantity</th>
-                        <th>Unit</th>
                         <th>Unit price</th>
                         <th>Credit amount</th>
                         <th>Tax type</th>
-                        <th>Tax Percentage</th>
                     </tr>
                     </thead>
                     <tbody id="invoiceLines">
-                    <tr>
-                        <th>
-                        <select name="line[0].productCode">
-                            <option value="2">2</option>
-                        </select>
-                        </th>
-                    </tr>
-                    <tr>
+                    <tr id="1">
                         <th>
                             <select name="line[1].productCode">
-                                <option value="3">3</option>
+                                <?php
+                                $searchUrl = searchAPIUrl('Product', 'listAll', 'productCode', 'invoice_form');
+                                $products = json_decode(file_get_contents($searchUrl), true);
+                                foreach($products as $product){
+                                    echo '<option value='.$product['productCode'].'>';
+                                    echo '['. $product['productCode'] . '] ' . $product['productDescription'];
+                                    echo '</option>';
+                                }
+                                ?>
+                            </select>
+                        </th>
+                        <th>
+                            <input type="number" name="line[1].quantity" value="1">
+                        </th>
+                        <th>
+                            <input type="number" name="line[1].unitPrice" value="1" readonly>
+                        </th>
+                        <th>
+                            <input type="number" name="line[1].creditAmount" value="1" readonly>
+                        </th>
+                        <th>
+                            <select name="line[1].taxId">
+                                <?php
+                                $parameters['operation'] = 'listAll';
+                                $parameters['field'] = 'taxId';
+                                $parameters['table'] = 'Tax';
+                                $parameters['rows'] = array('taxId', 'taxType', 'taxPercentage');
+                                $taxes = executeSearch($parameters);
+                                foreach($taxes as $tax){
+                                    echo '<option value='.$tax['taxId'].'>';
+                                    echo $tax['taxType'] . ' - ' . $tax['taxPercentage'] . '%';
+                                    echo '</option>';
+                                }
+                                ?>
                             </select>
                         </th>
                     </tr>

@@ -141,11 +141,12 @@ function parseLines(invoiceJson) {
     var lineArray = new Array();
     for(var field in invoiceJson) {
         if (field.indexOf("line") > -1) {
+            var lineNumber = parseInt(field.match(/\d+/)) - 1;
             var lineField = field.split('.')[1];
-            var line = new Object();
-            line[lineField] = invoiceJson[field];
+            if (!lineArray[lineNumber])
+                lineArray[lineNumber] = new Object();
+            lineArray[lineNumber][lineField] = invoiceJson[field];
             delete invoiceJson[field];
-            lineArray.push(line);
         }
     }
     invoiceJson['line'] = lineArray;
