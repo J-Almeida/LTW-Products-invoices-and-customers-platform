@@ -31,7 +31,7 @@
         <header id="customerHeader">
             <ul class="customerInfo">
                 <li>ID Number: <span id="customerID">
-                        <input id="customerIDInput" type="number" name="customerId">
+                        <input id="customerIDInput" type="number" name="customerId" readonly>
                 </span></li>
 
                 <li>Tax identification: <span id="customerTaxID">

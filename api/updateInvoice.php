@@ -34,11 +34,11 @@ if ($invoiceNo == NULL) {
 }
 
 $invoiceId = getId('Invoice', 'invoiceNo', $invoiceNo);
-$invoiceLines = $invoiceInfo['Line'];
+$invoiceLines = $invoiceInfo['line'];
 
 // ignore and reset document totals and lines
-unset($invoiceInfo['Line']);
-unset($invoiceInfo['DocumentTotals']);
+unset($invoiceInfo['line']);
+unset($invoiceInfo['documentTotals']);
 $invoiceInfo['taxPayable'] = 0;
 $invoiceInfo['netTotal'] = 0;
 $invoiceInfo['grossTotal'] = 0;
@@ -51,11 +51,16 @@ $deleteLines = new Delete('InvoiceLine', array('invoiceId' => $invoiceId));
 
 foreach($invoiceLines as $line) {
     // INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
+    if($line['taxId'])
+        $taxId = $line['taxId'];
+    else
+        $taxId = getId('Tax', 'taxType', $line['tax']['taxType']);
+
     $fields = array(
         'invoiceId' => $invoiceId,
         'productId' => getId('Product', 'productCode' ,$line['productCode']),
         'quantity'  => $line['quantity'],
-        'taxId'     => getId('Tax', 'taxType', $line['tax']['taxType'])
+        'taxId'     => $taxId
     );
     $insertedLines = new Insert('InvoiceLine', $fields);
 }
