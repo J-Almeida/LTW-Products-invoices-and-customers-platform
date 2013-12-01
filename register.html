@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice Database</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/ico" href="favicon.ico"/>
+</head>
+<body>
+
+    <div id="header">
+        <h1>New user</h1>
+        <h2>Registration</h2>
+    </div>
+
+    <div id="menu">
+        <ul id="menuList">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="invoices.php">Invoices</a></li>
+            <li><a href="customers.php">Customers</a></li>
+            <li><a href="products.php">Products</a></li>
+        </ul>
+
+        <div class="login">
+            <form method="post" action="api/login.php">
+                <ul id="loginMenu">
+                    <li><input type="text" name="login" value="" placeholder="Username or Email"></li>
+                    <li><input type="password" name="password" value="" placeholder="Password"></li>
+                    <li class="submit"><input type="submit" name="commit" value="Login"></li>
+                    <li class="loginHelp"> <a href="index.html">Forgot password?</a></li>
+                </ul>
+            </form>
+        </div>
+</div>
+
+<div id="content">
+    <div id="registerUser">
+        <form method="post" action="api/register.php">
+            <h1>Registration details</h1>
+                <div class="line"><label for="username">Username: </label><input type="text" name="username" id="username" required/></div>
+                <div class="line"><label for="password">Password: </label><input type="password" name="password" id="password" required/></div>
+                <div class="line"><label for="name">Name: </label><input type="text" name="name" id="name" required/></div>
+                <div class="line"><label for="email">Email: </label><input type="email" name="email" id="email" required/></div>
+                <div class="submit"><input type="submit" name="commit" value="Register"></div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
