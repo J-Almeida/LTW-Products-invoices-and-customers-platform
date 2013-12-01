@@ -65,7 +65,7 @@ CREATE TABLE Tax (
 	taxId INTEGER PRIMARY KEY AUTOINCREMENT,
 	taxType TEXT UNIQUE NOT NULL,
 	taxPercentage REAL NOT NULL,
-	description TEXT
+	taxDescription TEXT
 );
 
 CREATE TABLE Permission (
@@ -372,9 +372,9 @@ INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
             VALUES ("FT SEQ/44", "2013-11-30", 5, 1);
 
 
-INSERT INTO Tax(taxType, taxPercentage, description) VALUES ("IVA 1", 23.00, "Taxa Normal");
-INSERT INTO Tax(taxType, taxPercentage, description) VALUES ("IVA 2", 13.00, "Taxa Intermédia");
-INSERT INTO Tax(taxType, taxPercentage, description) VALUES ("IVA 3",  6.00, "Taxa Reduzida");
+INSERT INTO Tax(taxType, taxPercentage, taxDescription) VALUES ("IVA 1", 23.00, "Taxa Normal");
+INSERT INTO Tax(taxType, taxPercentage, taxDescription) VALUES ("IVA 2", 13.00, "Taxa Intermédia");
+INSERT INTO Tax(taxType, taxPercentage, taxDescription) VALUES ("IVA 3",  6.00, "Taxa Reduzida");
 
 
 INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
