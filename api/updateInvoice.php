@@ -7,9 +7,8 @@ include_once 'search.php';
 include_once 'insert.php';
 
 $jsonInvoice = NULL;
-// TODO switch to $_POST
-if ( isset($_GET['invoice']) && !empty($_GET['invoice']) ) {
-    $jsonInvoice = $_GET['invoice'];
+if ( isset($_POST['invoice']) && !empty($_POST['invoice']) ) {
+    $jsonInvoice = $_POST['invoice'];
 } else {
     $error = new Error(700, 'Missing \'invoice\' field');
     die( json_encode($error->getInfo()) );

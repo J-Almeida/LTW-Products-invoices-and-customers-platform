@@ -42,3 +42,8 @@ function displayCustomer(customerID) {
         $("#customer").fadeIn('slow', function() {});
     });
 }
+
+function setCustomerID() {
+    var customerID = getParameter(document.location.search).CustomerID;
+    $("#customerIDInput").val(customerID);
+}

@@ -11,7 +11,7 @@
     <script src="customer_detailed.js"></script>
 
 </head>
-<body onload="displayCustomer(getParameter(document.location.search).CustomerID)" >
+<body onload="displayCustomer(getParameter(document.location.search).CustomerID); setCustomerID()" >
 
     <div id="loadingCustomer">
         <span>Loading customer</span><br>
@@ -48,6 +48,10 @@
             </ul>
         </section>
 
+        <form id="edit" method="get" action="./customer_form.php">
+            <input id="customerIDInput" type="number" name="CustomerID" style="display: none;">
+            <input type="submit" value="Edit">
+        </form>
     </div>
 
 </body>

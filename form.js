@@ -32,6 +32,34 @@ function getProduct(productCode) {
     }
 }
 
+function getCustomer(customerID) {
+    $("#customer").hide();
+
+    $.ajax("./api/getCustomer.php?CustomerID=" + customerID, {
+        type: "GET",
+        data: "",
+        success: function(data)
+        {
+            populateForm(JSON.parse(data));
+        },
+        error: function(a, b, c)
+        {
+            console.log(a + ", " + b + ", " + c);
+        }
+    })
+
+    $("#loadingCustomer").fadeOut(400, function() {
+        $("#customer").fadeIn('slow', function() {});
+    });
+
+    if (customerID != '') {
+        $('#customerIDInput').prop('readonly', true);
+    }
+}
+
+String.prototype.firstLetterToLower = function() {
+    return this.charAt(0).toLowerCase() + this.slice(1);
+}
 
 function submitForm(objectName) {
 
@@ -40,6 +68,11 @@ function submitForm(objectName) {
     var information = objectName;
     information += "=";
     information += form;
+
+    var objectID = new Object();
+    objectID['customer'] = 'CustomerID';
+    objectID['product'] = 'ProductCode';
+    objectID['invoice'] = 'InvoiceNo';
 
     $.ajax($('form').attr('action'), {
         type: "POST",
@@ -50,7 +83,10 @@ function submitForm(objectName) {
             if (answer.error) {
                 alert('Code: ' + answer.error.code + "\n" + answer.error.reason);
             } else {
-                window.location = './product_detailed.html?ProductCode=' + productCode;
+                //window.location =
+                console.log(answer);
+                console.log(objectID[objectName].firstLetterToLower());
+                    alert('./' + objectName +'_detailed.html?' + objectID[objectName] + '=' + answer[objectID[objectName]]);
             }
         },
         error: function(a, b, c)

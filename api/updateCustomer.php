@@ -6,9 +6,8 @@ include_once 'update.php';
 include_once 'insert.php';
 
 $jsonCustomer = NULL;
-// TODO switch to $_POST
-if ( isset($_GET['customer']) && !empty($_GET['customer']) ) {
-    $jsonCustomer = $_GET['customer'];
+if ( isset($_POST['customer']) && !empty($_POST['customer']) ) {
+    $jsonCustomer = $_POST['customer'];
 } else {
     $error = new Error(700, 'Missing \'customer\' field');
     die( json_encode($error->getInfo()) );

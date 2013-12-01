@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/ico" href="favicon.ico"/>
 
-    <title>Product</title>
+    <title>Product Form</title>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="form.js"></script>
