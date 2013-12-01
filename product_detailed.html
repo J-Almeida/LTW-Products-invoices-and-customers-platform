@@ -11,7 +11,7 @@
     <script src="product_detailed.js"></script>
 
 </head>
-<body onload="displayProduct(getParameter(document.location.search).ProductCode)" >
+<body onload="displayProduct(getParameter(document.location.search).ProductCode); setProductCode()" >
 
     <div id="loadingProduct">
         <span>Loading product</span><br>
@@ -45,6 +45,11 @@
                 </li>
             </ul>
         </section>
+
+        <form id="edit" method="get" action="./product_form.php">
+            <input id="productCodeInput" type="number" name="ProductCode" style="display: none;">
+            <input type="submit" value="Edit">
+        </form>
     </div>
 
 </body>

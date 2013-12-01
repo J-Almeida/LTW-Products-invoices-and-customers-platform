@@ -41,3 +41,8 @@ function displayProduct(productCode) {
         $("#product").fadeIn('slow', function() {});
     });
 }
+
+function setProductCode() {
+    var productCode = getParameter(document.location.search).ProductCode;
+    $("#productCodeInput").val(productCode);
+}

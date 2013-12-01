@@ -9,9 +9,18 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="form.js"></script>
+    <script>
+        var productCode = "<?php echo ( isset( $_GET['ProductCode'] ) && $_GET['ProductCode'] != '') ? $_GET['ProductCode'] : '';?>";
+    </script>
 
 </head>
-<body>
+
+<body onload="getProduct(productCode)">
+
+<div id="loadingProduct">
+    <span>Loading product</span><br>
+    <img src='ajax-loader.gif' alt='loading' />
+</div>
 
 <div id="product">
     <form action="./api/updateProduct.php" method="POST" autocomplete="off">
@@ -22,7 +31,7 @@
         <header id="productHeader">
             <ul class="productInfo">
                 <li>Product code: <span id="productCode"></span>
-                    <input type="number" name="productCode" [[defaultProductCode]]>
+                    <input id="productCodeInput" type="number" name="productCode">
                 </li>
             </ul>
         </header>
@@ -47,7 +56,7 @@
         </section>
 
         <div id="submitButton">
-            <input type="button" value="Submit" onclick="submitForm('product'); return false;">
+            <input type="submit" value="Submit" onclick="submitForm('product'); return false;">
         </div>
     </form>
 </div>
