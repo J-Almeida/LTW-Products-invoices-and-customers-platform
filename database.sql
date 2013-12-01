@@ -80,9 +80,9 @@ CREATE TABLE User (
 	userId INTEGER PRIMARY KEY AUTOINCREMENT,
 	username TEXT UNIQUE NOT NULL,
 	name TEXT NOT NULL,
-	userPassword TEXT,
-	userEmail TEXT UNIQUE NOT NULL,
-	userPermissionId INTEGER REFERENCES Permission(permissionId) ON DELETE CASCADE
+	password TEXT,
+	email TEXT UNIQUE NOT NULL,
+	permissionId INTEGER REFERENCES Permission(permissionId) ON DELETE CASCADE
 );
 
 
@@ -116,13 +116,13 @@ INSERT INTO Permission(permissionType, permissionRead, permissionWrite, promote)
 INSERT INTO Permission(permissionType, permissionRead, permissionWrite, promote) VALUES ("editor", 1, 1, 0);
 INSERT INTO Permission(permissionType, permissionRead, permissionWrite, promote) VALUES ("reader", 1, 0, 0);
 
-INSERT INTO User(username, name, userPassword, userEmail, userPermissionId) VALUES ("MHawk", "Michael Hawk", "supercalifragilisticexpialidocious", "mhawk@hotmail.com", 1);
-INSERT INTO User(username, name, userPassword, userEmail, userPermissionId) VALUES ("Jakim", "Joaquim Esteves", "1234abcd", "jakim@ltw.pt", 1);
-INSERT INTO User(username, name, userPassword, userEmail, userPermissionId) VALUES ("AnaMaria12", "Ana Maria Santos", "abcd1234", "ana@ltw.pt", 2);
-INSERT INTO User(username, name, userPassword, userEmail, userPermissionId) VALUES ("Sususu", "Susana Isabel Barros", "12345678abcdefgh", "flores@ltw.pt", 2);
-INSERT INTO User(username, name, userPassword, userEmail, userPermissionId) VALUES ("LunaSol", "Luis Miguel", "sol974", "solluna@gmail.com", 3);
-INSERT INTO User(username, name, userPassword, userEmail, userPermissionId) VALUES ("HenriqueLuis", "Henrique Luis Pimenta", "1990motocicleta", "henri1990@gmail.com", 3);
-INSERT INTO User(username, name, userPassword, userEmail, userPermissionId) VALUES ("Mikki", "Maria Ines Sousa", "sousaesousa9090", "mari.ines@gmail.com", 3);
+INSERT INTO User(username, name, password, email, permissionId) VALUES ("MHawk", "Michael Hawk", "supercalifragilisticexpialidocious", "mhawk@hotmail.com", 1);
+INSERT INTO User(username, name, password, email, permissionId) VALUES ("Jakim", "Joaquim Esteves", "1234abcd", "jakim@ltw.pt", 1);
+INSERT INTO User(username, name, password, email, permissionId) VALUES ("AnaMaria12", "Ana Maria Santos", "abcd1234", "ana@ltw.pt", 2);
+INSERT INTO User(username, name, password, email, permissionId) VALUES ("Sususu", "Susana Isabel Barros", "12345678abcdefgh", "flores@ltw.pt", 2);
+INSERT INTO User(username, name, password, email, permissionId) VALUES ("LunaSol", "Luis Miguel", "sol974", "solluna@gmail.com", 3);
+INSERT INTO User(username, name, password, email, permissionId) VALUES ("HenriqueLuis", "Henrique Luis Pimenta", "1990motocicleta", "henri1990@gmail.com", 3);
+INSERT INTO User(username, name, password, email, permissionId) VALUES ("Mikki", "Maria Ines Sousa", "sousaesousa9090", "mari.ines@gmail.com", 3);
 
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
 			VALUES (001,"Borracha Quenaoapaga",2.50,"Un");

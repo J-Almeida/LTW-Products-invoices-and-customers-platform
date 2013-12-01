@@ -20,6 +20,7 @@
             <li><a href="invoices.php">Invoices</a></li>
             <li><a href="customers.php">Customers</a></li>
             <li><a href="products.php">Products</a></li>
+            <li><a href="users.php">Users</a></li>
         </ul>
 
         <div class="login">
