@@ -4,7 +4,7 @@ include_once 'utilities.php';
 
 function checkPassword($login, $password) {
 	$db = new PDO("sqlite:../database.db");
-	$query = $db->query("SELECT * FROM User WHERE (username = '$login' OR userEmail = '$login') AND userPassword = '$password'");
+	$query = $db->query("SELECT * FROM User WHERE (username = '$login' OR email = '$login') AND password = '$password'");
 	$query->setFetchMode(PDO::FETCH_ASSOC);
    	$result = $query->fetch();
 
@@ -16,7 +16,7 @@ function checkPassword($login, $password) {
 
 function getUsername($login) {
 	$db = new PDO("sqlite:../database.db");
-	$query = $db->query("SELECT username FROM User WHERE (username = '$login' OR userEmail = '$login')");
+	$query = $db->query("SELECT username FROM User WHERE (username = '$login' OR email = '$login')");
 	$query->setFetchMode(PDO::FETCH_ASSOC);
    	$result = $query->fetch();
 

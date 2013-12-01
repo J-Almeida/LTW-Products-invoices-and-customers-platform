@@ -90,13 +90,14 @@ body {
 /** Login form **/
 .login {
 	display: inline-block;
-	width: 64%;
+	width: 58%;
 	text-align: right;
 }
 
 #loginMenu {
 	display: inline-block;
 
+	margin:0;
 	-webkit-margin-before: 0;
 	-webkit-margin-after: 0;
 	-webkit-margin-start: 0px;

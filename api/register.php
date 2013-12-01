@@ -4,9 +4,9 @@
 	$fields = array(
         'username'         => $_POST["username"],
         'name'             => $_POST["name"],
-        'userPassword'     => $_POST["password"],
-        'userEmail'        => $_POST["email"],
-        'userPermissionId' => 3
+        'password'     => $_POST["password"],
+        'email'        => $_POST["email"],
+        'permissionId' => 3
     );
 
     $insertedLines = new Insert('User', $fields);
