@@ -16,8 +16,6 @@ class Search extends Query {
         $this->values = $values;
         $this->setRows($rows);
         $this->setJoins($tableJoins);
-        $this->db = new PDO("sqlite:../database.db");
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     // this will create the necessary table joins string to be in the sql query

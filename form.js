@@ -57,10 +57,6 @@ function getCustomer(customerID) {
     }
 }
 
-String.prototype.firstLetterToLower = function() {
-    return this.charAt(0).toLowerCase() + this.slice(1);
-}
-
 function submitForm(objectName) {
 
     var form = JSON.stringify(getFormData($('form')));
@@ -74,6 +70,11 @@ function submitForm(objectName) {
     objectID['product'] = 'ProductCode';
     objectID['invoice'] = 'InvoiceNo';
 
+    var objectFields = new Object();
+    objectFields['customer'] = 'customerId';
+    objectFields['product'] = 'productCode';
+    objectFields['invoice'] = 'invoiceNo';
+
     $.ajax($('form').attr('action'), {
         type: "POST",
         data: information,
@@ -83,10 +84,7 @@ function submitForm(objectName) {
             if (answer.error) {
                 alert('Code: ' + answer.error.code + "\n" + answer.error.reason);
             } else {
-                //window.location =
-                console.log(answer);
-                console.log(objectID[objectName].firstLetterToLower());
-                    alert('./' + objectName +'_detailed.html?' + objectID[objectName] + '=' + answer[objectID[objectName]]);
+                window.location = './' + objectName +'_detailed.html?' + objectID[objectName] + '=' + answer[objectFields[objectName]];
             }
         },
         error: function(a, b, c)

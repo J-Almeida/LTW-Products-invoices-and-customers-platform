@@ -23,8 +23,6 @@ class Insert extends Query {
     public function __construct($table, $fieldsAndValues) {
         $this->table = $table;
         $this->setFieldsAndValues($fieldsAndValues);
-        $this->db = new PDO("sqlite:../database.db");
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->sql = "INSERT INTO $this->table $this->fields VALUES $this->values";
 
         $this->executeQuery();

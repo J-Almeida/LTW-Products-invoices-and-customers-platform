@@ -18,8 +18,6 @@ class Delete extends Query {
     public function __construct($table, $fieldsAndValues) {
         $this->table = $table;
         $this->setFieldsAndValues($fieldsAndValues);
-        $this->db = new PDO("sqlite:../database.db");
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->sql = "DELETE FROM $this->table WHERE $this->fieldsAndValues";
 
         $this->executeQuery();

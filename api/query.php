@@ -6,6 +6,8 @@ class Query {
 
     public function executeQuery() {
         try {
+            $this->db = new PDO("sqlite:../database.db");
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query = $this->db->prepare($this->sql);
             return $query->execute();
         } catch (Exception $sqlError) {
@@ -15,6 +17,8 @@ class Query {
     }
 
     public function getResults() {
+        $this->db = new PDO("sqlite:../database.db");
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $query = $this->db->prepare($this->sql);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
