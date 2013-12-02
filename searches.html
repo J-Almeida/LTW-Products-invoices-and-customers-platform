@@ -18,6 +18,18 @@
          "companyName": "Company Name"};
          */
         var fieldNames = { {{tableFields}} };
+        var read = 0;
+        var write = 0;
+        var promote = 0;
+
+        $.get('api/getPermissions.php', function ( data ) {
+            if(data != "none") {
+                var permissions = JSON.parse(data);
+                read = permissions.read;
+                write = permissions.write;
+                promote = permissions.promote;
+            }
+        });
     </script>
 
 </head>
