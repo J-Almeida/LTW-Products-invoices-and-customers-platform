@@ -23,9 +23,9 @@ function drawCustomerStructure(customerData) {
 }
 
 function displayCustomer(customerID) {
-    $("#customer").hide();
 
     $.ajax("./api/getCustomer.php?CustomerID=" + customerID, {
+        async: false,
         type: "GET",
         data: "",
         success: function(data)

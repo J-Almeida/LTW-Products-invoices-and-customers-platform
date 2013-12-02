@@ -6,6 +6,11 @@ include_once 'delete.php';
 include_once 'search.php';
 include_once 'insert.php';
 
+if(!isset($_SESSION['username']) || !isset($_SESSION['permissions']) || $_SESSION['permissions']['permissionWrite'] != '1') {
+    $error = new Error(601, 'Permission Denied');
+    die( json_encode($error->getInfo()) );
+}
+
 $jsonInvoice = NULL;
 if ( isset($_POST['invoice']) && !empty($_POST['invoice']) ) {
     $jsonInvoice = $_POST['invoice'];

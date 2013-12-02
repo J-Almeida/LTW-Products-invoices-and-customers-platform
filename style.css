@@ -6,7 +6,7 @@ body {
 	margin: auto;
 }
 
-#loadingCustomer, #loadingProduct {
+#loadingCustomer, #loadingProduct, #loadingUser {
 	font-size: 14px;
 	margin-top: 40px;
 	text-align: center;
@@ -198,17 +198,17 @@ body {
 }
 
 /****************************************************************************************************************************************/
-/*												costumer_detailed, product_detailed														*/
+/*												costumer_detailed, product_detailed, user_detailed														*/
 /****************************************************************************************************************************************/
 
-#customer, #product {
+#customer, #product, #user {
 	border: 10px solid #fff;
 	box-shadow: 0 0 1px #888888;
 	padding: 10px;
 	margin: 0px;
 }
 
-#customer .customerTitle, #product .productTitle {
+#customer .customerTitle, #product .productTitle, #user .userTitle {
 	text-align: center;
 	font-size:  15px;
 	padding-bottom: 10px;
@@ -217,7 +217,7 @@ body {
 	padding-top: 10px;
 }
 
-.customerInfo, .productInfo {
+.customerInfo, .productInfo, .userInfo {
 	background-color: white;
 	padding-top: 15px;
 	overflow: hidden;
@@ -236,18 +236,18 @@ body {
 	border-radius: 10px;
 }
 
-.customerInfo li, .productInfo li {
+.customerInfo li, .productInfo li, .userInfo li {
 	font-weight: bold;
 	text-align: left;
 	clear: both;
 }
 
-.customerInfo span, .productInfo span {
+.customerInfo span, .productInfo span, .userInfo span {
 	font-weight: normal;
 	float: right;
 }
 
-.customerDetail, .productDetail {
+.customerDetail, .productDetail, .userDetail {
 	background-color: #FFF;
 	list-style: none;
 	text-align: left;
@@ -257,12 +257,12 @@ body {
 	padding-top: 25px;
 }
 
-.customerDetail li, .productDetail li {
+.customerDetail li, .productDetail li, .userDetail li {
 	font-weight: bold;
 	padding-bottom: 25px;
 }
 
-.customerDetail li p, .productDetail li p{
+.customerDetail li p, .productDetail li p, .userDetail li p{
 	font-size: 14px;
 	font-weight: normal;
 }

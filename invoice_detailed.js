@@ -122,7 +122,7 @@ $("#invoiceFooter").html(json.invoiceNo + "     |     " + json.invoiceDate);
 }
 
 function displayInvoice(invoiceNo) {
-    $("#invoice").hide();
+    
     $.ajax("./api/getInvoice.php?InvoiceNo=" + invoiceNo, {
         async: false,
         type: "GET",

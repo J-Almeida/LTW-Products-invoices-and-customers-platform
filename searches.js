@@ -44,7 +44,8 @@ function drawSearchResults(data, fieldNames) {
     var hyperlinks = {
         "invoiceNo" : "<a href='invoice_detailed.html?InvoiceNo=",
         "customerId": "<a href='customer_detailed.html?CustomerID=",
-        "productCode": "<a href='product_detailed.html?ProductCode="
+        "productCode": "<a href='product_detailed.html?ProductCode=",
+        "username": "<a href='user_detailed.html?Username="
     };
 
     tables += "<tbody>"

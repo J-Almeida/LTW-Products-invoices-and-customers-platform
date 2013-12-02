@@ -8,7 +8,6 @@ function populateForm(data) {
 }
 
 function getProduct(productCode) {
-    $("#product").hide();
 
     $.ajax("./api/getProduct.php?ProductCode=" + productCode, {
         type: "GET",
@@ -33,7 +32,6 @@ function getProduct(productCode) {
 }
 
 function getCustomer(customerID) {
-    $("#customer").hide();
 
     $.ajax("./api/getCustomer.php?CustomerID=" + customerID, {
         type: "GET",
@@ -57,6 +55,30 @@ function getCustomer(customerID) {
     }
 }
 
+function getUser(username) {
+
+    $.ajax("./api/getUser.php?Username=" + username, {
+        type: "GET",
+        data: "",
+        success: function(data)
+        {
+            populateForm(JSON.parse(data));
+        },
+        error: function(a, b, c)
+        {
+            console.log(a + ", " + b + ", " + c);
+        }
+    })
+
+    $("#loadingUser").fadeOut(400, function() {
+        $("#user").fadeIn('slow', function() {});
+    });
+
+    if (username != '') {
+        $('#usernameInput').prop('readonly', true);
+    }
+}
+
 function submitForm(objectName) {
 
     var form = JSON.stringify(getFormData($('form')));
@@ -69,11 +91,13 @@ function submitForm(objectName) {
     objectID['customer'] = 'CustomerID';
     objectID['product'] = 'ProductCode';
     objectID['invoice'] = 'InvoiceNo';
+    objectID['user'] = 'Username';
 
     var objectFields = new Object();
     objectFields['customer'] = 'customerId';
     objectFields['product'] = 'productCode';
     objectFields['invoice'] = 'invoiceNo';
+    objectFields['user'] = 'username';
 
     $.ajax($('form').attr('action'), {
         type: "POST",

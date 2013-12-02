@@ -22,7 +22,7 @@
     <img src='ajax-loader.gif' alt='loading' />
 </div>
 
-<div id="product">
+<div id="product" style="display: none; /*Jquery deals with showing the element after everything is loaded */">
     <form action="./api/updateProduct.php" method="POST" autocomplete="off">
         <div class="productTitle">
             <strong>Product Form</strong>

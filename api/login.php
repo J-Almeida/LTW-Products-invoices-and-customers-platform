@@ -24,6 +24,18 @@ function getUsername($login) {
    		return($result["username"]);
 }
 
+function getPermissions($user) {
+	$db = new PDO("sqlite:../database.db");
+	$query = $db->query("SELECT * FROM User, Permission WHERE (username = '$user' AND User.permissionId = Permission.permissionId)");
+	$query->setFetchMode(PDO::FETCH_ASSOC);
+   	$result = $query->fetch();
+
+   	if($result) {
+   		$permissions = array('read' => $result["permissionRead"], 'write' => $result["permissionWrite"], 'promote' => $result["promote"]);
+   		return $permissions;
+   	}
+}
+
 session_start();
 $login = $_POST["login"];
 $password = $_POST["password"];
@@ -33,7 +45,9 @@ echo "<br><br><br>";
 
 if(checkPassword($login, $password)) {
 	$user = getUsername($login);
+	$permissions = getPermissions($user);
 	$_SESSION['username'] = $user;
+	$_SESSION['permissions'] = $permissions;
 	echo "<p style='text-align: center;'>Welcome " . $user . "</p>";
 }
 else

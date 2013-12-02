@@ -22,9 +22,9 @@ function drawProductStructure(productData) {
 }
 
 function displayProduct(productCode) {
-    $("#product").hide();
 
     $.ajax("./api/getProduct.php?ProductCode=" + productCode, {
+        async: false,
         type: "GET",
         data: "",
         success: function(data)
