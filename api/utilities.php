@@ -127,6 +127,13 @@ function getAPIUrl($table, $field, $value) {
     return $url;
 }
 
+function searchAPIUrl($table, $op, $field, $trim = 'api/') {
+    $url = getCurrentPageUrl();
+    $url = substr($url, 0, strpos($url, $trim));
+    $url .= '/api/search' . $table . "sByField.php?op=$op&field=$field";
+    return $url;
+}
+
 function http_post($url, $data, $headers=null) {
 
     $data = http_build_query($data);

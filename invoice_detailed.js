@@ -56,8 +56,8 @@ function drawInvoiceStructure(invoiceData) {
     });
 
     var lines = "";
-    for(result in json.Line) {
-        var object = json.Line[result];
+    for(result in json.line) {
+        var object = json.line[result];
         var productData;
         lines += "<tr id=";
         lines += object.lineNumber;
@@ -102,8 +102,8 @@ function drawInvoiceStructure(invoiceData) {
 
 //Load onClick events for table rows
 var rowProd = {};
-for(result in json.Line) {
-    var object = json.Line[result];
+for(result in json.line) {
+    var object = json.line[result];
     var rowID = "#" + object.lineNumber;
     var pCode = object.productCode;
     rowProd[object.lineNumber] = pCode;
@@ -112,7 +112,7 @@ for(result in json.Line) {
     });
 }
 
-var documentTotals = json.DocumentTotals;
+var documentTotals = json.documentTotals;
 
 $("#taxPay").html("€ " + documentTotals.taxPayable);
 $("#netTotal").html("€ " + documentTotals.netTotal);

@@ -24,7 +24,6 @@ class Insert extends Query {
         $this->table = $table;
         $this->setFieldsAndValues($fieldsAndValues);
         $this->sql = "INSERT INTO $this->table $this->fields VALUES $this->values";
-
         $this->executeQuery();
     }
 } 

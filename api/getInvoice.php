@@ -44,8 +44,8 @@ foreach($invoiceLines as &$invoiceLine){
 }
 
 unset($invoice['invoiceId']);
-$invoice['Line'] = $invoiceLines;
+$invoice['line'] = $invoiceLines;
 
-setValuesAsArray('DocumentTotals', array('taxPayable', 'netTotal', 'grossTotal' ), $invoice);
+setValuesAsArray('documentTotals', array('taxPayable', 'netTotal', 'grossTotal' ), $invoice);
 
 echo json_encode($invoice, JSON_NUMERIC_CHECK);

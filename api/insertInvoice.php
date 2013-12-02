@@ -19,9 +19,9 @@ $invoiceInfo = json_decode($jsonInvoice, true);
 $table = 'Invoice';
 // INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
 //              VALUES ("FT SEQ/1", "2013-09-27", 1, 1);
-$invoiceLines = $invoiceInfo['Line'];
-unset($invoiceInfo['Line']);
-unset($invoiceInfo['DocumentTotals']);
+$invoiceLines = $invoiceInfo['line'];
+unset($invoiceInfo['line']);
+unset($invoiceInfo['documentTotals']);
 
 $insertedInvoice = new Insert('Invoice', $invoiceInfo);
 $invoiceId = getId('Invoice', 'invoiceNo', $invoiceInfo['invoiceNo']);
