@@ -26,7 +26,8 @@ class Query {
 
     private function getDatabase() {
         $db = 'sqlite:';
-        $db .= substr(__FILE__, 0, strpos(__FILE__, 'api/query.php'));
+        $db .= realpath(dirname(__FILE__));
+        $db = substr($db, 0, strpos($db, 'api'));
         $db .= 'database.db';
         return $db;
     }
