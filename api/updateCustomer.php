@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 include_once 'error.php';
 include_once 'utilities.php';
