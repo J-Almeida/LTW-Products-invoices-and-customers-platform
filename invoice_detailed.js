@@ -20,14 +20,6 @@ function drawCustomerDetails(customerId, content) {
     });
 }
 
-function drawSupplierDetails(supplierId, content) {
-    $.getJSON("./api/getSupplier.php?SupplierID=" + supplierId, function(data) {
-        var details = data.companyName + "    (T.ID  " + data.supplierTaxId +  ")<br>";
-        details += data.addressDetail + "<br>" + data.postalCode + " " + data.cityName + ", " + data.countryName;
-        content.html(details);
-    });
-}
-
 function getProductDetails(productCode) {
     $.ajaxSetup({
         async: false
@@ -49,7 +41,6 @@ function drawInvoiceStructure(invoiceData) {
     $("#invoiceNo").html(json.invoiceNo);
     $("#invoiceDate").html(json.invoiceDate);
     drawCustomerDetails(json.customerId, $("#invoiceToName"));
-    drawSupplierDetails(json.supplierId, $("#invoiceFromName"));
 
     $("#invoiceCustomer").click(function() {
         window.open("customer_detailed.html?CustomerID=" + json.customerId);
