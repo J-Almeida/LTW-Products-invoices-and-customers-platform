@@ -5,14 +5,13 @@ function hideRestrictedElements() {
         success: function(data)
         {
             if(data == "none") {
-                $("#edit").hide();
                 return;
             }
             
             var permissions = JSON.parse(data);
             
-            if(permissions.promote != 1) {
-                $("#edit").hide();
+            if(permissions.promote == 1) {
+                $("#edit").show();
             }
         },
         error: function(a, b, c)
