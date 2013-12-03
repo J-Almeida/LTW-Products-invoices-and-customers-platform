@@ -40,5 +40,8 @@ function getSearchPage($title, $fields) {
     $html = str_replace("{{tableFields}}", $tableFields, $html);
     $html = str_replace("{{searchFields}}", $searchFields, $html);
 
+    $object = substr($title, 0, -1); $object = lcfirst($object);
+    $html = str_replace("{{object}}", $object, $html);
+
     return $html;
 }

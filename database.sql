@@ -39,6 +39,7 @@ CREATE TABLE Invoice (
 	invoiceNo TEXT UNIQUE NOT NULL,
 	invoiceDate DATE NOT NULL,
 	customerId INTEGER REFERENCES Customer(customerId) ON DELETE CASCADE,
+	systemEntryDate TIMESTAMP,
 	/* Document Totals */
 	taxPayable REAL DEFAULT 0, /* Sum of taxes of all lines */ 
 	netTotal REAL DEFAULT 0,   /* Sum of price of all lines w/o tax */ 
@@ -79,6 +80,21 @@ CREATE TABLE User (
 	permissionId INTEGER REFERENCES Permission(permissionId) ON DELETE CASCADE
 );
 
+CREATE TRIGGER setSystemEntryDate
+AFTER INSERT ON Invoice
+FOR EACH ROW
+BEGIN
+	UPDATE Invoice SET systemEntryDate = strftime('%Y-%m-%dT%H:%M:%f')
+	WHERE Invoice.invoiceId = NEW.invoiceId; /* 2013-10-18T09:36:54.129+01:00 */
+END;
+
+CREATE TRIGGER updateSystemEntryDate
+AFTER UPDATE ON Invoice
+FOR EACH ROW
+BEGIN
+	UPDATE Invoice SET systemEntryDate = strftime('%Y-%m-%dT%H:%M:%f')
+	WHERE Invoice.invoiceId = OLD.invoiceId;
+END;
 
 CREATE TRIGGER updateInvoiceTotals
 AFTER INSERT ON InvoiceLine
