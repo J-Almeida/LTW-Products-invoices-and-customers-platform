@@ -5,6 +5,33 @@ function populateForm(data) {
             return key == this.name;
         }).val(value);
     });
+
+    var $selects = $('form select');
+    $.each(data, function(key, value) {
+        $selects.filter(function() {
+            return key == this.name;
+        }).val(value);
+    });
+
+    if ( data.invoiceNo ) {
+        loadInvoiceLines(data);
+    }
+}
+
+function loadInvoiceLines(invoiceData) {
+    var lines = invoiceData['line'];
+    for (var index = 1; index < lines.length; ++index) {
+        addRow();
+    }
+    var jsonLines = new Object();
+    for(var line in lines) {
+        var lineNumber = 'line[' + lines[line].lineNumber + ']';
+        for(var field in lines[line]) {
+            jsonLines[lineNumber + '.' + field] = lines[line][field];
+        }
+    }
+    populateForm(jsonLines);
+    updateAllLines();
 }
 
 function getProduct(productCode) {
@@ -139,7 +166,8 @@ function submitForm(objectName) {
     information += "=";
     information += form;
 
-    console.log(information);
+    // clear deleted invoice lines
+    information = information.replace(/,null/g, "");
 
     $.ajax($('form').attr('action'), {
         type: "POST",
@@ -158,7 +186,6 @@ function submitForm(objectName) {
             console.log(a + ", " + b + ", " + c);
         }
     })
-
 }
 
 function parseLines(invoiceJson) {

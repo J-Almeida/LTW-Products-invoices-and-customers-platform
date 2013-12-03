@@ -11,7 +11,7 @@
     <script src="invoice_detailed.js"></script>
 
 </head>
-<body onload="displayInvoice(getParameter(document.location.search).InvoiceNo)">
+<body onload="displayInvoice(getParameter(document.location.search).InvoiceNo); setInvoiceNo()">
 
     <div id="loadingInvoice">
         <span>Loading invoice</span><br>
@@ -94,6 +94,10 @@
 
         </section>
 
+        <form id="edit" method="get" action="./invoice_form.php">
+            <input id="invoiceNoInput" type="text" name="InvoiceNo" style="display: none;">
+            <input type="submit" value="Edit">
+        </form>
     </div>
 
     <br><br><div id="invoiceFooter"></div>

@@ -16,7 +16,7 @@
 
     <?php include_once('api/utilities.php'); ?>
 </head>
-<body onload="getInvoice(invoiceNo); updateLine($('.invoiceLine')); updateTotals();">
+<body onload="getInvoice(invoiceNo); updateAllLines(); updateTotals();">
 
 <div id="loadingInvoice">
     <span>Loading invoice</span><br>
@@ -126,7 +126,7 @@
                 </table>
             </div><br><br>
 
-            <button class="addRow" onclick="return false;">
+            <button class="addRow" onclick="addRow(); return false;">
                 Add line
             </button>
 

@@ -8,7 +8,7 @@ $(document).on('click', '.removeRow', function(){
     updateTotals();
 });
 
-$(document).on('click', '.addRow', function(){
+function addRow() {
     var newRow = $('.invoiceLines table:last tr:last').clone();
     var lastLineNumber = $('.invoiceLines table:last tr:last').attr('id');
     var newLineNumber = parseInt(lastLineNumber) + 1;
@@ -22,15 +22,21 @@ $(document).on('click', '.addRow', function(){
     $('.invoiceLines table').append('<tr class="invoiceLine" id=' + newLineNumber + '>' + newRow.html() + '</tr>');
     updateLine($('.invoiceLine:last'));
     updateTotals();
-});
+}
 
 function updateLine($element) {
     var line = $element.closest('.invoiceLine');
     var unitPrice = parseFloat(line.find('.productCode option:selected').data('unitprice'));
     var quantity = parseInt(line.find('.quantity').val());
-    line.find('.unitPrice').val(unitPrice);
-    line.find('.creditAmount').val(unitPrice * quantity);
+    line.find('.unitPrice').val(unitPrice.toFixed(2));
+    line.find('.creditAmount').val((unitPrice * quantity).toFixed(2));
     updateTotals();
+}
+
+function updateAllLines() {
+    $('.invoiceLine').each(function() {
+        updateLine($(this));
+    });
 }
 
 function updateTotals() {

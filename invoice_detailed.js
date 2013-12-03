@@ -62,7 +62,10 @@ function drawInvoiceStructure(invoiceData) {
         lines += "<tr id=";
         lines += object.lineNumber;
         lines += ">";
-        for(field in object) {
+        for(var field in object) {
+            if(field == 'taxId'){
+                continue;
+            }
             if(field != "lineNumber") {
                 if(field == "tax") {
                     for(taxField in object[field]) {
@@ -140,4 +143,9 @@ function displayInvoice(invoiceNo) {
     $("#loadingInvoice").fadeOut(400, function() {
         $("#invoice").fadeIn('slow', function() {});
     });
+}
+
+function setInvoiceNo() {
+    var invoiceNo = getParameter(document.location.search).InvoiceNo;
+    $("#invoiceNoInput").val(invoiceNo);
 }

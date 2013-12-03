@@ -33,7 +33,7 @@ roundDocumentTotals($invoice);
 $table = 'InvoiceLine';
 $field = 'invoiceId';
 $values = array($invoice['invoiceId']);
-$rows = array('lineNumber', 'productCode', 'quantity', 'unitPrice', 'creditAmount' , 'taxType', 'taxPercentage');
+$rows = array('lineNumber', 'productCode', 'quantity', 'unitPrice', 'creditAmount' , 'Tax.taxId AS taxId', 'taxType', 'taxPercentage');
 $joins = array('InvoiceLine' => array('Tax', 'Product'));
 
 $invoiceLinesSearch = new EqualSearch($table, $field, $values, $rows, $joins);
