@@ -6,7 +6,7 @@ $parameters = getSearchParametersFromURL();
 
 $parameters['table'] = 'Customer';
 $parameters['rows'] = array('customerId', 'customerTaxID', 'companyName', 'addressDetail', 'cityName', 'countryName', 'email');
-$parameters['joins'] = array();
+$parameters['joins'] = array('Customer' => 'Country');
 
 $result = executeSearch($parameters);
 

@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS Invoice;
 DROP TABLE IF EXISTS Customer;
 DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS Country;
 
 CREATE TABLE Customer (
 	customerId INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -14,9 +15,15 @@ CREATE TABLE Customer (
 	companyName TEXT NOT NULL,
 	addressDetail TEXT NOT NULL,
 	cityName TEXT NOT NULL,
-	countryName TEXT NOT NULL,
+	countryId INTEGER REFERENCES Country(countryId) ON DELETE CASCADE,
 	postalCode TEXT NOT NULL,
 	email TEXT
+);
+
+CREATE TABLE Country (
+	countryId INTEGER PRIMARY KEY AUTOINCREMENT,
+	countryName TEXT NOT NULL,
+	countryCode TEXT NOT NULL
 );
 
 CREATE TABLE Product (
@@ -206,37 +213,42 @@ INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
 			VALUES (366,"Esquadro Plastico Cristal Liderpapel - 60graus, 25cm",1.05,"Un");
 
+INSERT INTO Country(countryCode, countryName)
+			VALUES ("PT", "Portugal");
+INSERT INTO Country(countryCode, countryName)
+			VALUES ("GB", "Inglaterra");
+INSERT INTO Country(countryCode, countryName)
+			VALUES ("ES", "Espanha");
 
+INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+            VALUES (1234567, "Feup", "Rua Doutor Roberto Frias", "Porto", 1, "4200-465", "feup@fe.up.pt");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (1234567, "Feup", "Rua Doutor Roberto Frias", "Porto", "Portugal", "4200-465", "feup@fe.up.pt");
+INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+            VALUES (7654321, "Flup", "Via Panorâmica", "Porto", 1, "4150-564", "flup@fl.up.pt");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (7654321, "Flup", "Via Panorâmica", "Porto", "Portugal", "4150-564", "flup@fl.up.pt");
+INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+            VALUES (9874567, "Hounslow", "Potatos Street", "Londres", 2, "ML1 2DA", "houwnslow@hotmail.com");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (9874567, "Hounslow", "Potatos Street", "Londres", "Inglaterra", "ML1 2DA", "houwnslow@hotmail.com");
+INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+            VALUES (4457812, "Kingston", "30 Leicester Square", "Londres", 2, "WC2H 7LA", "kingstone@gmail.com");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (4457812, "Kingston", "30 Leicester Square", "Londres", "Inglaterra", "WC2H 7LA", "kingstone@gmail.com");
+INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+            VALUES (9875669, "La Tienda", "Sr. D. Alvaro Blanco Ruiz", "Madrid", 3, "28300", "tienda@lojita.com");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (9875669, "La Tienda", "Sr. D. Alvaro Blanco Ruiz", "Madrid", "Espanha", "28300", "tienda@lojita.com");
+INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+            VALUES (4565453, "Green Park", "Mary's Street", "Londres", 2, "AB3C 3LA", "greensales@gmail.com");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (4565453, "Green Park", "Mary's Street", "Londres", "Inglaterra", "AB3C 3LA", "greensales@gmail.com");
+INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+            VALUES (3453259, "Ouro e Prata", "Avenida da Liberdade", "Lisboa", 1, "1268-121", "prata@ouro.pt");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (3453259, "Ouro e Prata", "Avenida da Liberdade", "Lisboa", "Portugal", "1268-121", "prata@ouro.pt");
+INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+            VALUES (9574891, "Bolachas Inc.", "Rua Das Flores", "Porto", 1, "4510-145", "cookies@lojaporto.pt");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (9574891, "Bolachas Inc.", "Rua Das Flores", "Porto", "Portugal", "4510-145", "cookies@lojaporto.pt");
+INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+            VALUES (00056010, "Sir Francis Burdett & Son", "St. James's Place", "Londres", 2, "SW1 E17", "francis@sir.com");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (00056010, "Sir Francis Burdett & Son", "St. James's Place", "Londres", "Inglaterra", "SW1 E17", "francis@sir.com");
-
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (9593205891, "Jaquet-Droz's Automata", "Draughtsman Street", "Londres", "Inglaterra", "SW19 3RQ", "epicdolls@gmail.com");
+INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+            VALUES (9593205891, "Jaquet-Droz's Automata", "Draughtsman Street", "Londres", 2, "SW19 3RQ", "epicdolls@gmail.com");
 
 
 
