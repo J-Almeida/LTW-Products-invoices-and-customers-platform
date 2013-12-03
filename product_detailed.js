@@ -4,6 +4,11 @@ function hideRestrictedElements() {
         data: "",
         success: function(data)
         {
+            if(data == "none") {
+                $("#edit").hide();
+                return;
+            }
+            
             var permissions = JSON.parse(data);
             
             if(permissions.write != 1) {
