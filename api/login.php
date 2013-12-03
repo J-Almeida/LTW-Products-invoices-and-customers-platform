@@ -39,6 +39,7 @@ function getPermissions($user) {
 session_start();
 $login = $_POST["login"];
 $password = $_POST["password"];
+header('Refresh: 1; URL=../index.php');
 
 echo "<link rel=\"stylesheet\" href=\"style.css\">";
 echo "<br><br><br>";
@@ -54,6 +55,5 @@ else
 	echo "<p style='text-align: center;'>Wrong username or password. </p>";
 
 echo "<p style='text-align: center;'>Redirecting... </p>";
-header('Refresh: 2; URL=../index.php');
 exit;
 ?>
