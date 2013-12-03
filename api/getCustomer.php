@@ -14,8 +14,8 @@ if ( isset($_GET['CustomerID']) && !empty($_GET['CustomerID']) ) {
 $table = 'Customer';
 $field = 'CustomerID';
 $values = array($value);
-$rows = array('customerID', 'companyName', 'customerTaxId', 'email', 'addressDetail', 'cityName', 'countryName', 'postalCode' );
-$joins = array();
+$rows = array('customerID', 'companyName', 'customerTaxId', 'email', 'addressDetail', 'cityName', 'Country.countryId AS countryId', 'countryName', 'countryCode', 'postalCode' );
+$joins = array('Customer' => 'Country');
 
 $search = new EqualSearch($table, $field, $values, $rows, $joins);
 $result = $search->getResults();
