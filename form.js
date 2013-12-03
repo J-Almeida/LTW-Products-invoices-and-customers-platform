@@ -37,6 +37,7 @@ function loadInvoiceLines(invoiceData) {
 function getProduct(productCode) {
 
     $.ajax("./api/getProduct.php?ProductCode=" + productCode, {
+        async: false,
         type: "GET",
         data: "",
         success: function(data)
@@ -64,6 +65,7 @@ function getProduct(productCode) {
 function getCustomer(customerID) {
 
     $.ajax("./api/getCustomer.php?CustomerID=" + customerID, {
+        async: false,
         type: "GET",
         data: "",
         success: function(data)
@@ -112,6 +114,7 @@ function getInvoice(invoiceNo) {
 function getUser(username) {
 
     $.ajax("./api/getUser.php?Username=" + username, {
+        async: false,
         type: "GET",
         data: "",
         success: function(data)
@@ -167,6 +170,7 @@ function submitForm(objectName) {
     information += form;
 
     $.ajax($('form').attr('action'), {
+        async: false,
         type: "POST",
         data: information,
         success: function(data)

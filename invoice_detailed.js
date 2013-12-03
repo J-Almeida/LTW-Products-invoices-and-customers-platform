@@ -1,3 +1,22 @@
+function hideRestrictedElements() {
+    $.ajax("./api/getPermissions.php", {
+        async: false,
+        data: "",
+        success: function(data)
+        {
+            var permissions = JSON.parse(data);
+
+            if(permissions.write != 1) {
+                $("#edit").hide();
+            }
+        },
+        error: function(a, b, c)
+        {
+            console.log(a + ", " + b + ", " + c);
+        }
+    })
+}
+
 function getParameter(urlQuery) {
     urlQuery = urlQuery.split("+").join(" ");
 
@@ -130,6 +149,8 @@ function displayInvoice(invoiceNo) {
             console.log(a + ", " + b + ", " + c);
         }
     })
+
+    hideRestrictedElements();
 
     $("#loadingInvoice").fadeOut(400, function() {
         $("#invoice").fadeIn('slow', function() {});
