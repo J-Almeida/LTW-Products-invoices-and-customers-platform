@@ -28,12 +28,19 @@ function getSearchParametersFromURL() {
 }
 
 function executeSearch($parameters) {
-    $table = $parameters['table'];
+    if(isset($parameters['table']))
+        $table = $parameters['table'];
     $field = $parameters['field'];
-    $values = $parameters['values'];
+    if(isset($parameters['values']))
+        $values = $parameters['values'];
+    else
+        $values = array();
     $operation = $parameters['operation'];
     $rows = $parameters['rows'];
-    $joins = $parameters['joins'];
+    if(isset($parameters['joins']))
+        $joins = $parameters['joins'];
+    else
+        $joins = array();
 
     try {
         $reflection = new ReflectionClass($operation.'search');
