@@ -166,9 +166,6 @@ function submitForm(objectName) {
     information += "=";
     information += form;
 
-    // clear deleted invoice lines
-    information = information.replace(/,null/g, "");
-
     $.ajax($('form').attr('action'), {
         type: "POST",
         data: information,
@@ -200,9 +197,21 @@ function parseLines(invoiceJson) {
             delete invoiceJson[field];
         }
     }
+    // clear the lines that were deleted
+    lineArray.clean(null);
     invoiceJson['line'] = lineArray;
     return invoiceJson;
 }
+
+Array.prototype.clean = function(deleteValue) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] == deleteValue) {
+            this.splice(i, 1);
+            i--;
+        }
+    }
+    return this;
+};
 
 function getFormData($form){
     var unIndexedArray = $form.serializeArray();
