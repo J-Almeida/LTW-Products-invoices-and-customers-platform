@@ -6,6 +6,8 @@ include_once 'delete.php';
 include_once 'search.php';
 include_once 'insert.php';
 
+session_start();
+
 if(!isset($_SESSION['username']) || !isset($_SESSION['permissions']) || $_SESSION['permissions']['permissionWrite'] != '1') {
     $error = new Error(601, 'Permission Denied');
     die( json_encode($error->getInfo()) );
