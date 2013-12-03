@@ -1,12 +1,11 @@
 <?php
+session_start();
 
 include_once 'update.php';
 include_once 'utilities.php';
 include_once 'delete.php';
 include_once 'search.php';
 include_once 'insert.php';
-
-session_start();
 
 if(!isset($_SESSION['username']) || !isset($_SESSION['permissions']) || $_SESSION['permissions']['write'] != '1') {
     $error = new Error(601, 'Permission Denied');
