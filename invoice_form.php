@@ -9,13 +9,14 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="form.js"></script>
+    <script src="invoice_form.js"></script>
     <script>
         var invoiceNo = "<?php echo ( isset( $_GET['InvoiceNo'] ) && $_GET['InvoiceNo'] != '') ? $_GET['InvoiceNo'] : '';?>";
     </script>
 
     <?php include_once('api/utilities.php'); ?>
 </head>
-<body onload="getInvoice(invoiceNo)">
+<body onload="getInvoice(invoiceNo); updateLine($('.invoiceLine')); updateTotals();">
 
 <div id="loadingInvoice">
     <span>Loading invoice</span><br>
@@ -72,17 +73,18 @@
                         <th>Unit price</th>
                         <th>Credit amount</th>
                         <th>Tax type</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody id="invoiceLines">
-                    <tr id="1">
+                    <tr class="invoiceLine" id="1">
                         <th>
-                            <select name="line[1].productCode">
+                            <select class="productCode" name="line[1].productCode" onchange="updateLine($(this));">
                                 <?php
                                 $searchUrl = searchAPIUrl('Product', 'listAll', 'productCode', 'invoice_form');
                                 $products = json_decode(file_get_contents($searchUrl), true);
                                 foreach($products as $product){
-                                    echo '<option value='.$product['productCode'].'>';
+                                    echo '<option value='.$product['productCode'].' data-unitprice="'.$product['unitPrice'].'">';
                                     echo '['. $product['productCode'] . '] ' . $product['productDescription'];
                                     echo '</option>';
                                 }
@@ -90,16 +92,16 @@
                             </select>
                         </th>
                         <th>
-                            <input type="number" name="line[1].quantity" value="1">
+                            <input class="quantity" type="number" name="line[1].quantity" value="1" onchange="updateLine($(this));">
                         </th>
                         <th>
-                            <input type="number" name="line[1].unitPrice" value="1" readonly>
+                            <input class="unitPrice" type="number" name="line[1].unitPrice" value="1" readonly>
                         </th>
                         <th>
-                            <input type="number" name="line[1].creditAmount" value="1" readonly>
+                            <input class="creditAmount" type="number" name="line[1].creditAmount" value="1" readonly>
                         </th>
                         <th>
-                            <select name="line[1].taxId">
+                            <select class="taxId" name="line[1].taxId" onchange="updateTotals();">
                                 <?php
                                 $parameters['operation'] = 'listAll';
                                 $parameters['field'] = 'taxId';
@@ -107,18 +109,26 @@
                                 $parameters['rows'] = array('taxId', 'taxType', 'taxPercentage');
                                 $taxes = executeSearch($parameters);
                                 foreach($taxes as $tax){
-                                    echo '<option value='.$tax['taxId'].'>';
+                                    echo '<option value='.$tax['taxId'].' data-taxpercentage="'.$tax['taxPercentage'].'">';
                                     echo $tax['taxType'] . ' - ' . $tax['taxPercentage'] . '%';
                                     echo '</option>';
                                 }
                                 ?>
                             </select>
                         </th>
+                        <th>
+                            <button class="removeRow" onclick="return false;">
+                                Remove
+                            </button>
+                        </th>
                     </tr>
                     </tbody>
                 </table>
             </div><br><br>
 
+            <button class="addRow" onclick="return false;">
+                Add line
+            </button>
 
             <div class="invoiceTotals">
                 <table>
