@@ -17,7 +17,7 @@ if ( isset($_POST['invoice']) && !empty($_POST['invoice']) ) {
 $invoiceInfo = json_decode($jsonInvoice, true);
 
 $table = 'Invoice';
-// INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
+// INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
 //              VALUES ("FT SEQ/1", "2013-09-27", 1, 1);
 $invoiceLines = $invoiceInfo['line'];
 unset($invoiceInfo['line']);

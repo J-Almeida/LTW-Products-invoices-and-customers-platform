@@ -5,24 +5,12 @@ DROP TABLE IF EXISTS Tax;
 DROP TABLE IF EXISTS Permission;
 DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS Invoice;
-DROP TABLE IF EXISTS Supplier;
 DROP TABLE IF EXISTS Customer;
 DROP TABLE IF EXISTS User;
 
 CREATE TABLE Customer (
 	customerId INTEGER PRIMARY KEY AUTOINCREMENT,
 	customerTaxId INTEGER UNIQUE NOT NULL,
-	companyName TEXT NOT NULL,
-	addressDetail TEXT NOT NULL,
-	cityName TEXT NOT NULL,
-	countryName TEXT NOT NULL,
-	postalCode TEXT NOT NULL,
-	email TEXT
-);
-
-CREATE TABLE Supplier (
-	supplierId INTEGER PRIMARY KEY AUTOINCREMENT,
-	supplierTaxId INTEGER UNIQUE NOT NULL,
 	companyName TEXT NOT NULL,
 	addressDetail TEXT NOT NULL,
 	cityName TEXT NOT NULL,
@@ -44,7 +32,6 @@ CREATE TABLE Invoice (
 	invoiceNo TEXT UNIQUE NOT NULL,
 	invoiceDate DATE NOT NULL,
 	customerId INTEGER REFERENCES Customer(customerId) ON DELETE CASCADE,
-	supplierId INTEGER REFERENCES Supplier(supplierId) ON DELETE CASCADE,
 	/* Document Totals */
 	taxPayable REAL DEFAULT 0, /* Sum of taxes of all lines */ 
 	netTotal REAL DEFAULT 0,   /* Sum of price of all lines w/o tax */ 
@@ -254,122 +241,110 @@ INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countr
 
 
 
-INSERT INTO Supplier(supplierTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (4457812, "Kingston", "30 Leicester Square", "Londres", "Inglaterra", "WC2H 7LA", "kingstone@gmail.com");
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/1", "2013-09-27", 1);
 
-INSERT INTO Supplier(supplierTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (4457816, "Kingston Junior", "Mary's Street", "Londres", "Inglaterra", "AB3C 3LA", "kingjunior@gmail.com");
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/3", "2013-10-11", 3);
 
-INSERT INTO Supplier(supplierTaxId, companyName, addressDetail, cityName, countryName, postalCode, email)
-            VALUES (6767565, "Pague Ja", "Avenida da Liberdade", "Lisboa", "Portugal", "1268-121", "pagueja@hotmail.com");
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/14", "2013-09-30", 2);
 
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/11", "2013-11-01", 5);
 
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/2", "2013-09-29", 4);
 
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/15", "2013-11-02", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/1", "2013-09-27", 1, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/16", "2013-11-05", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/3", "2013-10-11", 3, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/17", "2013-11-07", 4);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/14", "2013-09-30", 2, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/18", "2013-11-09", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/11", "2013-11-01", 5, 2);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/19", "2013-11-09", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/2", "2013-09-29", 4, 3);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/20", "2013-11-10", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/15", "2013-11-02", 1, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/21", "2013-11-11", 10);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/16", "2013-11-05", 3, 2);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/22", "2013-11-11", 9);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/17", "2013-11-07", 4, 3);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/23", "2013-11-11", 8);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/18", "2013-11-09", 1, 3);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/24", "2013-11-15", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/19", "2013-11-09", 5, 3);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/25", "2013-11-15", 10);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/20", "2013-11-10", 3, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/26", "2013-11-16", 10);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/21", "2013-11-11", 10, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/27", "2013-11-17", 7);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/22", "2013-11-11", 9, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/28", "2013-11-17", 6);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/23", "2013-11-11", 8, 2);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/29", "2013-11-17", 8);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/24", "2013-11-15", 5, 2);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/30", "2013-11-17", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/25", "2013-11-15", 10, 2);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/31", "2013-11-17", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/26", "2013-11-16", 10, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/32", "2013-11-18", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/27", "2013-11-17", 7, 3);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/33", "2013-11-19", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/28", "2013-11-17", 6, 3);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/34", "2013-11-19", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/29", "2013-11-17", 8, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/35", "2013-11-20", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/30", "2013-11-17", 5, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/36", "2013-11-21", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/31", "2013-11-17", 3, 2);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/37", "2013-11-23", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/32", "2013-11-18", 3, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/38", "2013-11-25", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/33", "2013-11-19", 1, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/39", "2013-11-25", 2);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/34", "2013-11-19", 1, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/40", "2013-11-25", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/35", "2013-11-20", 5, 2);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/41", "2013-11-25", 4);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/36", "2013-11-21", 3, 3);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/42", "2013-11-27", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/37", "2013-11-23", 5, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/43", "2013-11-29", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/38", "2013-11-25", 1, 1);
-
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/39", "2013-11-25", 2, 1);
-
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/40", "2013-11-25", 3, 2);
-
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/41", "2013-11-25", 4, 1);
-
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/42", "2013-11-27", 1, 3);
-
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/43", "2013-11-29", 1, 2);
-
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId, supplierId)
-            VALUES ("FT SEQ/44", "2013-11-30", 5, 1);
+INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+            VALUES ("FT SEQ/44", "2013-11-30", 5);
 
 
 INSERT INTO Tax(taxType, taxPercentage, taxDescription) VALUES ("IVA 1", 23.00, "Taxa Normal");
