@@ -1,8 +1,13 @@
 <?php
 session_start();
 
-if(isset($_SESSION['username']))
+if(isset($_SESSION['username'])) {
 	unset($_SESSION['username']);
+}
+
+if(isset($_SESSION['permissions'])) {
+	unset($_SESSION['permissions']);
+}
 
 header('Refresh: 1; URL=../index.php');
 
