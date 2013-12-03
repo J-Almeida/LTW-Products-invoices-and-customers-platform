@@ -1,6 +1,6 @@
 <?php
-    include_once "api/getPermissions.php";
- ?>
+    include_once('api/utilities.php');
+?>
 <!doctype html>
 <html dir="ltr" lang="en" class="no-js">
 <head>
@@ -54,16 +54,14 @@
 
                     <li>Permission level:
                         <p id="permissionType">
-                            <select name="permissionType">
+                            <select name="permissionId">
                                 <?php
-                                getAllPermissions();
-                                /*$searchCustomersUrl = searchAPIUrl('Customer', 'listAll', 'customerId', 'invoice_form');
-                                $customers = json_decode(file_get_contents($searchCustomersUrl), true);
-                                foreach($customers as $customer){
-                                    echo '<option value='.$customer['customerId'].'>';
-                                    echo $customer['companyName'] . ' - Tax ID ' . $customer['customerTaxId'];
+                                $permissions = getAllPermissions();
+                                foreach($permissions as $permission) {
+                                    echo '<option value=' . $permission['permissionId'] . '>';
+                                    echo $permission['permissionType'];
                                     echo '</option>';
-                                }*/
+                                }
                                 ?>
                             </select>
                         </p>

@@ -157,3 +157,13 @@ function http_post($url, $data, $headers=null) {
     }
     return stream_get_contents($fp);
 }
+
+function getAllPermissions() {
+    $parameters = array('field' => '', 'operation' => "listall");
+    $parameters['table'] = 'Permission';
+    $parameters['rows'] = array('permissionId', 'permissionType');
+    $parameters['joins'] = array();
+
+    $result = executeSearch($parameters);
+    return $result;
+}
