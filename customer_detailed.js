@@ -1,3 +1,22 @@
+function hideRestrictedElements() {
+    $.ajax("./api/getPermissions.php", {
+        async: false,
+        data: "",
+        success: function(data)
+        {
+            var permissions = JSON.parse(data);
+            
+            if(permissions.write != 1) {
+                $("#edit").hide();
+            }
+        },
+        error: function(a, b, c)
+        {
+            console.log(a + ", " + b + ", " + c);
+        }
+    })
+}
+
 function getParameter(urlQuery) {
     urlQuery = urlQuery.split("+").join(" ");
 
@@ -37,6 +56,8 @@ function displayCustomer(customerID) {
             console.log(a + ", " + b + ", " + c);
         }
     })
+
+    hideRestrictedElements();
 
     $("#loadingCustomer").fadeOut(400, function() {
         $("#customer").fadeIn('slow', function() {});

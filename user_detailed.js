@@ -1,3 +1,22 @@
+function hideRestrictedElements() {
+    $.ajax("./api/getPermissions.php", {
+        async: false,
+        data: "",
+        success: function(data)
+        {
+            var permissions = JSON.parse(data);
+            
+            if(permissions.promote != 1) {
+                $("#edit").hide();
+            }
+        },
+        error: function(a, b, c)
+        {
+            console.log(a + ", " + b + ", " + c);
+        }
+    })
+}
+
 function getParameter(urlQuery) {
     urlQuery = urlQuery.split("+").join(" ");
 
@@ -36,6 +55,8 @@ function displayUser(username) {
             console.log(a + ", " + b + ", " + c);
         }
     })
+
+    hideRestrictedElements();
 
     $("#loadingUser").fadeOut(400, function() {
         $("#user").fadeIn('slow', function() {});

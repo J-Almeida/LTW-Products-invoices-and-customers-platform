@@ -1,19 +1,18 @@
-function hasPermission() {
+function hideRestrictedElements() {
     $.ajax("./api/getPermissions.php", {
         async: false,
         data: "",
         success: function(data)
         {
-            var permissions = data;
-            if(permissions["write"] == '1')
-                return true;
-            else
-                return false;
+            var permissions = JSON.parse(data);
+
+            if(permissions.write != 1) {
+                $("#edit").hide();
+            }
         },
         error: function(a, b, c)
         {
             console.log(a + ", " + b + ", " + c);
-            return false;
         }
     })
 }
@@ -151,9 +150,7 @@ function displayInvoice(invoiceNo) {
         }
     })
 
-    if(hasPermission() == false) {
-        $("#edit").hide();
-    }
+    hideRestrictedElements();
 
     $("#loadingInvoice").fadeOut(400, function() {
         $("#invoice").fadeIn('slow', function() {});
