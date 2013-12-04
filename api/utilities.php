@@ -75,7 +75,7 @@ function setValuesAsArray($newValue, $values, &$array) {
 }
 
 function itemExists($table, $itemValue, $itemType) {
-   $db = new PDO("sqlite:../database.db");
+   $db = new PDO(getDatabase());
    $query = $db->query("SELECT * FROM $table WHERE $itemType = '$itemValue'");
    $query->setFetchMode(PDO::FETCH_ASSOC);
    $result = $query->fetch();
@@ -142,7 +142,7 @@ function searchAPIUrl($table, $op, $field, $trim = 'api/') {
 }
 
 function http_post($url, $data, $headers=null) {
-
+    
     $data = http_build_query($data);
     $opts = array('http' => array('method' => 'POST', 'content' => $data));
 
@@ -166,4 +166,12 @@ function getAllPermissions() {
 
     $result = executeSearch($parameters);
     return $result;
+}
+
+function getDatabase() {
+    $db = 'sqlite:';
+    $db .= realpath(dirname(__FILE__));
+    $db = substr($db, 0, strpos($db, 'api'));
+    $db .= 'database.db';
+    return $db;
 }
