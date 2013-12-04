@@ -1,3 +1,30 @@
+function hideRestrictedElements() {
+    $.ajax("./api/getPermissions.php", {
+        async: false,
+        data: "",
+        success: function(data)
+        {
+            if(data == "none") {
+                return;
+            }
+            
+            var permissions = JSON.parse(data);
+
+            if(permissions.read == 1) {
+                $(".genLinks").show();
+            }
+            
+            if(permissions.promote == 1) {
+                $("#usersLink").show();
+            }
+        },
+        error: function(a, b, c)
+        {
+            console.log(a + ", " + b + ", " + c);
+        }
+    })
+}
+
 function submitForm() {
 
     var form = "?";

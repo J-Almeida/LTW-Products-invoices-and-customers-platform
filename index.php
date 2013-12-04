@@ -17,10 +17,18 @@
     <div id="menu">
         <ul id="menuList">
             <li><a href="index.php">Home</a></li>
-            <li><a href="invoices.php">Invoices</a></li>
-            <li><a href="customers.php">Customers</a></li>
-            <li><a href="products.php">Products</a></li>
-            <li><a href="users.php">Users</a></li>
+            <?php
+            if(isset($_SESSION['permissions']) && isset($_SESSION['username']) && $_SESSION['permissions']['read'] == '1') {
+                echo '<li><a href="users.php">Users</a></li>';
+                echo '<li><a href="invoices.php">Invoices</a></li>';
+                echo '<li><a href="customers.php">Customers</a></li>';
+                echo '<li><a href="products.php">Products</a></li>';
+            }
+            
+            if(isset($_SESSION['permissions']) && isset($_SESSION['username']) && $_SESSION['permissions']['promote'] == '1') {
+                echo '<li><a href="users.php">Users</a></li>';
+            }
+            ?>
         </ul>
 
         <div class="login">

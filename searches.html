@@ -18,22 +18,10 @@
          "companyName": "Company Name"};
          */
         var fieldNames = { {{tableFields}} };
-        var read = 0;
-        var write = 0;
-        var promote = 0;
-
-        $.get('api/getPermissions.php', function ( data ) {
-            if(data != "none") {
-                var permissions = JSON.parse(data);
-                read = permissions.read;
-                write = permissions.write;
-                promote = permissions.promote;
-            }
-        });
     </script>
 
 </head>
-<body>
+<body onload="hideRestrictedElements();">
 
 <div id="header">
     <h1>{{title}}</h1>
@@ -43,10 +31,10 @@
 <div id="menu">
     <ul>
         <li><a href="index.php">Home</a></li>
-        <li><a href="invoices.php">Invoices</a></li>
-        <li><a href="customers.php">Customers</a></li>
-        <li><a href="products.php">Products</a></li>
-        <li><a href="users.php">Users</a></li>
+        <li class="genLinks" style="display:none;"><a href="invoices.php">Invoices</a></li>
+        <li class="genLinks" style="display:none;"><a href="customers.php">Customers</a></li>
+        <li class="genLinks" style="display:none;"><a href="products.php">Products</a></li>
+        <li id="usersLink" style="display:none;"><a href="users.php">Users</a></li>
     </ul>
 
     <div class="login">
