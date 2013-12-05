@@ -5,11 +5,6 @@ require_once 'authenticationUtilities.php';
 require_once 'delete.php';
 require_once 'update.php';
 
-if(!comparePermissions(array('write'))) {
-    $error = new Error(601, 'Permission Denied');
-    die( json_encode($error->getInfo()) );
-}
-
 $table = NULL;
 if ( isset($_GET['table']) && !empty($_GET['table']) ) {
     $table = $_GET['table'];
@@ -32,6 +27,19 @@ if ( isset($_GET['value']) && !empty($_GET['value']) ) {
 } else {
     $error = new Error(700, 'Missing \'value\' field');
     die( json_encode($error->getInfo()) );
+}
+
+if($table == "User") {
+    if(!comparePermissions(array('promote'))) {
+        $error = new Error(601, 'Permission Denied');
+        die( json_encode($error->getInfo()) );
+    }
+}
+else {
+    if(!comparePermissions(array('write'))) {
+        $error = new Error(601, 'Permission Denied');
+        die( json_encode($error->getInfo()) );
+    }
 }
 
 // handle product deletions
