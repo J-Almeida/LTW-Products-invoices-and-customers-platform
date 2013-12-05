@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once './api/authenticationUtilities.php';
+require_once './api/authenticationUtilities.php';
 $neededPermissions = array('write');
 evaluateSessionPermissions($neededPermissions);
 ?>
@@ -21,8 +21,8 @@ evaluateSessionPermissions($neededPermissions);
     </script>
 
     <?php
-    include_once('api/utilities.php');
-    include_once('api/search.php');
+    require_once('api/utilities.php');
+    require_once('api/search.php');
     ?>
 </head>
 <body onload="getInvoice(invoiceNo); updateAllLines(); updateTotals();">

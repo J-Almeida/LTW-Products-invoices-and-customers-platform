@@ -1,5 +1,5 @@
 <?php
-include_once 'error.php';
+require_once 'error.php';
 
 if ($_FILES['file']['error'] == UPLOAD_ERR_OK               //checks for errors
     && is_uploaded_file($_FILES['file']['tmp_name'])) { //checks that file is uploaded
@@ -57,10 +57,10 @@ if (!$xml->schemaValidate('./saft.xsd')){
     $products = array();
     $invoices = array();
 
-    include_once 'search.php';
-    include_once 'customer.php';
-    include_once 'product.php';
-    include_once 'invoice.php';
+    require_once 'search.php';
+    require_once 'customer.php';
+    require_once 'product.php';
+    require_once 'invoice.php';
 
     foreach($auditFile->MasterFiles->Customer as $customer) {
         $oldCustomerId = (int) $customer->CustomerID;

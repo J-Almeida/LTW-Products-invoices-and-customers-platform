@@ -3,7 +3,7 @@
 require_once 'user.php';
 
 session_start();
-include_once 'authenticationUtilities.php';
+require_once 'authenticationUtilities.php';
 
 if(!comparePermissions(array('promote'))) {
 	$error = new Error(601, 'Permission Denied');

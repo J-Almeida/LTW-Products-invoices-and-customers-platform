@@ -2,7 +2,7 @@
 
 require_once 'customer.php';
 session_start();
-include_once 'authenticationUtilities.php';
+require_once 'authenticationUtilities.php';
 
 if(!comparePermissions(array('read'))) {
 	$error = new Error(601, 'Permission Denied');
