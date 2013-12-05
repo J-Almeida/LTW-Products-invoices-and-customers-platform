@@ -34,8 +34,8 @@ if ($invoiceNo == NULL) {
     $invoiceNo = getLastInvoiceNoPlusOne();
     $invoiceInfo['invoiceNo'] = $invoiceNo;
     $insertUrl = getCurrentPageUrl();
-    $insertUrl = substr($insertUrl, 0, strpos($insertUrl, 'api/'));
-    $insertUrl .= '/api/insertInvoice.php';
+    $insertUrl = substr($insertUrl, 0, strpos($insertUrl, 'api'));
+    $insertUrl .= 'api/insertInvoice.php';
     $response = http_post($insertUrl, array('invoice' => json_encode($invoiceInfo)));
     die($response);
 }
@@ -87,6 +87,7 @@ function getLastInvoiceNo(){
 }
 
 function getLastInvoiceNoPlusOne() {
+    // TODO handle case when there isn't any invoice!
     $invoiceNo = getLastInvoiceNo();
     $matches = array();
     preg_match('/(\d+)$/', $invoiceNo, $matches);
