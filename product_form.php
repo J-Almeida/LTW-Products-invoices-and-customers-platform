@@ -1,3 +1,9 @@
+<?php
+session_start();
+include_once './api/authenticationUtilities.php';
+$neededPermissions = array('write');
+evaluateSessionPermissions($neededPermissions);
+?>
 <!doctype html>
 <html dir="ltr" lang="en" class="no-js">
 <head>

@@ -1,5 +1,4 @@
 <?php
-
 include_once 'search.php';
 
 function getSearchParametersFromURL() {
@@ -129,7 +128,7 @@ function getId($table, $field, $value) {
 function getAPIUrl($table, $field, $value) {
     $url = getCurrentPageUrl();
     $url = substr($url, 0, strpos($url, 'api/'));
-    $url .= "/api/get$table.php?$field=";
+    $url .= "api/get$table.php?$field=";
     $url .= urlencode($value);
     return $url;
 }
@@ -137,7 +136,7 @@ function getAPIUrl($table, $field, $value) {
 function searchAPIUrl($table, $op, $field, $trim = 'api/') {
     $url = getCurrentPageUrl();
     $url = substr($url, 0, strpos($url, $trim));
-    $url .= '/api/search' . $table . "sByField.php?op=$op&field=$field";
+    $url .= 'api/search' . $table . "sByField.php?op=$op&field=$field";
     return $url;
 }
 

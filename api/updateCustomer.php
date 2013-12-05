@@ -5,8 +5,9 @@ include_once 'error.php';
 include_once 'utilities.php';
 include_once 'update.php';
 include_once 'insert.php';
+include_once 'authenticationUtilities.php';
 
-if(!isset($_SESSION['username']) || !isset($_SESSION['permissions']) || $_SESSION['permissions']['write'] != '1') {
+if(!comparePermissions(array('write'))) {
     $error = new Error(601, 'Permission Denied');
     die( json_encode($error->getInfo()) );
 }

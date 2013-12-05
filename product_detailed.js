@@ -1,26 +1,3 @@
-function hideRestrictedElements() {
-    $.ajax("./api/getPermissions.php", {
-        async: false,
-        data: "",
-        success: function(data)
-        {
-            if(data == "none") {
-                return;
-            }
-            
-            var permissions = JSON.parse(data);
-            
-            if(permissions.write == 1) {
-                $("#edit").show();
-            }
-        },
-        error: function(a, b, c)
-        {
-            console.log(a + ", " + b + ", " + c);
-        }
-    })
-}
-
 function getParameter(urlQuery) {
     urlQuery = urlQuery.split("+").join(" ");
 
@@ -59,8 +36,6 @@ function displayProduct(productCode) {
             console.log(a + ", " + b + ", " + c);
         }
     })
-
-    hideRestrictedElements();
 
     $("#loadingProduct").fadeOut(400, function() {
         $("#product").fadeIn('slow', function() {});

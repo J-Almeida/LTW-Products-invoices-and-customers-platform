@@ -1,26 +1,3 @@
-function hideRestrictedElements() {
-    $.ajax("./api/getPermissions.php", {
-        async: false,
-        data: "",
-        success: function(data)
-        {
-            if(data == "none") {
-                return;
-            }
-            
-            var permissions = JSON.parse(data);
-            
-            if(permissions.write == 1) {
-                $("#edit").show();
-            }
-        },
-        error: function(a, b, c)
-        {
-            console.log(a + ", " + b + ", " + c);
-        }
-    })
-}
-
 function getParameter(urlQuery) {
     urlQuery = urlQuery.split("+").join(" ");
 
@@ -66,7 +43,7 @@ function drawInvoiceStructure(invoiceData) {
     drawCustomerDetails(json.customerId, $("#invoiceToName"));
 
     $("#invoiceCustomer").click(function() {
-        window.open("customer_detailed.html?CustomerID=" + json.customerId);
+        window.open("customer_detailed.php?CustomerID=" + json.customerId);
     });
 
     var lines = "";
@@ -125,7 +102,7 @@ for(result in json.line) {
     var pCode = object.productCode;
     rowProd[object.lineNumber] = pCode;
     $(rowID).click(function() {
-        window.open("product_detailed.html?ProductCode=" + rowProd[this.id]);
+        window.open("product_detailed.php?ProductCode=" + rowProd[this.id]);
     });
 }
 
@@ -153,8 +130,6 @@ function displayInvoice(invoiceNo) {
             console.log(a + ", " + b + ", " + c);
         }
     })
-
-    hideRestrictedElements();
 
     $("#loadingInvoice").fadeOut(400, function() {
         $("#invoice").fadeIn('slow', function() {});

@@ -1,3 +1,9 @@
+<?php
+session_start();
+include_once './api/authenticationUtilities.php';
+$neededPermissions = array('read');
+evaluateSessionPermissions($neededPermissions);
+?>
 <!doctype html>
 <html dir="ltr" lang="en" class="no-js">
 <head>
@@ -11,7 +17,7 @@
     <script src="product_detailed.js"></script>
 
 </head>
-<body onload="displayProduct(getParameter(document.location.search).ProductCode); setProductCode()" >
+<body onload="displayProduct(getParameter(document.location.search).ProductCode); setProductCode()">
 
     <div id="loadingProduct">
         <span>Loading product</span><br>
@@ -46,10 +52,15 @@
             </ul>
         </section>
 
-        <form id="edit" method="get" action="./product_form.php" style="display:none;">
-            <input id="productCodeInput" type="number" name="ProductCode" style="display: none;">
-            <input type="submit" value="Edit">
-        </form>
+        <?php
+        $permissions = getSessionPermissions();
+        if(!empty($permissions) && $permissions['write'] == 1) {
+            echo '<form id="edit" method="get" action="./customer_form.php">';
+                echo '<input id="productCodeInput" type="number" name="ProductCode" style="display: none;">';
+                echo '<input type="submit" value="Edit">';
+            echo '</form>';
+        }
+        ?>
     </div>
 
 </body>

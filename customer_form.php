@@ -1,3 +1,9 @@
+<?php
+session_start();
+include_once './api/authenticationUtilities.php';
+$neededPermissions = array('write');
+evaluateSessionPermissions($neededPermissions);
+?>
 <!doctype html>
 <html dir="ltr" lang="en" class="no-js">
 <head>
@@ -14,7 +20,7 @@
     </script>
 
 </head>
-<body onload="getCustomer(customerID)" >
+<body onload="getCustomer(customerID)">
 
 <div id="loadingCustomer">
     <span>Loading customer</span><br>

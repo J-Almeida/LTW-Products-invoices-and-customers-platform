@@ -1,6 +1,10 @@
 <?php
-
+session_start();
 include_once "searches.php";
+include_once './api/authenticationUtilities.php';
+
+$neededPermissions = array('read');
+evaluateSessionPermissions($neededPermissions);
 
 $fields = array(
     'invoiceNo' => 'Invoice Number',
@@ -11,3 +15,4 @@ $fields = array(
     'grossTotal' => 'Gross total');
 
 echo getSearchPage("Invoices", $fields);
+?>

@@ -9,7 +9,7 @@ if(isset($_SESSION['permissions'])) {
 	unset($_SESSION['permissions']);
 }
 
-header('Refresh: 1; URL=../index.php');
+header('Refresh: 1; URL=./index.php');
 
 echo "<link rel=\"stylesheet\" href=\"style.css\">";
 echo "<br><br><br>";

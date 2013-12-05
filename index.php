@@ -19,7 +19,6 @@
             <li><a href="index.php">Home</a></li>
             <?php
             if(isset($_SESSION['permissions']) && isset($_SESSION['username']) && $_SESSION['permissions']['read'] == '1') {
-                echo '<li><a href="users.php">Users</a></li>';
                 echo '<li><a href="invoices.php">Invoices</a></li>';
                 echo '<li><a href="customers.php">Customers</a></li>';
                 echo '<li><a href="products.php">Products</a></li>';
@@ -35,7 +34,7 @@
             <?php
             $sessionEmpty = empty($_SESSION["username"]);
                 if($sessionEmpty) {
-                    echo '<form method="post" action="api/login.php">';
+                    echo '<form method="post" action="login.php">';
                         echo '<ul id="loginMenu">';
                             echo '<li><input type="text" name="login" value="" placeholder="Username or Email"></li>';
                             echo '<li><input type="password" name="password" value="" placeholder="Password"></li>';
@@ -47,7 +46,7 @@
                 }
                 else {
                     echo 'Welcome back, <strong>' . $_SESSION["username"] . '</strong>!';
-                    echo ' <a href="api/logout.php">Logout</a>';
+                    echo ' <a href="logout.php">Logout</a>';
                 }
             ?>
         </div>
