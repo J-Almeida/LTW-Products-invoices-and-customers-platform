@@ -1,6 +1,6 @@
 <?php
 
-include_once 'query.php';
+require_once 'query.php';
 
 class Update extends Query {
     protected $table;

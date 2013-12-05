@@ -1,7 +1,7 @@
 <?php
 
-include_once 'error.php';
-include_once 'query.php';
+require_once 'error.php';
+require_once 'query.php';
 
 class Search extends Query {
     protected $table;

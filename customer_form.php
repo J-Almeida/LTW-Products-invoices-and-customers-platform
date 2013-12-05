@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once './api/authenticationUtilities.php';
+require_once './api/authenticationUtilities.php';
 $neededPermissions = array('write');
 evaluateSessionPermissions($neededPermissions);
 ?>
@@ -66,7 +66,7 @@ evaluateSessionPermissions($neededPermissions);
                         -->
                         <select name="countryId">
                             <?php
-                            include_once './api/search.php';
+                            require_once './api/search.php';
                             $search = new ListAllSearch('Country', 'countryId', array(), array('*'));
                             $countries = $search->getResults();
                             foreach($countries as $country){

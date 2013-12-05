@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once './api/authenticationUtilities.php';
+require_once './api/authenticationUtilities.php';
 
 $login = $_POST["login"];
 $password = $_POST["password"];

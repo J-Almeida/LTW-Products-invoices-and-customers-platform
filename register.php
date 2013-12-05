@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once './api/insert.php';
-include_once './api/authenticationUtilities.php';
+require_once './api/insert.php';
+require_once './api/authenticationUtilities.php';
 
 $fields = array(
 	'username'         => $_POST["username"],

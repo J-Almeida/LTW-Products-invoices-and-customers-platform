@@ -1,5 +1,5 @@
 <?php
-include_once 'search.php';
+require_once 'search.php';
 
 function getSearchParametersFromURL() {
     $field = NULL;

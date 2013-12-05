@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once './api/authenticationUtilities.php';
+require_once './api/authenticationUtilities.php';
 $neededPermissions = array('promote');
 evaluateSessionPermissions($neededPermissions);
 ?>
@@ -17,7 +17,7 @@ evaluateSessionPermissions($neededPermissions);
     <script src="user_detailed.js"></script>
 
 </head>
-<body onload="displayUser(getParameter(document.location.search).Username); setUserID()" style="display:none;">
+<body onload="displayUser(getParameter(document.location.search).Username); setUserID()">
 
     <div id="loadingUser">
         <span>Loading User</span><br>
@@ -54,7 +54,7 @@ evaluateSessionPermissions($neededPermissions);
 
         <?php
         if(comparePermissions(array('promote'))) {
-            echo '<form id="edit" method="get" action="./invoice_form.php">';
+            echo '<form id="edit" method="get" action="./user_form.php">';
                 echo '<input id="UsernameInput" type="text" name="UsernameInput" style="display: none;">';
                 echo '<input type="submit" value="Edit">';
             echo '</form>';

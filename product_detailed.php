@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once './api/authenticationUtilities.php';
+require_once './api/authenticationUtilities.php';
 $neededPermissions = array('read');
 evaluateSessionPermissions($neededPermissions);
 ?>
@@ -55,7 +55,7 @@ evaluateSessionPermissions($neededPermissions);
         <?php
         $permissions = getSessionPermissions();
         if(!empty($permissions) && $permissions['write'] == 1) {
-            echo '<form id="edit" method="get" action="./customer_form.php">';
+            echo '<form id="edit" method="get" action="./product_form.php">';
                 echo '<input id="productCodeInput" type="number" name="ProductCode" style="display: none;">';
                 echo '<input type="submit" value="Edit">';
             echo '</form>';

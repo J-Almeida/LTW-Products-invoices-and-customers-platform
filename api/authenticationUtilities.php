@@ -1,5 +1,5 @@
 <?php
-include_once 'utilities.php';
+require_once 'utilities.php';
 
 function checkPassword($login, $password) {
 	$db = new PDO(getDatabase());
