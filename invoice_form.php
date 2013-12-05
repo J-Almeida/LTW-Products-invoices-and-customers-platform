@@ -14,7 +14,10 @@
         var invoiceNo = "<?php echo ( isset( $_GET['InvoiceNo'] ) && $_GET['InvoiceNo'] != '') ? $_GET['InvoiceNo'] : '';?>";
     </script>
 
-    <?php include_once('api/utilities.php'); ?>
+    <?php
+    include_once('api/utilities.php');
+    include_once('api/search.php');
+    ?>
 </head>
 <body onload="getInvoice(invoiceNo); updateAllLines(); updateTotals();">
 
@@ -48,8 +51,8 @@
                 <div id="invoiceTo" class="concernedInfo">
                     <select name="customerId">
                         <?php
-                        $searchCustomersUrl = searchAPIUrl('Customer', 'listAll', 'customerId', 'invoice_form');
-                        $customers = json_decode(file_get_contents($searchCustomersUrl), true);
+                        $search = new ListAllSearch('Customer', 'customerId', array(), array('*'));
+                        $customers = $search->getResults();
                         foreach($customers as $customer){
                             echo '<option value='.$customer['customerId'].'>';
                             echo $customer['companyName'] . ' - Tax ID ' . $customer['customerTaxId'];
@@ -81,8 +84,8 @@
                         <th>
                             <select class="productCode" name="line[1].productCode" onchange="updateLine($(this));">
                                 <?php
-                                $searchUrl = searchAPIUrl('Product', 'listAll', 'productCode', 'invoice_form');
-                                $products = json_decode(file_get_contents($searchUrl), true);
+                                $search = new ListAllSearch('Product', 'productCode', array(), array('*'));
+                                $products = $search->getResults();
                                 foreach($products as $product){
                                     echo '<option value='.$product['productCode'].' data-unitprice="'.$product['unitPrice'].'">';
                                     echo '['. $product['productCode'] . '] ' . $product['productDescription'];
@@ -103,11 +106,8 @@
                         <th>
                             <select class="taxId" name="line[1].taxId" onchange="updateTotals();">
                                 <?php
-                                $parameters['operation'] = 'listAll';
-                                $parameters['field'] = 'taxId';
-                                $parameters['table'] = 'Tax';
-                                $parameters['rows'] = array('taxId', 'taxType', 'taxPercentage');
-                                $taxes = executeSearch($parameters);
+                                $search = new ListAllSearch('Tax', 'taxId', array(), array('*'));
+                                $taxes = $search->getResults();
                                 foreach($taxes as $tax){
                                     echo '<option value='.$tax['taxId'].' data-taxpercentage="'.$tax['taxPercentage'].'">';
                                     echo $tax['taxType'] . ' - ' . $tax['taxPercentage'] . '%';

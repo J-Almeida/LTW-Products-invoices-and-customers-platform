@@ -87,18 +87,6 @@ function itemExists($table, $itemValue, $itemType) {
    }
 }
 
-function getCurrentPageUrl() {
-    $pageURL = 'http';
-    if (isset($_SERVER["HTTPS"]) && strtolower($_SERVER["HTTPS"] == "on")) {$pageURL .= "s";}
-    $pageURL .= "://";
-    if ($_SERVER["SERVER_PORT"] != "80") {
-        $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-    } else {
-        $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-    }
-    return $pageURL;
-}
-
 function roundMoneyAmount(&$amount) {
     $amount = round($amount, 2, PHP_ROUND_HALF_UP);
 }
@@ -124,38 +112,6 @@ function getId($table, $field, $value) {
     $rows = array($table.'Id');
     $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
     return $invoiceSearch->getResults()[0][$table.'Id'];
-}
-
-function getAPIUrl($table, $field, $value) {
-    $url = getCurrentPageUrl();
-    $url = substr($url, 0, strpos($url, 'api/'));
-    $url .= "/api/get$table.php?$field=";
-    $url .= urlencode($value);
-    return $url;
-}
-
-function searchAPIUrl($table, $op, $field, $trim = 'api/') {
-    $url = getCurrentPageUrl();
-    $url = substr($url, 0, strpos($url, $trim));
-    $url .= '/api/search' . $table . "sByField.php?op=$op&field=$field";
-    return $url;
-}
-
-function http_post($url, $data, $headers=null) {
-
-    $data = http_build_query($data);
-    $opts = array('http' => array('method' => 'POST', 'content' => $data));
-
-    if($headers) {
-        $opts['http']['header'] = $headers;
-    }
-    $st = stream_context_create($opts);
-    $fp = fopen($url, 'rb', false, $st);
-
-    if(!$fp) {
-        return false;
-    }
-    return stream_get_contents($fp);
 }
 
 function getAllPermissions() {

@@ -60,12 +60,9 @@
                         -->
                         <select name="countryId">
                             <?php
-                            include_once './api/utilities.php';
-                            $parameters['operation'] = 'listAll';
-                            $parameters['field'] = 'countryId';
-                            $parameters['table'] = 'Country';
-                            $parameters['rows'] = array('countryId', 'countryName', 'countryCode');
-                            $countries = executeSearch($parameters);
+                            include_once './api/search.php';
+                            $search = new ListAllSearch('Country', 'countryId', array(), array('*'));
+                            $countries = $search->getResults();
                             foreach($countries as $country){
                                 echo '<option value='.$country['countryId'].'>';
                                 echo $country['countryName'] . ' - ' . $country['countryCode'];

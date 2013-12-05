@@ -58,8 +58,9 @@ if (!$xml->schemaValidate('./saft.xsd')){
     $invoices = array();
 
     include_once 'search.php';
-    include_once 'insert.php';
-    include_once 'utilities.php';
+    include_once 'customer.php';
+    include_once 'product.php';
+    include_once 'invoice.php';
 
     foreach($auditFile->MasterFiles->Customer as $customer) {
         $oldCustomerId = (int) $customer->CustomerID;
@@ -83,11 +84,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
                 'postalCode' => (string) $customer->BillingAddress->PostalCode
             );
 
-            $insertUrl = getCurrentPageUrl();
-            $insertUrl = substr($insertUrl, 0, strpos($insertUrl, 'api'));
-            $insertUrl .= 'api/updateCustomer.php';
-            $response = http_post($insertUrl, array('customer' => json_encode($customerToImport, JSON_NUMERIC_CHECK)));
-            $response = json_decode($response, true);
+            $response = updateCustomer($customerToImport);
             if ($response['error'] == null) {
                 $customers[$oldCustomerId] = $response;
                 echo "Imported customer with ID $oldCustomerId as ".$response['customerId'].'<br/>';
@@ -117,11 +114,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
                 'unitOfMeasure' => $productInfo['unitOfMeasure']
             );
 
-            $insertUrl = getCurrentPageUrl();
-            $insertUrl = substr($insertUrl, 0, strpos($insertUrl, 'api'));
-            $insertUrl .= 'api/updateProduct.php';
-            $response = http_post($insertUrl, array('product' => json_encode($productToImport, JSON_NUMERIC_CHECK)));
-            $response = json_decode($response, true);
+            $response = updateProduct($productToImport);
             if ($response['error'] == null) {
                 $products[$oldProductCode] = $response;
                 echo "Imported product with code $oldProductCode as ".$response['productCode'].'<br/>';
@@ -174,11 +167,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
             )
         );
 
-        $insertUrl = getCurrentPageUrl();
-        $insertUrl = substr($insertUrl, 0, strpos($insertUrl, 'api'));
-        $insertUrl .= 'api/updateInvoice.php';
-        $response = http_post($insertUrl, array('invoice' => json_encode($invoiceToImport, JSON_NUMERIC_CHECK)));
-        $response = json_decode($response, true);
+        $response = updateInvoice($invoiceToImport);
         if ($response['error']) {
             echo "Error inserting product with number $invoice->InvoiceNo:<br/>";
             echo 'Error code '.$response['error']['code'].': '.$response['error']['reason'].'<br/>';
