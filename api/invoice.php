@@ -57,12 +57,16 @@ function insertInvoice($invoiceInfo) {
     $invoiceId = getId('Invoice', 'invoiceNo', $invoiceInfo['invoiceNo']);
 
     foreach($invoiceLines as $line) {
-        // INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
+        if($line['taxId'])
+            $taxId = $line['taxId'];
+        else
+            $taxId = getId('Tax', 'taxType', $line['tax']['taxType']);
+
         $fields = array(
             'invoiceId' => $invoiceId,
             'productId' => getId('Product', 'productCode', $line['productCode']),
             'quantity'  => $line['quantity'],
-            'taxId'     => getId('Tax', 'taxType', $line['tax']['taxType'])
+            'taxId'     => $taxId
         );
         new Insert('InvoiceLine', $fields);
     }
@@ -84,7 +88,6 @@ function updateInvoice($invoiceInfo) {
         $invoiceInfo['invoiceNo'] = $invoiceNo;
         $response = insertInvoice($invoiceInfo);
         return $response;
-        //die(json_encode($response, JSON_NUMERIC_CHECK));
     }
 
     $invoiceId = getId('Invoice', 'invoiceNo', $invoiceNo);
