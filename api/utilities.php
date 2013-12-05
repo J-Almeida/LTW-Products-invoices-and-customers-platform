@@ -113,41 +113,6 @@ function getId($table, $field, $value) {
     return $invoiceSearch->getResults()[0][$table.'Id'];
 }
 
-// TODO DELETE
-function getAPIUrl($table, $field, $value) {
-    $url = getCurrentPageUrl();
-    $url = substr($url, 0, strpos($url, 'api/'));
-    $url .= "api/get$table.php?$field=";
-    $url .= urlencode($value);
-    return $url;
-}
-
-// TODO DELETE
-function searchAPIUrl($table, $op, $field, $trim = 'api/') {
-    $url = getCurrentPageUrl();
-    $url = substr($url, 0, strpos($url, $trim));
-    $url .= 'api/search' . $table . "sByField.php?op=$op&field=$field";
-    return $url;
-}
-
-// TODO DELETE
-function http_post($url, $data, $headers=null) {
-    
-    $data = http_build_query($data);
-    $opts = array('http' => array('method' => 'POST', 'content' => $data));
-
-    if($headers) {
-        $opts['http']['header'] = $headers;
-    }
-    $st = stream_context_create($opts);
-    $fp = fopen($url, 'rb', false, $st);
-
-    if(!$fp) {
-        return false;
-    }
-    return stream_get_contents($fp);
-}
-
 function getAllPermissions() {
     $parameters = array('field' => '', 'operation' => "listall");
     $parameters['table'] = 'Permission';
