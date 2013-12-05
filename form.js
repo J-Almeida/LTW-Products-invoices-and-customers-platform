@@ -179,7 +179,7 @@ function submitForm(objectName) {
             if (answer.error) {
                 alert('Code: ' + answer.error.code + "\n" + answer.error.reason);
             } else {
-                window.location = './' + objectName +'_detailed.html?' + objectID[objectName] + '=' + answer[objectFields[objectName]];
+                window.location = './' + objectName +'_detailed.php?' + objectID[objectName] + '=' + answer[objectFields[objectName]];
             }
         },
         error: function(a, b, c)

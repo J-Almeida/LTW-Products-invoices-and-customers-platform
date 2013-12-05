@@ -1,9 +1,8 @@
 <?php
-
 include_once 'utilities.php';
 
 function checkPassword($login, $password) {
-	$db = new PDO("sqlite:../database.db");
+	$db = new PDO(getDatabase());
 	$query = $db->query("SELECT * FROM User WHERE (username = '$login' OR email = '$login') AND password = '$password'");
 	$query->setFetchMode(PDO::FETCH_ASSOC);
    	$result = $query->fetch();
@@ -15,7 +14,7 @@ function checkPassword($login, $password) {
 }
 
 function getUsername($login) {
-	$db = new PDO("sqlite:../database.db");
+	$db = new PDO(getDatabase());
 	$query = $db->query("SELECT username FROM User WHERE (username = '$login' OR email = '$login')");
 	$query->setFetchMode(PDO::FETCH_ASSOC);
    	$result = $query->fetch();
@@ -25,7 +24,7 @@ function getUsername($login) {
 }
 
 function getPermissions($user) {
-	$db = new PDO("sqlite:../database.db");
+	$db = new PDO(getDatabase());
 	$query = $db->query("SELECT * FROM User, Permission WHERE (username = '$user' AND User.permissionId = Permission.permissionId)");
 	$query->setFetchMode(PDO::FETCH_ASSOC);
    	$result = $query->fetch();
@@ -36,24 +35,34 @@ function getPermissions($user) {
    	}
 }
 
-session_start();
-$login = $_POST["login"];
-$password = $_POST["password"];
-header('Refresh: 1; URL=../index.php');
-
-echo "<link rel=\"stylesheet\" href=\"style.css\">";
-echo "<br><br><br>";
-
-if(checkPassword($login, $password)) {
-	$user = getUsername($login);
-	$permissions = getPermissions($user);
-	$_SESSION['username'] = $user;
-	$_SESSION['permissions'] = $permissions;
-	echo "<p style='text-align: center;'>Welcome " . $user . "</p>";
+function getSessionPermissions() {
+   if(isset($_SESSION['username']) && isset($_SESSION['permissions']) && !empty($_SESSION['permissions'])) {
+      return ($_SESSION['permissions']);
+   }
+   else
+      return array();
 }
-else
-	echo "<p style='text-align: center;'>Wrong username or password. </p>";
 
-echo "<p style='text-align: center;'>Redirecting... </p>";
-exit;
+function comparePermissions($neededPermissions) {
+   $permissions = getSessionPermissions();
+
+   if(empty($permissions))
+      return false;
+
+   foreach ($neededPermissions as $neededPermission) {
+      if($permissions[$neededPermission] != 1) {
+         return false;
+      }
+   }
+
+   return true;
+}
+
+function evaluateSessionPermissions($neededPermissions) {
+   $hasPermission = comparePermissions($neededPermissions);
+   if(!$hasPermission) {
+      header("Location: ./nopermission.html");
+      exit;
+   }
+}
 ?>

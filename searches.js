@@ -1,30 +1,3 @@
-function hideRestrictedElements() {
-    $.ajax("./api/getPermissions.php", {
-        async: false,
-        data: "",
-        success: function(data)
-        {
-            if(data == "none") {
-                return;
-            }
-            
-            var permissions = JSON.parse(data);
-
-            if(permissions.read == 1) {
-                $(".genLinks").show();
-            }
-            
-            if(permissions.promote == 1) {
-                $("#usersLink").show();
-            }
-        },
-        error: function(a, b, c)
-        {
-            console.log(a + ", " + b + ", " + c);
-        }
-    })
-}
-
 function submitForm() {
 
     var form = "?";
@@ -69,10 +42,10 @@ function drawSearchResults(data, fieldNames) {
     tables += "</tr></thead>";
 
     var hyperlinks = {
-        "invoiceNo" : "<a href='invoice_detailed.html?InvoiceNo=",
-        "customerId": "<a href='customer_detailed.html?CustomerID=",
-        "productCode": "<a href='product_detailed.html?ProductCode=",
-        "username": "<a href='user_detailed.html?Username="
+        "invoiceNo" : "<a href='invoice_detailed.php?InvoiceNo=",
+        "customerId": "<a href='customer_detailed.php?CustomerID=",
+        "productCode": "<a href='product_detailed.php?ProductCode=",
+        "username": "<a href='user_detailed.php?Username="
     };
 
     tables += "<tbody>"

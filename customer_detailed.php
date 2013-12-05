@@ -1,3 +1,9 @@
+<?php
+session_start();
+include_once './api/authenticationUtilities.php';
+$neededPermissions = array('read');
+evaluateSessionPermissions($neededPermissions);
+?>
 <!doctype html>
 <html dir="ltr" lang="en" class="no-js">
 <head>
@@ -11,7 +17,7 @@
     <script src="customer_detailed.js"></script>
 
 </head>
-<body onload="displayCustomer(getParameter(document.location.search).CustomerID); setCustomerID()" >
+<body onload="displayCustomer(getParameter(document.location.search).CustomerID); setCustomerID()">
 
     <div id="loadingCustomer">
         <span>Loading customer</span><br>
@@ -48,12 +54,16 @@
             </ul>
         </section>
 
-        <form id="edit" method="get" action="./customer_form.php" style="display: none;">
-            <input id="customerIDInput" type="number" name="CustomerID" style="display: none;">
-            <input type="submit" value="Edit">
-        </form>
+        <?php
+        $permissions = getSessionPermissions();
+        if(!empty($permissions) && $permissions['write'] == 1) {
+            echo '<form id="edit" method="get" action="./customer_form.php">';
+                echo '<input id="customerIDInput" type="number" name="CustomerID" style="display: none;">';
+                echo '<input type="submit" value="Edit">';
+            echo '</form>';
+        }
+        ?>
     </div>
-
 </body>
 
 </html>

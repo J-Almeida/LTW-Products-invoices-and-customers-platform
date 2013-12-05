@@ -1,6 +1,13 @@
 <?php
 
 require_once 'customer.php';
+session_start();
+include_once 'authenticationUtilities.php';
+
+if(!comparePermissions(array('read'))) {
+	$error = new Error(601, 'Permission Denied');
+    die( json_encode($error->getInfo()) );
+}
 
 $value = NULL;
 if ( isset($_GET['CustomerID']) && !empty($_GET['CustomerID']) ) {

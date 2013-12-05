@@ -2,8 +2,9 @@
 session_start();
 
 require_once 'customer.php';
+include_once 'authenticationUtilities.php';
 
-if(!isset($_SESSION['username']) || !isset($_SESSION['permissions']) || $_SESSION['permissions']['write'] != '1') {
+if(!comparePermissions(array('write'))) {
     $error = new Error(601, 'Permission Denied');
     die( json_encode($error->getInfo()) );
 }

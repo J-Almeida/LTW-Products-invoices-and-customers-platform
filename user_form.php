@@ -1,5 +1,8 @@
 <?php
-    include_once('api/utilities.php');
+session_start();
+include_once './api/authenticationUtilities.php';
+$neededPermissions = array('promote');
+evaluateSessionPermissions($neededPermissions);
 ?>
 <!doctype html>
 <html dir="ltr" lang="en" class="no-js">

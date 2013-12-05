@@ -1,3 +1,9 @@
+<?php
+session_start();
+include_once './api/authenticationUtilities.php';
+$neededPermissions = array('read');
+evaluateSessionPermissions($neededPermissions);
+?>
 <!doctype html>
 <html dir="ltr" lang="en" class="no-js">
 <head>
@@ -94,10 +100,15 @@
 
         </section>
 
-        <form id="edit" method="get" action="./invoice_form.php" style="display:none;">
-            <input id="invoiceNoInput" type="text" name="InvoiceNo" style="display: none;">
-            <input type="submit" value="Edit">
-        </form>
+        <?php
+        $permissions = getSessionPermissions();
+        if(!empty($permissions) && $permissions['write'] == 1) {
+            echo '<form id="edit" method="get" action="./invoice_form.php">';
+                echo '<input id="invoiceNoInput" type="text" name="InvoiceNo" style="display: none;">';
+                echo '<input type="submit" value="Edit">';
+            echo '</form>';
+        }
+        ?>
     </div>
 
     <br><br><div id="invoiceFooter"></div>

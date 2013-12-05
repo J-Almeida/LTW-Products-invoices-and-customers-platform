@@ -21,7 +21,7 @@
     </script>
 
 </head>
-<body onload="hideRestrictedElements();">
+<body>
 
 <div id="header">
     <h1>{{title}}</h1>
@@ -30,11 +30,7 @@
 
 <div id="menu">
     <ul>
-        <li><a href="index.php">Home</a></li>
-        <li class="genLinks" style="display:none;"><a href="invoices.php">Invoices</a></li>
-        <li class="genLinks" style="display:none;"><a href="customers.php">Customers</a></li>
-        <li class="genLinks" style="display:none;"><a href="products.php">Products</a></li>
-        <li id="usersLink" style="display:none;"><a href="users.php">Users</a></li>
+        {{menuItems}}
     </ul>
 
     <div class="login">

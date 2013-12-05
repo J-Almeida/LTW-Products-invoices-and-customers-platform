@@ -1,6 +1,14 @@
 <?php
 require_once 'invoice.php';
 
+session_start();
+include_once 'authenticationUtilities.php';
+
+if(!comparePermissions(array('read'))) {
+	$error = new Error(601, 'Permission Denied');
+    die( json_encode($error->getInfo()) );
+}
+
 $value = NULL;
 if ( isset($_GET['InvoiceNo']) && !empty($_GET['InvoiceNo']) ) {
     $value = $_GET['InvoiceNo'];
