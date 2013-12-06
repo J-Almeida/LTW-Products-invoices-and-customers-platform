@@ -17,7 +17,7 @@ evaluateSessionPermissions($neededPermissions);
     <script src="invoice_detailed.js"></script>
 
 </head>
-<body onload="displayInvoice(getParameter(document.location.search).InvoiceNo); setInvoiceNo()">
+<body onload="displayInvoice(getParameter(document.location.search).InvoiceNo); setInvoiceNo(); setDeleteParameters();">
 
     <div id="loadingInvoice">
         <span>Loading invoice</span><br>
@@ -103,10 +103,19 @@ evaluateSessionPermissions($neededPermissions);
         <?php
         $permissions = getSessionPermissions();
         if(!empty($permissions) && $permissions['write'] == 1) {
-            echo '<form id="edit" method="get" action="./invoice_form.php">';
-                echo '<input id="invoiceNoInput" type="text" name="InvoiceNo" style="display: none;">';
-                echo '<input type="submit" value="Edit">';
-            echo '</form>';
+            echo '<div id="editButtons">';
+                echo '<form id="edit" method="get" action="./invoice_form.php">';
+                    echo '<input id="invoiceNoInput" type="text" name="InvoiceNo" style="display: none;">';
+                    echo '<input type="submit" value="Edit">';
+                echo '</form>';
+
+                echo '<form id="delete" method="get" action="./api/deleteFrom.php" onsubmit="return confirm(\'Confirm deletion?\')">';
+                    echo '<input id="tableDel" type="text" name="table" style="display: none;">';
+                    echo '<input id="fieldDel" type="text" name="field" style="display: none;">';
+                    echo '<input id="valueDel" type="text" name="value" style="display: none;">';
+                    echo '<input type="submit" value="Delete">';
+                echo '</form>';
+            echo '</div>';
         }
         ?>
     </div>

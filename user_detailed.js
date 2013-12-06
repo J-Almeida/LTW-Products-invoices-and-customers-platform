@@ -46,3 +46,10 @@ function setUserID() {
     var username = getParameter(document.location.search).Username;
     $("#UsernameInput").val(username);
 }
+
+function setDeleteParameters() {
+    var username = getParameter(document.location.search).Username;
+    $("#tableDel").val('User');
+    $("#fieldDel").val('username');
+    $("#valueDel").val(username);
+}

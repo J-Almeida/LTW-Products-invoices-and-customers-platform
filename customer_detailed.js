@@ -47,3 +47,10 @@ function setCustomerID() {
     var customerID = getParameter(document.location.search).CustomerID;
     $("#customerIDInput").val(customerID);
 }
+
+function setDeleteParameters() {
+    var customerID = getParameter(document.location.search).CustomerID;
+    $("#tableDel").val('Customer');
+    $("#fieldDel").val('CustomerID');
+    $("#valueDel").val(customerID);
+}

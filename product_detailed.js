@@ -46,3 +46,10 @@ function setProductCode() {
     var productCode = getParameter(document.location.search).ProductCode;
     $("#productCodeInput").val(productCode);
 }
+
+function setDeleteParameters() {
+    var productCode = getParameter(document.location.search).ProductCode;
+    $("#tableDel").val('Product');
+    $("#fieldDel").val('productCode');
+    $("#valueDel").val(productCode);
+}

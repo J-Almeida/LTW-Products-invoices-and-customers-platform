@@ -17,7 +17,7 @@ evaluateSessionPermissions($neededPermissions);
     <script src="user_detailed.js"></script>
 
 </head>
-<body onload="displayUser(getParameter(document.location.search).Username); setUserID()">
+<body onload="displayUser(getParameter(document.location.search).Username); setUserID(); setDeleteParameters();">
 
     <div id="loadingUser">
         <span>Loading User</span><br>
@@ -54,10 +54,19 @@ evaluateSessionPermissions($neededPermissions);
 
         <?php
         if(comparePermissions(array('promote'))) {
-            echo '<form id="edit" method="get" action="./user_form.php">';
-                echo '<input id="UsernameInput" type="text" name="UsernameInput" style="display: none;">';
-                echo '<input type="submit" value="Edit">';
-            echo '</form>';
+            echo '<div id="editButtons">';
+                echo '<form id="edit" method="get" action="./user_form.php">';
+                    echo '<input id="UsernameInput" type="text" name="UsernameInput" style="display: none;">';
+                    echo '<input type="submit" value="Edit">';
+                echo '</form>';
+
+                echo '<form id="delete" method="get" action="./api/deleteFrom.php" onsubmit="return confirm(\'Confirm deletion?\')">';
+                    echo '<input id="tableDel" type="text" name="table" style="display: none;">';
+                    echo '<input id="fieldDel" type="text" name="field" style="display: none;">';
+                    echo '<input id="valueDel" type="text" name="value" style="display: none;">';
+                    echo '<input type="submit" value="Delete">';
+                echo '</form>';
+            echo '</div>';
         }
         ?>
     </div>

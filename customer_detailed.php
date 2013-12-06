@@ -17,7 +17,7 @@ evaluateSessionPermissions($neededPermissions);
     <script src="customer_detailed.js"></script>
 
 </head>
-<body onload="displayCustomer(getParameter(document.location.search).CustomerID); setCustomerID()">
+<body onload="displayCustomer(getParameter(document.location.search).CustomerID); setCustomerID(); setDeleteParameters();">
 
     <div id="loadingCustomer">
         <span>Loading customer</span><br>
@@ -57,10 +57,19 @@ evaluateSessionPermissions($neededPermissions);
         <?php
         $permissions = getSessionPermissions();
         if(!empty($permissions) && $permissions['write'] == 1) {
-            echo '<form id="edit" method="get" action="./customer_form.php">';
-                echo '<input id="customerIDInput" type="number" name="CustomerID" style="display: none;">';
-                echo '<input type="submit" value="Edit">';
-            echo '</form>';
+            echo '<div id="editButtons">';
+                echo '<form id="edit" method="get" action="./customer_form.php">';
+                    echo '<input id="customerIDInput" type="number" name="CustomerID" style="display: none;">';
+                    echo '<input type="submit" value="Edit">';
+                echo '</form>';
+
+                echo '<form id="delete" method="get" action="./api/deleteFrom.php" onsubmit="return confirm(\'Confirm deletion?\')">';
+                    echo '<input id="tableDel" type="text" name="table" style="display: none;">';
+                    echo '<input id="fieldDel" type="text" name="field" style="display: none;">';
+                    echo '<input id="valueDel" type="text" name="value" style="display: none;">';
+                    echo '<input type="submit" value="Delete">';
+                echo '</form>';
+            echo '</div>';
         }
         ?>
     </div>

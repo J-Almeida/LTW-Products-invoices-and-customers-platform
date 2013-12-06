@@ -140,3 +140,10 @@ function setInvoiceNo() {
     var invoiceNo = getParameter(document.location.search).InvoiceNo;
     $("#invoiceNoInput").val(invoiceNo);
 }
+
+function setDeleteParameters() {
+    var invoiceNo = getParameter(document.location.search).InvoiceNo;
+    $("#tableDel").val('Invoice');
+    $("#fieldDel").val('invoiceNo');
+    $("#valueDel").val(invoiceNo);
+}
