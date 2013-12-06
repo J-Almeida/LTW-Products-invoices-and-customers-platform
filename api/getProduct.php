@@ -2,7 +2,7 @@
 
 require_once 'product.php';
 
-session_start();
+require_once '../bootstrap.php';
 require_once 'authenticationUtilities.php';
 
 if(!comparePermissions(array('read'))) {

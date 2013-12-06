@@ -1,6 +1,5 @@
 <?php
-session_start();
-
+require_once '../bootstrap.php';
 require_once 'authenticationUtilities.php';
 require_once 'delete.php';
 require_once 'update.php';

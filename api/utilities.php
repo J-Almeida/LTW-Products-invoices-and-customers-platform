@@ -110,7 +110,11 @@ function getId($table, $field, $value) {
     $values = array($value);
     $rows = array($table.'Id');
     $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
-    return $invoiceSearch->getResults()[0][$table.'Id'];
+    $results = $invoiceSearch->getResults();
+    if(isSet($results[0])) {
+        return $results[0][$table.'Id'];
+    }
+    return null;
 }
 
 function getAllPermissions() {

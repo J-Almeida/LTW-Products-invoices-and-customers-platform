@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once '../bootstrap.php';
 
 require_once 'invoice.php';
 require_once 'authenticationUtilities.php';

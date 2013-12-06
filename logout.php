@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once 'bootstrap.php';
 
 if(isset($_SESSION['username'])) {
 	unset($_SESSION['username']);

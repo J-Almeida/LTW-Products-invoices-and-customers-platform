@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once '../bootstrap.php';
 require_once 'utilities.php';
 require_once 'search.php';
 require_once 'authenticationUtilities.php';
