@@ -7,6 +7,7 @@ class Query {
     public function executeQuery() {
         try {
             $this->db = new PDO($this->getDatabase());
+            $this->db->query('PRAGMA foreign_keys = ON');
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query = $this->db->prepare($this->sql);
             return $query->execute();
@@ -18,6 +19,7 @@ class Query {
 
     public function getResults() {
         $this->db = new PDO($this->getDatabase());
+        $this->db->query('PRAGMA foreign_keys = ON');
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $query = $this->db->prepare($this->sql);
         $query->execute();
