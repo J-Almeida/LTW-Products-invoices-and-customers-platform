@@ -55,8 +55,7 @@ evaluateSessionPermissions($neededPermissions);
         </section>
 
         <?php
-        $permissions = getSessionPermissions();
-        if(!empty($permissions) && $permissions['write'] == 1) {
+        if(comparePermissions(array('write'))) {
             echo '<div id="editButtons">';
                 echo '<form id="edit" method="get" action="./customer_form.php">';
                     echo '<input id="customerIDInput" type="number" name="CustomerID" style="display: none;">';

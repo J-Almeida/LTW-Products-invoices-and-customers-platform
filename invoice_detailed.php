@@ -101,8 +101,7 @@ evaluateSessionPermissions($neededPermissions);
         </section>
 
         <?php
-        $permissions = getSessionPermissions();
-        if(!empty($permissions) && $permissions['write'] == 1) {
+        if(comparePermissions(array('write'))) {
             echo '<div id="editButtons">';
                 echo '<form id="edit" method="get" action="./invoice_form.php">';
                     echo '<input id="invoiceNoInput" type="text" name="InvoiceNo" style="display: none;">';
