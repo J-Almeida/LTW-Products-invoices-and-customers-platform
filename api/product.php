@@ -16,7 +16,7 @@ function getProduct($productCode) {
 
     if (!$result) {
         $error = new Error(404, "Product not found");
-        return $error;
+        return $error->getInfo();
         //die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
     }
 

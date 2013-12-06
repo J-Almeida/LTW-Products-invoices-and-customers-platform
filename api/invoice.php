@@ -18,7 +18,7 @@ function getInvoice($invoiceNo) {
 
     if (!$invoice) {
         $error = new Error(404, "Invoice not found");
-        return $error;
+        return $error->getInfo();
         //die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
     }
 

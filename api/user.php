@@ -16,7 +16,7 @@ function getUser($userName) {
 
     if (!$result) {
         $error = new Error(404, "User not found");
-        die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
+        return $error->getInfo();
     }
 
     $result = $result[0];

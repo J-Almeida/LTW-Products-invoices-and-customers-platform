@@ -16,7 +16,7 @@ function getCustomer($customerId) {
 
     if (!$result) {
         $error = new Error(404, "Customer not found");
-        return $error;
+        return $error->getInfo();
         //die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
     }
 
