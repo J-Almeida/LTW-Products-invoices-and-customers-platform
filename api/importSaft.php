@@ -104,7 +104,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
             $products[$oldProductCode] = json_decode($existingProduct, true);
             echo "Product with code $oldProductCode already in current database with code ".$products[$oldProductCode]['productCode'].'<br/>';
         } else {
-            $productInfo = getProductInfo($product->ProductCode, $auditFile);
+            $productInfo = getProductInfo((int)$product->ProductCode, $auditFile);
             if ($productInfo == null) {
                 continue; // not a valid product, skip
             }
@@ -180,7 +180,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
 function getProductInfo($productCode, $auditFile) {
     foreach($auditFile->SourceDocuments->SalesInvoices->Invoice as $invoice) {
         foreach($invoice->Line as $line) {
-            if ((int)$line->ProductCode = $productCode) {
+            if ($productCode == (int)$line->ProductCode) {
                 $productInfo = array();
                 $productInfo['unitPrice'] = (float) $line->UnitPrice;
                 $productInfo['unitOfMeasure'] = (string) $line->UnitOfMeasure;
