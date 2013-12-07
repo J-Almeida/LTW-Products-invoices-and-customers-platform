@@ -8,9 +8,9 @@ require_once 'delete.php';
 function getInvoice($invoiceNo) {
     // Fetch the invoice we are looking for
     $table = 'Invoice';
-    $field = 'invoiceNo';
+    $field = 'InvoiceNo';
     $values = array($invoiceNo);
-    $rows = array('invoiceId', 'invoiceNo', 'invoiceDate', 'CustomerID', 'taxPayable', 'netTotal', 'grossTotal');
+    $rows = array('InvoiceID', 'InvoiceNo', 'InvoiceDate', 'CustomerID', 'TaxPayable', 'NetTotal', 'GrossTotal');
     $joins = array();
 
     $invoiceSearch = new EqualSearch($table, $field, $values, $rows, $joins);
@@ -28,50 +28,50 @@ function getInvoice($invoiceNo) {
 
     // Fetch the invoice lines associated with the invoice found
     $table = 'InvoiceLine';
-    $field = 'invoiceId';
-    $values = array($invoice['invoiceId']);
-    $rows = array('lineNumber', 'ProductCode', 'quantity', 'UnitPrice', 'creditAmount' , 'Tax.taxId AS taxId', 'taxType', 'taxPercentage');
+    $field = 'InvoiceID';
+    $values = array($invoice['InvoiceID']);
+    $rows = array('LineNumber', 'ProductCode', 'Quantity', 'UnitPrice', 'CreditAmount' , 'Tax.TaxID AS TaxID', 'TaxType', 'TaxPercentage');
     $joins = array('InvoiceLine' => array('Tax', 'Product'));
 
     $invoiceLinesSearch = new EqualSearch($table, $field, $values, $rows, $joins);
     $invoiceLines = $invoiceLinesSearch->getResults();
     foreach($invoiceLines as &$invoiceLine){
         roundLineTotals($invoiceLine);
-        setValuesAsArray('tax', array('taxType', 'taxPercentage'), $invoiceLine);
+        setValuesAsArray('Tax', array('TaxType', 'TaxPercentage'), $invoiceLine);
     }
 
-    unset($invoice['invoiceId']);
-    $invoice['line'] = $invoiceLines;
+    unset($invoice['InvoiceID']);
+    $invoice['Line'] = $invoiceLines;
 
-    setValuesAsArray('documentTotals', array('taxPayable', 'netTotal', 'grossTotal' ), $invoice);
+    setValuesAsArray('DocumentTotals', array('TaxPayable', 'NetTotal', 'GrossTotal' ), $invoice);
 
     return $invoice;
 }
 
 function insertInvoice($invoiceInfo) {
-    $invoiceLines = $invoiceInfo['line'];
-    unset($invoiceInfo['line']);
-    unset($invoiceInfo['documentTotals']);
+    $invoiceLines = $invoiceInfo['Line'];
+    unset($invoiceInfo['Line']);
+    unset($invoiceInfo['DocumentTotals']);
 
     new Insert('Invoice', $invoiceInfo);
-    $invoiceId = getId('Invoice', 'invoiceNo', $invoiceInfo['invoiceNo']);
+    $invoiceId = getId('Invoice', 'InvoiceNo', $invoiceInfo['InvoiceNo']);
 
     foreach($invoiceLines as $line) {
-        if($line['taxId'])
-            $taxId = $line['taxId'];
+        if($line['TaxId'])
+            $taxId = $line['TaxId'];
         else
-            $taxId = getId('Tax', 'taxType', $line['tax']['taxType']);
+            $taxId = getId('Tax', 'TaxType', $line['Tax']['TaxType']);
 
         $fields = array(
-            'invoiceId' => $invoiceId,
+            'InvoiceID' => $invoiceId,
             'ProductID' => getId('Product', 'ProductCode', $line['ProductCode']),
-            'quantity'  => $line['quantity'],
-            'taxId'     => $taxId
+            'Quantity'  => $line['Quantity'],
+            'TaxId'     => $taxId
         );
         new Insert('InvoiceLine', $fields);
     }
 
-    return getInvoice($invoiceInfo['invoiceNo']);
+    return getInvoice($invoiceInfo['InvoiceNo']);
 }
 
 function updateInvoice($invoiceInfo) {
@@ -80,44 +80,44 @@ function updateInvoice($invoiceInfo) {
 
     $table = 'Invoice';
     $field = 'InvoiceNo';
-    $invoiceNo = $invoiceInfo['invoiceNo'];
+    $invoiceNo = $invoiceInfo['InvoiceNo'];
 
     if ($invoiceNo == NULL) {
         // create a new invoice with the last invoiceNo + 1
         $invoiceNo = getLastInvoiceNoPlusOne();
-        $invoiceInfo['invoiceNo'] = $invoiceNo;
+        $invoiceInfo['InvoiceNo'] = $invoiceNo;
         $response = insertInvoice($invoiceInfo);
         return $response;
     }
 
-    $invoiceId = getId('Invoice', 'invoiceNo', $invoiceNo);
-    $invoiceLines = $invoiceInfo['line'];
+    $invoiceId = getId('Invoice', 'InvoiceNo', $invoiceNo);
+    $invoiceLines = $invoiceInfo['Line'];
 
     // ignore and reset document totals and lines
-    unset($invoiceInfo['line']);
-    unset($invoiceInfo['documentTotals']);
-    $invoiceInfo['taxPayable'] = 0;
-    $invoiceInfo['netTotal'] = 0;
-    $invoiceInfo['grossTotal'] = 0;
+    unset($invoiceInfo['Line']);
+    unset($invoiceInfo['DocumentTotals']);
+    $invoiceInfo['TaxPayable'] = 0;
+    $invoiceInfo['NetTotal'] = 0;
+    $invoiceInfo['GrossTotal'] = 0;
 
     new Update($table, $invoiceInfo, $field, $invoiceNo);
 
     // Re insert all invoice lines
     // This is necessary because the database will calculate the new invoice totals
-    new Delete('InvoiceLine', array('invoiceId' => $invoiceId));
+    new Delete('InvoiceLine', array('InvoiceID' => $invoiceId));
 
     foreach($invoiceLines as $line) {
-        // INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
-        if($line['taxId'])
-            $taxId = $line['taxId'];
+        // INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
+        if($line['TaxID'])
+            $taxId = $line['TaxID'];
         else
-            $taxId = getId('Tax', 'taxType', $line['tax']['taxType']);
+            $taxId = getId('Tax', 'TaxType', $line['Tax']['TaxType']);
 
         $fields = array(
-            'invoiceId' => $invoiceId,
+            'InvoiceID' => $invoiceId,
             'ProductID' => getId('Product', 'ProductCode' ,$line['ProductCode']),
-            'quantity'  => $line['quantity'],
-            'taxId'     => $taxId
+            'Quantity'  => $line['Quantity'],
+            'TaxID'     => $taxId
         );
         new Insert('InvoiceLine', $fields);
     }
@@ -127,13 +127,13 @@ function updateInvoice($invoiceInfo) {
 
 function getLastInvoiceNo(){
     $table = 'Invoice';
-    $field = 'invoiceNo';
+    $field = 'InvoiceNo';
     $values = array();
-    $rows = array('invoiceNo');
+    $rows = array('InvoiceNo');
     $invoiceSearch = new MaxSearch($table, $field, $values, $rows);
     $results = $invoiceSearch->getResults();
     if(isSet($results[0])) {
-        return $results[0]['invoiceNo'];
+        return $results[0]['InvoiceNo'];
     }
     return 'FT SEQ/0';
 }

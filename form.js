@@ -13,19 +13,19 @@ function populateForm(data) {
         }).val(value);
     });
 
-    if ( data.invoiceNo ) {
+    if ( data.InvoiceNo ) {
         loadInvoiceLines(data);
     }
 }
 
 function loadInvoiceLines(invoiceData) {
-    var lines = invoiceData['line'];
+    var lines = invoiceData['Line'];
     for (var index = 1; index < lines.length; ++index) {
         addRow();
     }
     var jsonLines = new Object();
     for(var line in lines) {
-        var lineNumber = 'line[' + lines[line].lineNumber + ']';
+        var lineNumber = 'Line[' + lines[line].LineNumber + ']';
         for(var field in lines[line]) {
             jsonLines[lineNumber + '.' + field] = lines[line][field];
         }
@@ -152,7 +152,7 @@ function submitForm(objectName) {
     var objectFields = new Object();
     objectFields['customer'] = 'CustomerID';
     objectFields['product'] = 'ProductCode';
-    objectFields['invoice'] = 'invoiceNo';
+    objectFields['invoice'] = 'InvoiceNo';
     objectFields['user'] = 'username';
 
     // clean empty fields from form
@@ -191,7 +191,7 @@ function submitForm(objectName) {
 function parseLines(invoiceJson) {
     var lineArray = new Array();
     for(var field in invoiceJson) {
-        if (field.indexOf("line") > -1) {
+        if (field.indexOf("Line") > -1) {
             var lineNumber = parseInt(field.match(/\d+/)) - 1;
             var lineField = field.split('.')[1];
             if (!lineArray[lineNumber])
@@ -202,7 +202,7 @@ function parseLines(invoiceJson) {
     }
     // clear the lines that were deleted
     lineArray.clean(null);
-    invoiceJson['line'] = lineArray;
+    invoiceJson['Line'] = lineArray;
     return invoiceJson;
 }
 

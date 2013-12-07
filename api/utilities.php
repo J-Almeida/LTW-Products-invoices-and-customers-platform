@@ -91,14 +91,14 @@ function roundMoneyAmount(&$amount) {
 }
 
 function roundDocumentTotals(&$invoice) {
-    roundMoneyAmount($invoice['taxPayable']);
-    roundMoneyAmount($invoice['netTotal']);
-    roundMoneyAmount($invoice['grossTotal']);
+    roundMoneyAmount($invoice['TaxPayable']);
+    roundMoneyAmount($invoice['NetTotal']);
+    roundMoneyAmount($invoice['GrossTotal']);
 }
 
 function roundLineTotals(&$line) {
     roundMoneyAmount($line['UnitPrice']);
-    roundMoneyAmount($line['creditAmount']);
+    roundMoneyAmount($line['CreditAmount']);
 }
 
 function roundProductTotals(&$product) {
@@ -106,25 +106,12 @@ function roundProductTotals(&$product) {
 }
 
 function getId($table, $field, $value) {
-
-    if($table == 'Product') {
-        $values = array($value);
-        $rows = array($table.'ID');
-        $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
-        $results = $invoiceSearch->getResults();
-        if(isSet($results[0])) {
-            return $results[0][$table.'ID'];
-        }
-        return null;
-    }
-    
-    $table = lcfirst($table);
     $values = array($value);
-    $rows = array($table.'Id');
+    $rows = array($table.'ID');
     $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
     $results = $invoiceSearch->getResults();
     if(isSet($results[0])) {
-        return $results[0][$table.'Id'];
+        return $results[0][$table.'ID'];
     }
     return null;
 }

@@ -38,8 +38,8 @@ function getProductDetails(productCode) {
 function drawInvoiceStructure(invoiceData) {
     var json = JSON.parse(invoiceData);
 
-    $("#invoiceNo").html(json.invoiceNo);
-    $("#invoiceDate").html(json.invoiceDate);
+    $("#invoiceNo").html(json.InvoiceNo);
+    $("#invoiceDate").html(json.InvoiceDate);
     drawCustomerDetails(json.CustomerID, $("#invoiceToName"));
 
     $("#invoiceCustomer").click(function() {
@@ -47,18 +47,18 @@ function drawInvoiceStructure(invoiceData) {
     });
 
     var lines = "";
-    for(result in json.line) {
-        var object = json.line[result];
+    for(result in json.Line) {
+        var object = json.Line[result];
         var productData;
         lines += "<tr id=";
-        lines += object.lineNumber;
+        lines += object.LineNumber;
         lines += ">";
         for(var field in object) {
-            if(field == 'taxId'){
+            if(field == 'TaxID'){
                 continue;
             }
-            if(field != "lineNumber") {
-                if(field == "tax") {
+            if(field != "LineNumber") {
+                if(field == "Tax") {
                     for(taxField in object[field]) {
                         lines += "<td>";
                         lines += object[field][taxField];
@@ -76,14 +76,14 @@ function drawInvoiceStructure(invoiceData) {
                 }
                 else {
                     lines += "<td>";
-                    if(field == "UnitPrice" || field == "creditAmount")
+                    if(field == "UnitPrice" || field == "CreditAmount")
                         lines += "€ "; 
                     lines += object[field];
                     lines += "</td>";
                 }
             }
 
-            if(field == "quantity") {
+            if(field == "Quantity") {
                 lines += "<td>";
                 lines += productData.UnitOfMeasure;
                 lines += "</td>";
@@ -96,23 +96,23 @@ function drawInvoiceStructure(invoiceData) {
 
 //Load onClick events for table rows
 var rowProd = {};
-for(result in json.line) {
-    var object = json.line[result];
-    var rowID = "#" + object.lineNumber;
+for(result in json.Line) {
+    var object = json.Line[result];
+    var rowID = "#" + object.LineNumber;
     var pCode = object.ProductCode;
-    rowProd[object.lineNumber] = pCode;
+    rowProd[object.LineNumber] = pCode;
     $(rowID).click(function() {
         window.open("product_detailed.php?ProductCode=" + rowProd[this.id]);
     });
 }
 
-var documentTotals = json.documentTotals;
+var documentTotals = json.DocumentTotals;
 
-$("#taxPay").html("€ " + documentTotals.taxPayable);
-$("#netTotal").html("€ " + documentTotals.netTotal);
-$("#grossTotal").html("€ " + documentTotals.grossTotal);
+$("#taxPay").html("€ " + documentTotals.TaxPayable);
+$("#netTotal").html("€ " + documentTotals.NetTotal);
+$("#grossTotal").html("€ " + documentTotals.GrossTotal);
 
-$("#invoiceFooter").html(json.invoiceNo + "     |     " + json.invoiceDate);
+$("#invoiceFooter").html(json.InvoiceNo + "     |     " + json.InvoiceDate);
 }
 
 function displayInvoice(invoiceNo) {

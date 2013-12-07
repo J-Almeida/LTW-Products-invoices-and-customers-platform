@@ -42,11 +42,11 @@ evaluateSessionPermissions($neededPermissions);
         <header id="invoiceHeader">
             <ul class="invoiceInfo">
                 <li>Invoice no: <span id="invoiceNo">
-                        <input id="invoiceNoInput" type="text" name="invoiceNo" readonly>
+                        <input id="invoiceNoInput" type="text" name="InvoiceNo" readonly>
                 </span></li>
 
                 <li>Invoice date: <span id="invoiceDate">
-                        <input type="date" name="invoiceDate">
+                        <input type="date" name="InvoiceDate">
                 </span></li>
             </ul>
         </header>
@@ -88,7 +88,7 @@ evaluateSessionPermissions($neededPermissions);
                     <tbody id="invoiceLines">
                     <tr class="invoiceLine" id="1">
                         <th>
-                            <select class="productCode" name="line[1].ProductCode" onchange="updateLine($(this));">
+                            <select class="productCode" name="Line[1].ProductCode" onchange="updateLine($(this));">
                                 <?php
                                 $search = new ListAllSearch('Product', 'ProductCode', array(), array('*'));
                                 $products = $search->getResults();
@@ -101,22 +101,22 @@ evaluateSessionPermissions($neededPermissions);
                             </select>
                         </th>
                         <th>
-                            <input class="quantity" type="number" name="line[1].quantity" value="1" onchange="updateLine($(this));">
+                            <input class="quantity" type="number" name="Line[1].Quantity" value="1" onchange="updateLine($(this));">
                         </th>
                         <th>
-                            <input class="unitPrice" type="number" name="line[1].UnitPrice" value="1" readonly>
+                            <input class="unitPrice" type="number" name="Line[1].UnitPrice" value="1" readonly>
                         </th>
                         <th>
-                            <input class="creditAmount" type="number" name="line[1].creditAmount" value="1" readonly>
+                            <input class="creditAmount" type="number" name="Line[1].CreditAmount" value="1" readonly>
                         </th>
                         <th>
-                            <select class="taxId" name="line[1].taxId" onchange="updateTotals();">
+                            <select class="taxId" name="Line[1].TaxID" onchange="updateTotals();">
                                 <?php
-                                $search = new ListAllSearch('Tax', 'taxId', array(), array('*'));
+                                $search = new ListAllSearch('Tax', 'TaxID', array(), array('*'));
                                 $taxes = $search->getResults();
                                 foreach($taxes as $tax){
-                                    echo '<option value='.$tax['taxId'].' data-taxpercentage="'.$tax['taxPercentage'].'">';
-                                    echo $tax['taxType'] . ' - ' . $tax['taxPercentage'] . '%';
+                                    echo '<option value='.$tax['TaxID'].' data-taxpercentage="'.$tax['TaxPercentage'].'">';
+                                    echo $tax['TaxType'] . ' - ' . $tax['TaxPercentage'] . '%';
                                     echo '</option>';
                                 }
                                 ?>

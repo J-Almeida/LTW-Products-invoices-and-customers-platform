@@ -35,32 +35,32 @@ CREATE TABLE Product (
 );
 
 CREATE TABLE Invoice (
-	invoiceId INTEGER PRIMARY KEY AUTOINCREMENT,
-	invoiceNo TEXT UNIQUE NOT NULL,
-	invoiceDate DATE NOT NULL,
+	InvoiceID INTEGER PRIMARY KEY AUTOINCREMENT,
+	InvoiceNo TEXT UNIQUE NOT NULL,
+	InvoiceDate DATE NOT NULL,
 	CustomerID INTEGER REFERENCES Customer(CustomerID) ON DELETE CASCADE,
-	systemEntryDate TIMESTAMP,
+	SystemEntryDate TIMESTAMP,
 	/* Document Totals */
-	taxPayable REAL DEFAULT 0, /* Sum of taxes of all lines */ 
-	netTotal REAL DEFAULT 0,   /* Sum of price of all lines w/o tax */ 
-	grossTotal REAL DEFAULT 0  /* netTotal + taxPayable */
+	TaxPayable REAL DEFAULT 0, /* Sum of taxes of all lines */ 
+	NetTotal REAL DEFAULT 0,   /* Sum of price of all lines w/o tax */ 
+	GrossTotal REAL DEFAULT 0  /* NetTotal + TaxPayable */
 );
 
 CREATE TABLE InvoiceLine (
-	invoiceLineId INTEGER PRIMARY KEY AUTOINCREMENT,
-	invoiceId INTEGER REFERENCES Invoice(invoiceId) ON DELETE CASCADE,
-	lineNumber INTEGER DEFAULT 0,
+	InvoiceLineID INTEGER PRIMARY KEY AUTOINCREMENT,
+	InvoiceID INTEGER REFERENCES Invoice(InvoiceID) ON DELETE CASCADE,
+	LineNumber INTEGER DEFAULT 0,
 	ProductID INTEGER REFERENCES Product(ProductID) ON DELETE CASCADE,
-	quantity INTEGER NOT NULL,
-	creditAmount REAL,
-	taxId INTEGER REFERENCES Tax(taxId) ON DELETE CASCADE
+	Quantity INTEGER NOT NULL,
+	CreditAmount REAL,
+	TaxID INTEGER REFERENCES Tax(TaxID) ON DELETE CASCADE
 );
 
 CREATE TABLE Tax (
-	taxId INTEGER PRIMARY KEY AUTOINCREMENT,
-	taxType TEXT UNIQUE NOT NULL,
-	taxPercentage REAL NOT NULL,
-	taxDescription TEXT
+	TaxID INTEGER PRIMARY KEY AUTOINCREMENT,
+	TaxType TEXT UNIQUE NOT NULL,
+	TaxPercentage REAL NOT NULL,
+	TaxDescription TEXT
 );
 
 CREATE TABLE Permission (
@@ -84,42 +84,42 @@ CREATE TRIGGER setSystemEntryDate
 AFTER INSERT ON Invoice
 FOR EACH ROW
 BEGIN
-	UPDATE Invoice SET systemEntryDate = strftime('%Y-%m-%dT%H:%M:%f')
-	WHERE Invoice.invoiceId = NEW.invoiceId; /* 2013-10-18T09:36:54.129+01:00 */
+	UPDATE Invoice SET SystemEntryDate = strftime('%Y-%m-%dT%H:%M:%f')
+	WHERE Invoice.InvoiceID = NEW.InvoiceID; /* 2013-10-18T09:36:54.129+01:00 */
 END;
 
 CREATE TRIGGER updateSystemEntryDate
 AFTER UPDATE ON Invoice
 FOR EACH ROW
 BEGIN
-	UPDATE Invoice SET systemEntryDate = strftime('%Y-%m-%dT%H:%M:%f')
-	WHERE Invoice.invoiceId = OLD.invoiceId;
+	UPDATE Invoice SET SystemEntryDate = strftime('%Y-%m-%dT%H:%M:%f')
+	WHERE Invoice.InvoiceID = OLD.InvoiceID;
 END;
 
 CREATE TRIGGER updateInvoiceTotals
 AFTER INSERT ON InvoiceLine
 FOR EACH ROW
 BEGIN
-	UPDATE InvoiceLine SET lineNumber = 
-	1 + (SELECT max(lineNumber) FROM InvoiceLine WHERE invoiceLine.invoiceId = NEW.invoiceId)
-	WHERE invoiceLine.invoiceLineId = NEW.invoiceLineId;
+	UPDATE InvoiceLine SET LineNumber = 
+	1 + (SELECT max(LineNumber) FROM InvoiceLine WHERE invoiceLine.InvoiceID = NEW.InvoiceID)
+	WHERE invoiceLine.InvoiceLineID = NEW.InvoiceLineID;
 
-	UPDATE InvoiceLine SET creditAmount = NEW.quantity * (SELECT UnitPrice FROM Product WHERE ProductID = NEW.ProductID)
-	WHERE invoiceLine.invoiceLineId = NEW.invoiceLineId;
+	UPDATE InvoiceLine SET CreditAmount = NEW.Quantity * (SELECT UnitPrice FROM Product WHERE ProductID = NEW.ProductID)
+	WHERE invoiceLine.InvoiceLineID = NEW.InvoiceLineID;
 
-	UPDATE Invoice SET taxPayable = 
-	taxPayable + (SELECT taxPercentage FROM Tax WHERE taxId = NEW.taxId) * 0.01
-	* (SELECT creditAmount FROM InvoiceLine WHERE InvoiceLine.invoiceLineId = NEW.invoiceLineId) 
-	WHERE Invoice.invoiceId = NEW.invoiceId; 
+	UPDATE Invoice SET TaxPayable = 
+	TaxPayable + (SELECT TaxPercentage FROM Tax WHERE TaxID = NEW.TaxID) * 0.01
+	* (SELECT CreditAmount FROM InvoiceLine WHERE InvoiceLine.InvoiceLineID = NEW.InvoiceLineID) 
+	WHERE Invoice.InvoiceID = NEW.InvoiceID; 
 
-	UPDATE Invoice SET netTotal = 
-	netTotal + (SELECT creditAmount FROM InvoiceLine WHERE InvoiceLine.invoiceLineId = NEW.invoiceLineId)
-	WHERE Invoice.invoiceId = NEW.invoiceId;
+	UPDATE Invoice SET NetTotal = 
+	NetTotal + (SELECT CreditAmount FROM InvoiceLine WHERE InvoiceLine.InvoiceLineID = NEW.InvoiceLineID)
+	WHERE Invoice.InvoiceID = NEW.InvoiceID;
 
-	UPDATE Invoice SET grossTotal =
-	(SELECT taxPayable FROM Invoice WHERE Invoice.invoiceId = NEW.invoiceId) 
-	+ (SELECT netTotal FROM Invoice WHERE Invoice.invoiceId = NEW.invoiceId)
-	WHERE Invoice.invoiceId = NEW.invoiceId;
+	UPDATE Invoice SET GrossTotal =
+	(SELECT TaxPayable FROM Invoice WHERE Invoice.InvoiceID = NEW.InvoiceID) 
+	+ (SELECT NetTotal FROM Invoice WHERE Invoice.InvoiceID = NEW.InvoiceID)
+	WHERE Invoice.InvoiceID = NEW.InvoiceID;
 END;
 
 INSERT INTO Permission(permissionType, permissionRead, permissionWrite, promote) VALUES ( "admin", 1, 1, 1);
@@ -269,458 +269,458 @@ INSERT INTO Customer(CustomerTaxID, CompanyName, AddressDetail, CityName, Countr
 
 
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/1", "2013-09-27", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/3", "2013-10-11", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/14", "2013-09-30", 2);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/11", "2013-11-01", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/2", "2013-09-29", 4);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/15", "2013-11-02", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/16", "2013-11-05", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/17", "2013-11-07", 4);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/18", "2013-11-09", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/19", "2013-11-09", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/20", "2013-11-10", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/21", "2013-11-11", 10);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/22", "2013-11-11", 9);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/23", "2013-11-11", 8);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/24", "2013-11-15", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/25", "2013-11-15", 10);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/26", "2013-11-16", 10);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/27", "2013-11-17", 7);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/28", "2013-11-17", 6);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/29", "2013-11-17", 8);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/30", "2013-11-17", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/31", "2013-11-17", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/32", "2013-11-18", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/33", "2013-11-19", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/34", "2013-11-19", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/35", "2013-11-20", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/36", "2013-11-21", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/37", "2013-11-23", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/38", "2013-11-25", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/39", "2013-11-25", 2);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/40", "2013-11-25", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/41", "2013-11-25", 4);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/42", "2013-11-27", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/43", "2013-11-29", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
+INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/44", "2013-11-30", 5);
 
 
-INSERT INTO Tax(taxType, taxPercentage, taxDescription) VALUES ("IVA 1", 23.00, "Taxa Normal");
-INSERT INTO Tax(taxType, taxPercentage, taxDescription) VALUES ("IVA 2", 13.00, "Taxa Intermédia");
-INSERT INTO Tax(taxType, taxPercentage, taxDescription) VALUES ("IVA 3",  6.00, "Taxa Reduzida");
+INSERT INTO Tax(TaxType, TaxPercentage, TaxDescription) VALUES ("IVA 1", 23.00, "Taxa Normal");
+INSERT INTO Tax(TaxType, TaxPercentage, TaxDescription) VALUES ("IVA 2", 13.00, "Taxa Intermédia");
+INSERT INTO Tax(TaxType, TaxPercentage, TaxDescription) VALUES ("IVA 3",  6.00, "Taxa Reduzida");
 
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 1, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 2, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 3, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 4, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 5, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 6, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 7, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 8, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 9, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 10, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 11, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 12, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 13, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 14, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 15, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 16, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 17, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 18, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 19, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 20, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 21, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 22, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 23, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 24, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 25, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 26, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 27, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 28, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 29, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 30, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 31, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 32, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 33, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 34, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 35, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 36, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 37, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 38, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 39, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 40, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 41, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 42, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 43, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 44, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 45, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (1, 46, 1, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (2, 43, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (2, 44, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (2, 45, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (2, 46, 1, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (3, 10, 5, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (3, 17, 2, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (4, 18, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (4, 15, 10, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (4, 10, 2, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (5, 1, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (5, 9, 9, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (5, 11, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (5, 2, 3, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (6, 1, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (6, 2, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (6, 3, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (6, 4, 5, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (6, 5, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (6, 10, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (6, 11, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (6, 12, 7, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (7, 5, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (7, 6, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (7, 7, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (7, 8, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (7, 11, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (7, 9, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (7, 14, 10, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (7, 15, 1, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (8, 1, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (8, 7, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (8, 2, 15, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (9, 1, 1, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (10, 1, 23, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (10, 2, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (10, 3, 10, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (10, 4, 10, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (10, 5, 10, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (10, 10, 45, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (10, 11, 40, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (10, 12, 50, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (11, 13, 5, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (11, 14, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (11, 17, 15, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (12, 18, 1, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (13, 18, 50, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (14, 2, 5, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (14, 10, 3, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (14, 11, 1, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (15, 10, 10, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (16, 16, 7, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (17, 16, 37, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (17, 15, 37, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (17, 14, 37, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (18, 6, 50, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (18, 7, 20, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (18, 8, 20, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (19, 1, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (19, 2, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (19, 3, 2, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (20, 4, 20, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (20, 5, 10, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (20, 6, 20, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (21, 7, 20, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (21, 8, 10, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (21, 9, 20, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (22, 7, 10, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (22, 8, 20, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (22, 9, 10, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (23, 10, 10, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (23, 1, 2, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (24, 2, 2, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (24, 1, 2, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (25, 10, 11, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (25, 11, 11, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (26, 3, 10, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (26, 4, 10, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (26, 5, 10, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (26, 6, 20, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (26, 7, 20, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (26, 8, 20, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (27, 7, 99, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (27, 8, 99, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (28, 5, 20, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (28, 6, 20, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (28, 7, 20, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (29, 7, 99, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (29, 8, 99, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (30, 2, 5, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (31, 1, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (31, 2, 20, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (31, 3, 20, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (31, 4, 20, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (31, 5, 20, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (32, 1, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (32, 2, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (32, 3, 5, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (32, 4, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (32, 5, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (32, 6, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (32, 7, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (32, 8, 5, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (32, 9, 1, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (32, 10, 1, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (33, 3, 9, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (34, 1, 99, 1);
 
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (35, 14, 50, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (35, 14, 5, 1);
-INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
+INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
             VALUES (35, 5, 14, 1);

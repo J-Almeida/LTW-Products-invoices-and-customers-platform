@@ -12,7 +12,7 @@ if(!comparePermissions(array('read'))) {
 $parameters = getSearchParametersFromURL();
 
 $parameters['table'] = 'Invoice';
-$parameters['rows'] = array('InvoiceNo', 'InvoiceDate', 'taxPayable', 'netTotal' ,'GrossTotal', 'CompanyName');
+$parameters['rows'] = array('InvoiceNo', 'InvoiceDate', 'TaxPayable', 'NetTotal' ,'GrossTotal', 'CompanyName');
 $parameters['joins'] = array('Invoice' => 'Customer');
 
 $result = executeSearch($parameters);

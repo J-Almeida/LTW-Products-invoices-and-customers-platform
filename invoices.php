@@ -7,12 +7,12 @@ $neededPermissions = array('read');
 evaluateSessionPermissions($neededPermissions);
 
 $fields = array(
-    'invoiceNo' => 'Invoice Number',
-    'invoiceDate' => 'Invoice Date',
+    'InvoiceNo' => 'Invoice Number',
+    'InvoiceDate' => 'Invoice Date',
     'CompanyName' => 'Company Name',
-    'taxPayable' => 'Payable tax',
-    'netTotal' => 'Net Total',
-    'grossTotal' => 'Gross total');
+    'TaxPayable' => 'Payable tax',
+    'NetTotal' => 'Net Total',
+    'GrossTotal' => 'Gross total');
 
 echo getSearchPage("Invoices", $fields);
 ?>
