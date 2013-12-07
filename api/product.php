@@ -6,9 +6,9 @@ require_once 'update.php';
 function getProduct($productCode) {
     // Fetch the product we are looking for
     $table = 'Product';
-    $field = 'productCode';
+    $field = 'ProductCode';
     $values = array($productCode);
-    $rows = array('productCode','productDescription', 'unitPrice', 'unitOfMeasure');
+    $rows = array('ProductCode','ProductDescription', 'UnitPrice', 'UnitOfMeasure');
     $joins = array();
 
     $search = new EqualSearch($table, $field, $values, $rows, $joins);
@@ -32,11 +32,11 @@ function updateProduct($productInfo) {
 // TODO select only the necessary fields from the json, return error when important fields are missing
 
     $table = 'Product';
-    $field = 'productCode';
-    $productCode = $productInfo['productCode'];
+    $field = 'ProductCode';
+    $productCode = $productInfo['ProductCode'];
     if ($productCode == NULL) {
         $productCode = getLastProductCode() + 1;
-        $productInfo['productCode'] = $productCode;
+        $productInfo['ProductCode'] = $productCode;
         new Insert('Product', $productInfo);
     } else
         new Update($table, $productInfo, $field, $productCode);
@@ -46,13 +46,13 @@ function updateProduct($productInfo) {
 
 function getLastProductCode(){
     $table = 'Product';
-    $field = 'productCode';
+    $field = 'ProductCode';
     $values = array();
-    $rows = array('productCode');
+    $rows = array('ProductCode');
     $max = new MaxSearch($table, $field, $values, $rows);
     $results = $max->getResults();
     if(isSet($results[0])) {
-        return $results[0]['productCode'];
+        return $results[0]['ProductCode'];
     }
     return 0;
 }

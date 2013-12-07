@@ -15,10 +15,10 @@ function getParameter(urlQuery) {
 function drawProductStructure(productData) {
     var json = JSON.parse(productData);
 
-    $("#productCode").html(json.productCode);
-    $("#productDescription").html(json.productDescription);
-    $("#unitPrice").html("€" + json.unitPrice);
-    $("#unitOfMeasure").html(json.unitOfMeasure);
+    $("#productCode").html(json.ProductCode);
+    $("#productDescription").html(json.ProductDescription);
+    $("#unitPrice").html("€" + json.UnitPrice);
+    $("#unitOfMeasure").html(json.UnitOfMeasure);
 }
 
 function displayProduct(productCode) {

@@ -10,7 +10,7 @@ function getInvoice($invoiceNo) {
     $table = 'Invoice';
     $field = 'invoiceNo';
     $values = array($invoiceNo);
-    $rows = array('invoiceId', 'invoiceNo', 'invoiceDate', 'customerId', 'taxPayable', 'netTotal', 'grossTotal');
+    $rows = array('invoiceId', 'invoiceNo', 'invoiceDate', 'CustomerID', 'taxPayable', 'netTotal', 'grossTotal');
     $joins = array();
 
     $invoiceSearch = new EqualSearch($table, $field, $values, $rows, $joins);
@@ -30,7 +30,7 @@ function getInvoice($invoiceNo) {
     $table = 'InvoiceLine';
     $field = 'invoiceId';
     $values = array($invoice['invoiceId']);
-    $rows = array('lineNumber', 'productCode', 'quantity', 'unitPrice', 'creditAmount' , 'Tax.taxId AS taxId', 'taxType', 'taxPercentage');
+    $rows = array('lineNumber', 'ProductCode', 'quantity', 'UnitPrice', 'creditAmount' , 'Tax.taxId AS taxId', 'taxType', 'taxPercentage');
     $joins = array('InvoiceLine' => array('Tax', 'Product'));
 
     $invoiceLinesSearch = new EqualSearch($table, $field, $values, $rows, $joins);
@@ -64,7 +64,7 @@ function insertInvoice($invoiceInfo) {
 
         $fields = array(
             'invoiceId' => $invoiceId,
-            'productId' => getId('Product', 'productCode', $line['productCode']),
+            'ProductID' => getId('Product', 'ProductCode', $line['ProductCode']),
             'quantity'  => $line['quantity'],
             'taxId'     => $taxId
         );
@@ -107,7 +107,7 @@ function updateInvoice($invoiceInfo) {
     new Delete('InvoiceLine', array('invoiceId' => $invoiceId));
 
     foreach($invoiceLines as $line) {
-        // INSERT INTO InvoiceLine(invoiceId, productId, quantity, taxId)
+        // INSERT INTO InvoiceLine(invoiceId, ProductID, quantity, taxId)
         if($line['taxId'])
             $taxId = $line['taxId'];
         else
@@ -115,7 +115,7 @@ function updateInvoice($invoiceInfo) {
 
         $fields = array(
             'invoiceId' => $invoiceId,
-            'productId' => getId('Product', 'productCode' ,$line['productCode']),
+            'ProductID' => getId('Product', 'ProductCode' ,$line['ProductCode']),
             'quantity'  => $line['quantity'],
             'taxId'     => $taxId
         );

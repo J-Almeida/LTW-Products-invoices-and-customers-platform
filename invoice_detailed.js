@@ -65,18 +65,18 @@ function drawInvoiceStructure(invoiceData) {
                         lines += "</td>";
                     }
                 }
-                else if(field == "productCode") {
+                else if(field == "ProductCode") {
                     productData = getProductDetails(object[field]);
                     lines += "<td>";
                     lines += "[";
-                    lines += productData.productCode;
+                    lines += productData.ProductCode;
                     lines += "] ";
-                    lines += productData.productDescription;
+                    lines += productData.ProductDescription;
                     lines += "</td>";
                 }
                 else {
                     lines += "<td>";
-                    if(field == "unitPrice" || field == "creditAmount")
+                    if(field == "UnitPrice" || field == "creditAmount")
                         lines += "€ "; 
                     lines += object[field];
                     lines += "</td>";
@@ -85,7 +85,7 @@ function drawInvoiceStructure(invoiceData) {
 
             if(field == "quantity") {
                 lines += "<td>";
-                lines += productData.unitOfMeasure;
+                lines += productData.UnitOfMeasure;
                 lines += "</td>";
             }
         }
@@ -99,7 +99,7 @@ var rowProd = {};
 for(result in json.line) {
     var object = json.line[result];
     var rowID = "#" + object.lineNumber;
-    var pCode = object.productCode;
+    var pCode = object.ProductCode;
     rowProd[object.lineNumber] = pCode;
     $(rowID).click(function() {
         window.open("product_detailed.php?ProductCode=" + rowProd[this.id]);

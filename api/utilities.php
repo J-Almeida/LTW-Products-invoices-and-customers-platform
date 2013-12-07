@@ -97,15 +97,27 @@ function roundDocumentTotals(&$invoice) {
 }
 
 function roundLineTotals(&$line) {
-    roundMoneyAmount($line['unitPrice']);
+    roundMoneyAmount($line['UnitPrice']);
     roundMoneyAmount($line['creditAmount']);
 }
 
 function roundProductTotals(&$product) {
-    roundMoneyAmount($product['unitPrice']);
+    roundMoneyAmount($product['UnitPrice']);
 }
 
 function getId($table, $field, $value) {
+
+    if($table == 'Product') {
+        $values = array($value);
+        $rows = array($table.'ID');
+        $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
+        $results = $invoiceSearch->getResults();
+        if(isSet($results[0])) {
+            return $results[0][$table.'ID'];
+        }
+        return null;
+    }
+    
     $table = lcfirst($table);
     $values = array($value);
     $rows = array($table.'Id');

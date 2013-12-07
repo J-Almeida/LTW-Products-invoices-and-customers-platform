@@ -32,7 +32,7 @@ evaluateSessionPermissions($neededPermissions);
     <img src='ajax-loader.gif' alt='loading' />
 </div>
 
-<div id="invoice">
+<div id="invoice" style="display: none; /*Jquery deals with showing the element after everything is loaded */">
     <form id="invoiceForm" action="./api/updateInvoice.php" method="POST" autocomplete="off">
 
         <div class="invoiceTitle">
@@ -88,13 +88,13 @@ evaluateSessionPermissions($neededPermissions);
                     <tbody id="invoiceLines">
                     <tr class="invoiceLine" id="1">
                         <th>
-                            <select class="productCode" name="line[1].productCode" onchange="updateLine($(this));">
+                            <select class="productCode" name="line[1].ProductCode" onchange="updateLine($(this));">
                                 <?php
-                                $search = new ListAllSearch('Product', 'productCode', array(), array('*'));
+                                $search = new ListAllSearch('Product', 'ProductCode', array(), array('*'));
                                 $products = $search->getResults();
                                 foreach($products as $product){
-                                    echo '<option value='.$product['productCode'].' data-unitprice="'.$product['unitPrice'].'">';
-                                    echo '['. $product['productCode'] . '] ' . $product['productDescription'];
+                                    echo '<option value='.$product['ProductCode'].' data-unitprice="'.$product['UnitPrice'].'">';
+                                    echo '['. $product['ProductCode'] . '] ' . $product['ProductDescription'];
                                     echo '</option>';
                                 }
                                 ?>
@@ -104,7 +104,7 @@ evaluateSessionPermissions($neededPermissions);
                             <input class="quantity" type="number" name="line[1].quantity" value="1" onchange="updateLine($(this));">
                         </th>
                         <th>
-                            <input class="unitPrice" type="number" name="line[1].unitPrice" value="1" readonly>
+                            <input class="unitPrice" type="number" name="line[1].UnitPrice" value="1" readonly>
                         </th>
                         <th>
                             <input class="creditAmount" type="number" name="line[1].creditAmount" value="1" readonly>

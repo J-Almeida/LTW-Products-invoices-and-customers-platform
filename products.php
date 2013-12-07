@@ -7,9 +7,9 @@ $neededPermissions = array('read');
 evaluateSessionPermissions($neededPermissions);
 
 $fields = array(
-    'productCode' => 'Product Code',
-    'productDescription' => 'Description',
-    'unitPrice' => 'Unit Price',
-    'unitOfMeasure' => 'Units Of Measure');
+    'ProductCode' => 'Product Code',
+    'ProductDescription' => 'Description',
+    'UnitPrice' => 'Unit Price',
+    'UnitOfMeasure' => 'Units Of Measure');
 
 echo getSearchPage("Products", $fields);

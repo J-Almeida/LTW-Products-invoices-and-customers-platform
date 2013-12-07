@@ -37,7 +37,7 @@ evaluateSessionPermissions($neededPermissions);
         <header id="productHeader">
             <ul class="productInfo">
                 <li>Product code: <span id="productCode"></span>
-                    <input id="productCodeInput" type="number" name="productCode" readonly>
+                    <input id="productCodeInput" type="number" name="ProductCode" readonly>
                 </li>
             </ul>
         </header>
@@ -46,17 +46,17 @@ evaluateSessionPermissions($neededPermissions);
             <ul class="productDetail">
                 <li>Description:
                     <p id="productDescription"></p>
-                    <input type="text" name="productDescription">
+                    <input type="text" name="ProductDescription">
                 </li>
 
                 <li>Unit Price:
                     <p id="unitPrice"></p>
-                    <input type="number" name="unitPrice">
+                    <input type="number" name="UnitPrice">
                 </li>
 
                 <li>Unit of measure:
                     <p id="unitOfMeasure"></p>
-                    <input type="text" name="unitOfMeasure">
+                    <input type="text" name="UnitOfMeasure">
                 </li>
             </ul>
         </section>

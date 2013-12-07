@@ -44,7 +44,7 @@ function drawSearchResults(data, fieldNames) {
     var hyperlinks = {
         "invoiceNo" : "<a href='invoice_detailed.php?InvoiceNo=",
         "CustomerID": "<a href='customer_detailed.php?CustomerID=",
-        "productCode": "<a href='product_detailed.php?ProductCode=",
+        "ProductCode": "<a href='product_detailed.php?ProductCode=",
         "username": "<a href='user_detailed.php?Username="
     };
 
@@ -133,7 +133,7 @@ var fieldTypes = {
     'grossTotal' : 'type="number"',
     'CustomerID' : 'type="number"',
     'CustomerTaxID' : 'type="number"',
-    'unitPrice' : 'type="number"',
+    'UnitPrice' : 'type="number"',
     'Email' : 'type="email"'
 };
 

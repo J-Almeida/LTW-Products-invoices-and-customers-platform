@@ -90,7 +90,6 @@ function getCustomer(customerID) {
 }
 
 function getInvoice(invoiceNo) {
-    $("#invoice").hide();
 
     $.ajax("./api/getInvoice.php?InvoiceNo=" + invoiceNo, {
         async: false,
@@ -152,7 +151,7 @@ function submitForm(objectName) {
 
     var objectFields = new Object();
     objectFields['customer'] = 'CustomerID';
-    objectFields['product'] = 'productCode';
+    objectFields['product'] = 'ProductCode';
     objectFields['invoice'] = 'invoiceNo';
     objectFields['user'] = 'username';
 

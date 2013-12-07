@@ -12,7 +12,7 @@ if(!comparePermissions(array('read'))) {
 $parameters = getSearchParametersFromURL();
 
 $parameters['table'] = 'Product';
-$parameters['rows'] = array('productCode', 'productDescription', 'unitPrice', 'unitOfMeasure');
+$parameters['rows'] = array('ProductCode', 'ProductDescription', 'UnitPrice', 'UnitOfMeasure');
 $parameters['joins'] = array();
 
 $result = executeSearch($parameters);
