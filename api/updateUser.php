@@ -18,4 +18,4 @@ if ( isset($_POST['user']) && !empty($_POST['user']) ) {
 }
 
 $userInfo = json_decode($jsonUser, true);
-echo json_encode(updateUser($userInfo), JSON_NUMERIC_CHECK);
+echo json_encode(updateUser($userInfo));

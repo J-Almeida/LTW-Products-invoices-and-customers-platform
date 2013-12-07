@@ -87,7 +87,7 @@ function itemExists($table, $itemValue, $itemType) {
 }
 
 function roundMoneyAmount(&$amount) {
-    $amount = round($amount, 2, PHP_ROUND_HALF_UP);
+    $amount = round($amount, 2);
 }
 
 function roundDocumentTotals(&$invoice) {

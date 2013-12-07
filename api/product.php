@@ -50,5 +50,9 @@ function getLastProductCode(){
     $values = array();
     $rows = array('productCode');
     $max = new MaxSearch($table, $field, $values, $rows);
-    return $max->getResults()[0]['productCode'];
+    $results = $max->getResults();
+    if(isSet($results[0])) {
+        return $results[0]['productCode'];
+    }
+    return null;
 }

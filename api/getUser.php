@@ -18,4 +18,4 @@ if ( isset($_GET['Username']) && !empty($_GET['Username']) ) {
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 
-echo json_encode(getUser($value), JSON_NUMERIC_CHECK);
+echo json_encode(getUser($value));

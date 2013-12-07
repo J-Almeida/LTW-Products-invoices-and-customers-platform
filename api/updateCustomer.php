@@ -18,4 +18,4 @@ if ( isset($_POST['customer']) && !empty($_POST['customer']) ) {
 }
 
 $customerInfo = json_decode($jsonCustomer, true);
-echo json_encode(updateCustomer($customerInfo), JSON_NUMERIC_CHECK);
+echo json_encode(updateCustomer($customerInfo));

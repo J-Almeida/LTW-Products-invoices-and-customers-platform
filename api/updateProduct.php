@@ -18,4 +18,4 @@ if ( isset($_POST['product']) && !empty($_POST['product']) ) {
 }
 
 $productInfo = json_decode($jsonProduct, true);
-echo json_encode(updateProduct($productInfo), JSON_NUMERIC_CHECK);
+echo json_encode(updateProduct($productInfo));

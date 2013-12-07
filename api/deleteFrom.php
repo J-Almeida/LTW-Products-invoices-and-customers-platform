@@ -53,13 +53,19 @@ if ($table == 'Product') {
             // when a product is deleted, the line from the invoice will be too
             // so we must update the invoice totals
             $taxSearch = new EqualSearch('Tax', 'taxId', array($line['taxId']), array('taxPercentage'));
-            $taxPercentage = $taxSearch->getResults()[0]['taxPercentage'];
+            $results = $taxSearch->getResults();
+            if(isSet($results[0])) {
+                $taxPercentage = $results[0]['taxPercentage'];
+            }
 
             $productTaxPayable = $line['creditAmount'] * 0.01 * $taxPercentage;
             $productNetTotal = $line['creditAmount'];
 
             $invoiceSearch = new EqualSearch('Invoice', 'invoiceId', array($line['invoiceId']), array('*'));
-            $invoice = $invoiceSearch->getResults()[0];
+            $results = $invoiceSearch->getResults();
+            if(isSet($results[0])) {
+                $invoice = $results[0];
+            }
             $invoice['taxPayable'] = $invoice['taxPayable'] - $productTaxPayable;
             $invoice['netTotal'] = $invoice['netTotal'] - $productNetTotal;
             $invoice['grossTotal'] = $invoice['netTotal'] + $invoice['taxPayable'];

@@ -18,4 +18,4 @@ if ( isset($_POST['invoice']) && !empty($_POST['invoice']) ) {
 }
 
 $invoiceInfo = json_decode($jsonInvoice, true);
-echo json_encode(updateInvoice($invoiceInfo), JSON_NUMERIC_CHECK);
+echo json_encode(updateInvoice($invoiceInfo));

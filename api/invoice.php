@@ -131,7 +131,11 @@ function getLastInvoiceNo(){
     $values = array();
     $rows = array('invoiceNo');
     $invoiceSearch = new MaxSearch($table, $field, $values, $rows);
-    return $invoiceSearch->getResults()[0]['invoiceNo'];
+    $results = $invoiceSearch->getResults();
+    if(isSet($results[0])) {
+        return $results[0]['invoiceNo'];
+    }
+    return null;
 }
 
 function getLastInvoiceNoPlusOne() {

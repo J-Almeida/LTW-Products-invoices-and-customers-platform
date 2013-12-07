@@ -18,4 +18,4 @@ if ( isset($_GET['ProductCode']) && !empty($_GET['ProductCode']) ) {
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 
-echo json_encode(getProduct($value), JSON_NUMERIC_CHECK);
+echo json_encode(getProduct($value));

@@ -20,4 +20,4 @@ $result = executeSearch($parameters);
 if (!$result)
     echo '[]';
 else
-    echo json_encode($result, JSON_NUMERIC_CHECK);
+    echo json_encode($result);

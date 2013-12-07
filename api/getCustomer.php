@@ -17,4 +17,4 @@ if ( isset($_GET['CustomerID']) && !empty($_GET['CustomerID']) ) {
     die(json_encode($error->getInfo(), JSON_NUMERIC_CHECK));
 }
 
-echo json_encode(getCustomer($value), JSON_NUMERIC_CHECK);
+echo json_encode(getCustomer($value));

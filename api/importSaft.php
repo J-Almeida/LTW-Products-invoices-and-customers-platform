@@ -197,7 +197,7 @@ function getObject($table, $field, $value) {
     if(!$results[0]) {
         return null;
     }
-    $results = json_encode($results[0], JSON_NUMERIC_CHECK);
+    $results = json_encode($results[0]);
     return $results;
 }
 
@@ -208,8 +208,11 @@ function getCountry($countryCode) {
         // got no results, insert country into database
         new Insert('Country', array('countryName' => $countryCode.'land', 'countryCode' => $countryCode));
         $countrySearch = new EqualSearch('Country', 'countryCode', array($countryCode), array('countryId'));
-        $insertedCountry = $countrySearch->getResults()[0];
-        return $insertedCountry['countryId'];
+        $insertedCountry = $countrySearch->getResults();
+        if(isSet($insertedCountry[0])) {
+            return $insertedCountry[0]['countryId'];
+        }
+        return null;
     }
     return $results[0]['countryId'];
 }
