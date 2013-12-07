@@ -5,9 +5,19 @@ require_once './api/authenticationUtilities.php';
 
 header('Refresh: 2; URL=./index.php');
 
+echo "<link rel=\"stylesheet\" href=\"style.css\">";
+echo "<br><br><br>";
+
 //Don't let register a new user if there's currently a logged in one
 if(isset($_SESSION['username'])) {
 	echo "<p style='text-align: center;'>Log off before registering a new user.</p>";
+	echo "<p style='text-align: center;'>Redirecting... </p>";
+	exit;
+}
+
+//Check if all the credentials have been sent
+if( !isset($_POST["username"]) || !isset($_POST["name"]) || !isset($_POST["password"]) || !isset($_POST["email"]) ) {
+	echo "<p style='text-align: center;'>Please register using the correct form, thank you!</p>";
 	echo "<p style='text-align: center;'>Redirecting... </p>";
 	exit;
 }
@@ -35,9 +45,6 @@ $fields = array(
 	);
 
 $insertedLines = new Insert('User', $fields);
-
-echo "<link rel=\"stylesheet\" href=\"style.css\">";
-echo "<br><br><br>";
 
 //Login the new user automatically
 if(checkPassword($login, $password)) {
