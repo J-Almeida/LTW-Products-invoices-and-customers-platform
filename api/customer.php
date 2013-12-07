@@ -9,7 +9,7 @@ function getCustomer($customerId) {
     $table = 'Customer';
     $field = 'CustomerID';
     $values = array($customerId);
-    $rows = array('customerID', 'companyName', 'customerTaxId', 'email', 'addressDetail', 'cityName', 'Country.countryId AS countryId', 'countryName', 'countryCode', 'postalCode' );
+    $rows = array('CustomerID', 'CompanyName', 'CustomerTaxID', 'Email', 'AddressDetail', 'CityName', 'Country.CountryID AS CountryID', 'CountryName', 'CountryCode', 'PostalCode' );
     $joins = array('Customer' => 'Country');
 
     $search = new EqualSearch($table, $field, $values, $rows, $joins);
@@ -30,12 +30,12 @@ function updateCustomer($customerInfo) {
 // TODO select only the necessary fields from the json, return error when important fields are missing
 
     $table = 'Customer';
-    $field = 'customerId';
-    $customerId = $customerInfo['customerId'];
+    $field = 'CustomerID';
+    $customerId = $customerInfo['CustomerID'];
     if ($customerId == NULL) {
-        $customerInfo['customerId'] = getLastCustomerId() + 1;
+        $customerInfo['CustomerID'] = getLastCustomerId() + 1;
         new Insert('Customer', $customerInfo);
-        $customerId = $customerInfo['customerId'];
+        $customerId = $customerInfo['CustomerID'];
     } else
         new Update($table, $customerInfo, $field, $customerId);
 
@@ -44,13 +44,13 @@ function updateCustomer($customerInfo) {
 
 function getLastCustomerId(){
     $table = 'Customer';
-    $field = 'customerId';
+    $field = 'CustomerID';
     $values = array();
-    $rows = array('customerId');
+    $rows = array('CustomerID');
     $max = new MaxSearch($table, $field, $values, $rows);
     $results = $max->getResults();
     if(isSet($results[0])) {
-        return $results[0]['customerId'];
+        return $results[0]['CustomerID'];
     }
     return 0;
 }

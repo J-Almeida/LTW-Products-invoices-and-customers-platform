@@ -7,12 +7,12 @@ $neededPermissions = array('read');
 evaluateSessionPermissions($neededPermissions);
 
 $fields = array(
-    'customerId' => "ID",
-    'customerTaxId' => 'Tax ID',
-    'companyName' => 'Name',
-    'email' => 'Email',
-    'addressDetail' => 'Address',
-    'cityName' => 'City',
-    'countryName' => 'Country');
+    'CustomerID' => "ID",
+    'CustomerTaxID' => 'Tax ID',
+    'CompanyName' => 'Name',
+    'Email' => 'Email',
+    'AddressDetail' => 'Address',
+    'CityName' => 'City',
+    'CountryName' => 'Country');
 
 echo getSearchPage("Customers", $fields);

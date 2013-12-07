@@ -43,7 +43,7 @@ function drawSearchResults(data, fieldNames) {
 
     var hyperlinks = {
         "invoiceNo" : "<a href='invoice_detailed.php?InvoiceNo=",
-        "customerId": "<a href='customer_detailed.php?CustomerID=",
+        "CustomerID": "<a href='customer_detailed.php?CustomerID=",
         "productCode": "<a href='product_detailed.php?ProductCode=",
         "username": "<a href='user_detailed.php?Username="
     };
@@ -131,10 +131,10 @@ var fieldTypes = {
     'taxPayable' : 'type="number"',
     'netTotal' : 'type="number"',
     'grossTotal' : 'type="number"',
-    'customerId' : 'type="number"',
-    'customerTaxId' : 'type="number"',
+    'CustomerID' : 'type="number"',
+    'CustomerTaxID' : 'type="number"',
     'unitPrice' : 'type="number"',
-    'email' : 'type="email"'
+    'Email' : 'type="email"'
 };
 
 function getValueBoxes(operation, field) {

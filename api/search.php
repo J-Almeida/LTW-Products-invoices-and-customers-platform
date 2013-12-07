@@ -26,9 +26,9 @@ class Search extends Query {
             foreach ($tableJoins as $table => $joins ) {
                 if ( is_array($joins) )  // support for multiple joins on the same table
                     foreach ($joins as $join)
-                        $this->joins .= "INNER JOIN $join ON $table.$join" . "Id" . " = $join.$join" . "Id ";
+                        $this->joins .= "INNER JOIN $join ON $table.$join" . "ID" . " = $join.$join" . "ID ";
                 else
-                    $this->joins .= "INNER JOIN $joins ON $table.$joins" . "Id" . " = $joins.$joins" . "Id ";
+                    $this->joins .= "INNER JOIN $joins ON $table.$joins" . "ID" . " = $joins.$joins" . "ID ";
             }
     }
 

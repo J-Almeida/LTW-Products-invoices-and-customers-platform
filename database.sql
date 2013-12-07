@@ -10,20 +10,20 @@ DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Country;
 
 CREATE TABLE Customer (
-	customerId INTEGER PRIMARY KEY AUTOINCREMENT,
-	customerTaxId INTEGER UNIQUE NOT NULL,
-	companyName TEXT NOT NULL,
-	addressDetail TEXT NOT NULL,
-	cityName TEXT NOT NULL,
-	countryId INTEGER REFERENCES Country(countryId) ON DELETE CASCADE,
-	postalCode TEXT NOT NULL,
-	email TEXT
+	CustomerID INTEGER PRIMARY KEY AUTOINCREMENT,
+	CustomerTaxID INTEGER UNIQUE NOT NULL,
+	CompanyName TEXT NOT NULL,
+	AddressDetail TEXT NOT NULL,
+	CityName TEXT NOT NULL,
+	CountryID INTEGER REFERENCES Country(CountryID) ON DELETE CASCADE,
+	PostalCode TEXT NOT NULL,
+	Email TEXT
 );
 
 CREATE TABLE Country (
-	countryId INTEGER PRIMARY KEY AUTOINCREMENT,
-	countryName TEXT NOT NULL,
-	countryCode TEXT NOT NULL
+	CountryID INTEGER PRIMARY KEY AUTOINCREMENT,
+	CountryName TEXT NOT NULL,
+	CountryCode TEXT NOT NULL
 );
 
 CREATE TABLE Product (
@@ -38,7 +38,7 @@ CREATE TABLE Invoice (
 	invoiceId INTEGER PRIMARY KEY AUTOINCREMENT,
 	invoiceNo TEXT UNIQUE NOT NULL,
 	invoiceDate DATE NOT NULL,
-	customerId INTEGER REFERENCES Customer(customerId) ON DELETE CASCADE,
+	CustomerID INTEGER REFERENCES Customer(CustomerID) ON DELETE CASCADE,
 	systemEntryDate TIMESTAMP,
 	/* Document Totals */
 	taxPayable REAL DEFAULT 0, /* Sum of taxes of all lines */ 
@@ -76,7 +76,7 @@ CREATE TABLE User (
 	username TEXT UNIQUE NOT NULL,
 	name TEXT NOT NULL,
 	password TEXT,
-	email TEXT UNIQUE NOT NULL,
+	Email TEXT UNIQUE NOT NULL,
 	permissionId INTEGER REFERENCES Permission(permissionId) ON DELETE CASCADE
 );
 
@@ -126,13 +126,13 @@ INSERT INTO Permission(permissionType, permissionRead, permissionWrite, promote)
 INSERT INTO Permission(permissionType, permissionRead, permissionWrite, promote) VALUES ("editor", 1, 1, 0);
 INSERT INTO Permission(permissionType, permissionRead, permissionWrite, promote) VALUES ("reader", 1, 0, 0);
 
-INSERT INTO User(username, name, password, email, permissionId) VALUES ("MHawk", "Michael Hawk", "supercalifragilisticexpialidocious", "mhawk@hotmail.com", 1);
-INSERT INTO User(username, name, password, email, permissionId) VALUES ("Jakim", "Joaquim Esteves", "1234abcd", "jakim@ltw.pt", 1);
-INSERT INTO User(username, name, password, email, permissionId) VALUES ("AnaMaria12", "Ana Maria Santos", "abcd1234", "ana@ltw.pt", 2);
-INSERT INTO User(username, name, password, email, permissionId) VALUES ("Sususu", "Susana Isabel Barros", "12345678abcdefgh", "flores@ltw.pt", 2);
-INSERT INTO User(username, name, password, email, permissionId) VALUES ("LunaSol", "Luis Miguel", "sol974", "solluna@gmail.com", 3);
-INSERT INTO User(username, name, password, email, permissionId) VALUES ("HenriqueLuis", "Henrique Luis Pimenta", "1990motocicleta", "henri1990@gmail.com", 3);
-INSERT INTO User(username, name, password, email, permissionId) VALUES ("Mikki", "Maria Ines Sousa", "sousaesousa9090", "mari.ines@gmail.com", 3);
+INSERT INTO User(username, name, password, Email, permissionId) VALUES ("MHawk", "Michael Hawk", "supercalifragilisticexpialidocious", "mhawk@hotmail.com", 1);
+INSERT INTO User(username, name, password, Email, permissionId) VALUES ("Jakim", "Joaquim Esteves", "1234abcd", "jakim@ltw.pt", 1);
+INSERT INTO User(username, name, password, Email, permissionId) VALUES ("AnaMaria12", "Ana Maria Santos", "abcd1234", "ana@ltw.pt", 2);
+INSERT INTO User(username, name, password, Email, permissionId) VALUES ("Sususu", "Susana Isabel Barros", "12345678abcdefgh", "flores@ltw.pt", 2);
+INSERT INTO User(username, name, password, Email, permissionId) VALUES ("LunaSol", "Luis Miguel", "sol974", "solluna@gmail.com", 3);
+INSERT INTO User(username, name, password, Email, permissionId) VALUES ("HenriqueLuis", "Henrique Luis Pimenta", "1990motocicleta", "henri1990@gmail.com", 3);
+INSERT INTO User(username, name, password, Email, permissionId) VALUES ("Mikki", "Maria Ines Sousa", "sousaesousa9090", "mari.ines@gmail.com", 3);
 
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
 			VALUES (001,"Borracha Quenaoapaga",2.50,"Un");
@@ -229,149 +229,149 @@ INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
 INSERT INTO Product(productCode, productDescription, unitPrice, unitOfMeasure)
 			VALUES (366,"Esquadro Plastico Cristal Liderpapel - 60graus, 25cm",1.05,"Un");
 
-INSERT INTO Country(countryCode, countryName)
+INSERT INTO Country(CountryCode, CountryName)
 			VALUES ("PT", "Portugal");
-INSERT INTO Country(countryCode, countryName)
+INSERT INTO Country(CountryCode, CountryName)
 			VALUES ("GB", "Inglaterra");
-INSERT INTO Country(countryCode, countryName)
+INSERT INTO Country(CountryCode, CountryName)
 			VALUES ("ES", "Espanha");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+INSERT INTO Customer(CustomerTaxID, CompanyName, AddressDetail, CityName, CountryID, PostalCode, Email)
             VALUES (1234567, "Feup", "Rua Doutor Roberto Frias", "Porto", 1, "4200-465", "feup@fe.up.pt");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+INSERT INTO Customer(CustomerTaxID, CompanyName, AddressDetail, CityName, CountryID, PostalCode, Email)
             VALUES (7654321, "Flup", "Via Panorâmica", "Porto", 1, "4150-564", "flup@fl.up.pt");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+INSERT INTO Customer(CustomerTaxID, CompanyName, AddressDetail, CityName, CountryID, PostalCode, Email)
             VALUES (9874567, "Hounslow", "Potatos Street", "Londres", 2, "ML1 2DA", "houwnslow@hotmail.com");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+INSERT INTO Customer(CustomerTaxID, CompanyName, AddressDetail, CityName, CountryID, PostalCode, Email)
             VALUES (4457812, "Kingston", "30 Leicester Square", "Londres", 2, "WC2H 7LA", "kingstone@gmail.com");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+INSERT INTO Customer(CustomerTaxID, CompanyName, AddressDetail, CityName, CountryID, PostalCode, Email)
             VALUES (9875669, "La Tienda", "Sr. D. Alvaro Blanco Ruiz", "Madrid", 3, "28300", "tienda@lojita.com");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+INSERT INTO Customer(CustomerTaxID, CompanyName, AddressDetail, CityName, CountryID, PostalCode, Email)
             VALUES (4565453, "Green Park", "Mary's Street", "Londres", 2, "AB3C 3LA", "greensales@gmail.com");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+INSERT INTO Customer(CustomerTaxID, CompanyName, AddressDetail, CityName, CountryID, PostalCode, Email)
             VALUES (3453259, "Ouro e Prata", "Avenida da Liberdade", "Lisboa", 1, "1268-121", "prata@ouro.pt");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+INSERT INTO Customer(CustomerTaxID, CompanyName, AddressDetail, CityName, CountryID, PostalCode, Email)
             VALUES (9574891, "Bolachas Inc.", "Rua Das Flores", "Porto", 1, "4510-145", "cookies@lojaporto.pt");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+INSERT INTO Customer(CustomerTaxID, CompanyName, AddressDetail, CityName, CountryID, PostalCode, Email)
             VALUES (00056010, "Sir Francis Burdett & Son", "St. James's Place", "Londres", 2, "SW1 E17", "francis@sir.com");
 
-INSERT INTO Customer(customerTaxId, companyName, addressDetail, cityName, countryId, postalCode, email)
+INSERT INTO Customer(CustomerTaxID, CompanyName, AddressDetail, CityName, CountryID, PostalCode, Email)
             VALUES (9593205891, "Jaquet-Droz's Automata", "Draughtsman Street", "Londres", 2, "SW19 3RQ", "epicdolls@gmail.com");
 
 
 
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/1", "2013-09-27", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/3", "2013-10-11", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/14", "2013-09-30", 2);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/11", "2013-11-01", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/2", "2013-09-29", 4);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/15", "2013-11-02", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/16", "2013-11-05", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/17", "2013-11-07", 4);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/18", "2013-11-09", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/19", "2013-11-09", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/20", "2013-11-10", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/21", "2013-11-11", 10);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/22", "2013-11-11", 9);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/23", "2013-11-11", 8);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/24", "2013-11-15", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/25", "2013-11-15", 10);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/26", "2013-11-16", 10);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/27", "2013-11-17", 7);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/28", "2013-11-17", 6);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/29", "2013-11-17", 8);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/30", "2013-11-17", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/31", "2013-11-17", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/32", "2013-11-18", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/33", "2013-11-19", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/34", "2013-11-19", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/35", "2013-11-20", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/36", "2013-11-21", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/37", "2013-11-23", 5);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/38", "2013-11-25", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/39", "2013-11-25", 2);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/40", "2013-11-25", 3);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/41", "2013-11-25", 4);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/42", "2013-11-27", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/43", "2013-11-29", 1);
 
-INSERT INTO Invoice (invoiceNo, invoiceDate, customerId)
+INSERT INTO Invoice (invoiceNo, invoiceDate, CustomerID)
             VALUES ("FT SEQ/44", "2013-11-30", 5);
 
 

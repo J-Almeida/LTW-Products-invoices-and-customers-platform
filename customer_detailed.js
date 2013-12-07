@@ -15,11 +15,11 @@ function getParameter(urlQuery) {
 function drawCustomerStructure(customerData) {
     var json = JSON.parse(customerData);
 
-    $("#customerID").html(json.customerId);
-    $("#customerTaxID").html(json.customerTaxId);
-    $("#companyName").html(json.companyName);
-    $("#billingAddress").html(json.addressDetail + "<br>" + json.postalCode + " " + json.cityName + ", " + json.countryName);
-    $("#emailAddress").html(json.email);
+    $("#customerID").html(json.CustomerID);
+    $("#customerTaxID").html(json.CustomerTaxID);
+    $("#companyName").html(json.CompanyName);
+    $("#billingAddress").html(json.AddressDetail + "<br>" + json.PostalCode + " " + json.CityName + ", " + json.CountryName);
+    $("#emailAddress").html(json.Email);
 }
 
 function displayCustomer(customerID) {

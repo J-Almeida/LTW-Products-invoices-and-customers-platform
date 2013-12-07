@@ -37,11 +37,11 @@ evaluateSessionPermissions($neededPermissions);
         <header id="customerHeader">
             <ul class="customerInfo">
                 <li>ID Number: <span id="customerID">
-                        <input id="customerIDInput" type="number" name="customerId" readonly>
+                        <input id="customerIDInput" type="number" name="CustomerID" readonly>
                 </span></li>
 
                 <li>Tax identification: <span id="customerTaxID">
-                        <input type="number" name="customerTaxId">
+                        <input type="number" name="CustomerTaxID">
                 </span></li>
             </ul>
         </header>
@@ -50,40 +50,40 @@ evaluateSessionPermissions($neededPermissions);
             <ul class="customerDetail">
                 <li>Name:
                     <p id="companyName">
-                        <input type="text" name="companyName">
+                        <input type="text" name="CompanyName">
                     </p>
                 </li>
 
                 <li>Billing Address:
                     <p id="billingAddress">
                         <label for="addressDetail">Address</label> <br/>
-                        <input type="text" name="addressDetail"> <br/>
+                        <input type="text" name="AddressDetail"> <br/>
                         <label for="cityName">City</label> <br/>
-                        <input type="text" name="cityName"> <br/>
+                        <input type="text" name="CityName"> <br/>
                         <label for="countryName">Country</label> <br/>
                         <!--
                         <input type="text" name="countryName"> <br/>
                         -->
-                        <select name="countryId">
+                        <select name="CountryID">
                             <?php
                             require_once './api/search.php';
-                            $search = new ListAllSearch('Country', 'countryId', array(), array('*'));
+                            $search = new ListAllSearch('Country', 'CountryID', array(), array('*'));
                             $countries = $search->getResults();
                             foreach($countries as $country){
-                                echo '<option value='.$country['countryId'].'>';
-                                echo $country['countryName'] . ' - ' . $country['countryCode'];
+                                echo '<option value='.$country['CountryID'].'>';
+                                echo $country['CountryName'] . ' - ' . $country['CountryCode'];
                                 echo '</option>';
                             }
                             ?>
                         </select><br/>
                         <label for="postalCode">Postal Code</label> <br/>
-                        <input type="text" name="postalCode">
+                        <input type="text" name="PostalCode">
                     </p>
                 </li>
 
                 <li>Email Address:
                     <p id="emailAddress">
-                        <input type="email" name="email">
+                        <input type="email" name="Email">
                     </p>
                 </li>
             </ul>

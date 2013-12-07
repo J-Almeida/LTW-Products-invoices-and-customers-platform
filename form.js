@@ -151,7 +151,7 @@ function submitForm(objectName) {
     objectID['user'] = 'Username';
 
     var objectFields = new Object();
-    objectFields['customer'] = 'customerId';
+    objectFields['customer'] = 'CustomerID';
     objectFields['product'] = 'productCode';
     objectFields['invoice'] = 'invoiceNo';
     objectFields['user'] = 'username';

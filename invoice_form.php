@@ -55,13 +55,13 @@ evaluateSessionPermissions($neededPermissions);
             <div class="invoiceCustomer" id="invoiceCustomer">
                 <h2>Invoice To:</h2>
                 <div id="invoiceTo" class="concernedInfo">
-                    <select name="customerId">
+                    <select name="CustomerID">
                         <?php
-                        $search = new ListAllSearch('Customer', 'customerId', array(), array('*'));
+                        $search = new ListAllSearch('Customer', 'CustomerID', array(), array('*'));
                         $customers = $search->getResults();
                         foreach($customers as $customer){
-                            echo '<option value='.$customer['customerId'].'>';
-                            echo $customer['companyName'] . ' - Tax ID ' . $customer['customerTaxId'];
+                            echo '<option value='.$customer['CustomerID'].'>';
+                            echo $customer['CompanyName'] . ' - Tax ID ' . $customer['CustomerTaxID'];
                             echo '</option>';
                         }
                         ?>

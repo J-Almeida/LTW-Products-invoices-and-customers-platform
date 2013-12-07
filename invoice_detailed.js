@@ -14,8 +14,8 @@ function getParameter(urlQuery) {
 
 function drawCustomerDetails(customerId, content) {
     $.getJSON("./api/getCustomer.php?CustomerID=" + customerId, function(data) {
-        var details = data.companyName + " (T.ID  " + data.customerTaxId +  ")<br>";
-        details += data.addressDetail + "<br>" + data.postalCode + " " + data.cityName + ", " + data.countryName;
+        var details = data.CompanyName + " (T.ID  " + data.CustomerTaxID +  ")<br>";
+        details += data.AddressDetail + "<br>" + data.PostalCode + " " + data.CityName + ", " + data.CountryName;
         content.html(details);
     });
 }
@@ -40,10 +40,10 @@ function drawInvoiceStructure(invoiceData) {
 
     $("#invoiceNo").html(json.invoiceNo);
     $("#invoiceDate").html(json.invoiceDate);
-    drawCustomerDetails(json.customerId, $("#invoiceToName"));
+    drawCustomerDetails(json.CustomerID, $("#invoiceToName"));
 
     $("#invoiceCustomer").click(function() {
-        window.open("customer_detailed.php?CustomerID=" + json.customerId);
+        window.open("customer_detailed.php?CustomerID=" + json.CustomerID);
     });
 
     var lines = "";
