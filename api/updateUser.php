@@ -5,7 +5,7 @@ require_once 'user.php';
 require_once 'authenticationUtilities.php';
 
 if(!comparePermissions(array('promote'))) {
-	$error = new Error(601, 'Permission Denied');
+	$error = new Error(601, 'Permission denied');
     die( json_encode($error->getInfo()) );
 }
 

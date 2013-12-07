@@ -24,13 +24,13 @@ if ( isset($_GET['value']) && !empty($_GET['value']) ) {
 
 if($table == "User") {
     if(!comparePermissions(array('promote'))) {
-        $error = new Error(601, 'Permission Denied');
+        $error = new Error(601, 'Permission denied');
         die( json_encode($error->getInfo()) );
     }
 }
 else {
     if(!comparePermissions(array('write'))) {
-        $error = new Error(601, 'Permission Denied');
+        $error = new Error(601, 'Permission denied');
         die( json_encode($error->getInfo()) );
     }
 }

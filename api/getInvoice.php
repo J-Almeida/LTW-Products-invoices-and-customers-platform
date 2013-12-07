@@ -5,7 +5,7 @@ require_once '../bootstrap.php';
 require_once 'authenticationUtilities.php';
 
 if(!comparePermissions(array('read'))) {
-	$error = new Error(601, 'Permission Denied');
+	$error = new Error(601, 'Permission denied');
     die( json_encode($error->getInfo()) );
 }
 
