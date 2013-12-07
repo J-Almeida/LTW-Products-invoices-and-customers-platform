@@ -168,7 +168,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
         );
 
         $response = updateInvoice($invoiceToImport);
-        if ($response['error']) {
+        if (isset($response['error']) && !empty($response['error'])) {
             echo "Error inserting product with number $invoice->InvoiceNo:<br/>";
             echo 'Error code '.$response['error']['code'].': '.$response['error']['reason'].'<br/>';
         } else {
@@ -194,7 +194,7 @@ function getProductInfo($productCode, $auditFile) {
 function getObject($table, $field, $value) {
     $search = new EqualSearch($table, $field, array($value), array('*'));
     $results = $search->getResults();
-    if(!$results[0]) {
+    if(!isset($results[0]) || !$results[0]) {
         return null;
     }
     $results = json_encode($results[0]);
