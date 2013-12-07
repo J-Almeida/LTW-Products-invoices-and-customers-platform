@@ -33,10 +33,24 @@ function updateCustomer($customerInfo) {
     $field = 'customerId';
     $customerId = $customerInfo['customerId'];
     if ($customerId == NULL) {
+        $customerInfo['customerId'] = getLastCustomerId() + 1;
         new Insert('Customer', $customerInfo);
-        $customerId = getId('Customer', 'customerTaxId', $customerInfo['customerTaxId']);
+        $customerId = $customerInfo['customerId'];
     } else
         new Update($table, $customerInfo, $field, $customerId);
 
     return getCustomer($customerId);
+}
+
+function getLastCustomerId(){
+    $table = 'Customer';
+    $field = 'customerId';
+    $values = array();
+    $rows = array('customerId');
+    $max = new MaxSearch($table, $field, $values, $rows);
+    $results = $max->getResults();
+    if(isSet($results[0])) {
+        return $results[0]['customerId'];
+    }
+    return 0;
 }

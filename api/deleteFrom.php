@@ -15,17 +15,11 @@ if ( isset($_GET['table']) && !empty($_GET['table']) ) {
 $field = NULL;
 if ( isset($_GET['field']) && !empty($_GET['field']) ) {
     $field = $_GET['field'];
-} else {
-    $error = new Error(700, 'Missing \'field\' field');
-    die( json_encode($error->getInfo()) );
 }
 
 $value = NULL;
 if ( isset($_GET['value']) && !empty($_GET['value']) ) {
     $value = $_GET['value'];
-} else {
-    $error = new Error(700, 'Missing \'value\' field');
-    die( json_encode($error->getInfo()) );
 }
 
 if($table == "User") {
@@ -42,7 +36,7 @@ else {
 }
 
 // handle product deletions
-if ($table == 'Product') {
+if ($table == 'Product' && $field != null && $value != null) {
     $search = new EqualSearch('Product', $field, array($value), array('*'));
     $results = $search->getResults();
     foreach($results as $product) {
@@ -75,4 +69,7 @@ if ($table == 'Product') {
     }
 }
 
-new Delete($table, array($field => $value));
+if ($field == null || $value == null)
+    new Delete($table, array());
+else
+    new Delete($table, array($field => $value));

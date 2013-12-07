@@ -17,9 +17,12 @@ class Delete extends Query {
 
     public function __construct($table, $fieldsAndValues) {
         $this->table = $table;
-        $this->setFieldsAndValues($fieldsAndValues);
-        $this->sql = "DELETE FROM $this->table WHERE $this->fieldsAndValues";
-
+        if (count($fieldsAndValues) == 0) {
+            $this->sql = "DELETE FROM $this->table";
+        } else {
+            $this->setFieldsAndValues($fieldsAndValues);
+            $this->sql = "DELETE FROM $this->table WHERE $this->fieldsAndValues";
+        }
         $this->executeQuery();
     }
 

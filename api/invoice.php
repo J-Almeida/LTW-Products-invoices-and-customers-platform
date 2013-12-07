@@ -135,7 +135,7 @@ function getLastInvoiceNo(){
     if(isSet($results[0])) {
         return $results[0]['invoiceNo'];
     }
-    return null;
+    return 'FT SEQ/0';
 }
 
 function getLastInvoiceNoPlusOne() {

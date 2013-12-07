@@ -54,5 +54,5 @@ function getLastProductCode(){
     if(isSet($results[0])) {
         return $results[0]['productCode'];
     }
-    return null;
+    return 0;
 }
