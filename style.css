@@ -6,6 +6,11 @@ body {
 	margin: auto;
 }
 
+body p {
+	font-size: 14px;
+	text-align: center;
+}
+
 #loadingCustomer, #loadingProduct, #loadingUser {
 	font-size: 14px;
 	margin-top: 40px;
