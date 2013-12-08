@@ -29,10 +29,16 @@ function displayCustomer(customerID) {
         success: function(data)
         {
             var customer = JSON.parse(data);
-            for(var field in customer['BillingAddress']){
-                customer[field] = customer['BillingAddress'][field];
+
+            if (customer.error) {
+                document.body.innerHTML = "<p>Error loading customer</p>" + "<p>Code " + customer.error.code + ": " + customer.error.reason + "</p>";
             }
-            drawCustomerStructure(customer);
+            else {
+                for(var field in customer['BillingAddress']){
+                    customer[field] = customer['BillingAddress'][field];
+                }
+                drawCustomerStructure(customer);
+            }
         },
         error: function(a, b, c)
         {

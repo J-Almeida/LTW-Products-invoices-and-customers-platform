@@ -123,7 +123,12 @@ function displayInvoice(invoiceNo) {
         data: "",
         success: function(data)
         {
-            drawInvoiceStructure(data);
+            var json = JSON.parse(data);
+            if (json.error) {
+                document.body.innerHTML = "<p>Error loading invoice</p>" + "<p>Code " + json.error.code + ": " + json.error.reason + "</p>";
+            }
+            else
+                drawInvoiceStructure(data);
         },
         error: function(a, b, c)
         {

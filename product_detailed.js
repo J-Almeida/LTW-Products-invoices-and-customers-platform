@@ -29,7 +29,14 @@ function displayProduct(productCode) {
         data: "",
         success: function(data)
         {
-            drawProductStructure(data);
+            var product = JSON.parse(data);
+
+            if (product.error) {
+                document.body.innerHTML = "<p>Error loading product</p>" + "<p>Code " + product.error.code + ": " + product.error.reason + "</p>";
+            }
+            else {
+                drawProductStructure(data);
+            }
         },
         error: function(a, b, c)
         {
