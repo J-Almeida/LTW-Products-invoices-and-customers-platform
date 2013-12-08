@@ -15,7 +15,9 @@
 	}
 
 	function isValidEmail($email) {
-		$pattern = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
-		return(preg_match($pattern, $email));
+		if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+			return false;
+		else
+			return true;
 	}
 ?>
