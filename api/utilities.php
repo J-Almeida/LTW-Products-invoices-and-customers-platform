@@ -155,7 +155,8 @@ function getFiscalYear() {
 
 // Checks if all obligatory fields are missing or empty in a json info array
 // deletes all fields which are neither obligatory nor optional
-function checkFields(&$info, $obligatoryFields, $optionalFields = array()) {
+function validateFields(&$info, $obligatoryFields, $optionalFields = array()) {
+
     foreach($obligatoryFields as $field) {
         if ( !isset($info[$field]) ) {
             $error = new Error(700, "Missing field $field");
@@ -166,11 +167,46 @@ function checkFields(&$info, $obligatoryFields, $optionalFields = array()) {
             $error = new Error(700, "Empty field $field");
             die( json_encode($error->getInfo()) );
         }
+
+        validateField($field, $info);
+    }
+
+    foreach($optionalFields as $field) {
+        if ( array_key_exists($field, $info) )
+            validateField($field, $info);
     }
 
     foreach($info as $field => $value) {
         if ( !in_array($field, $obligatoryFields) && !in_array($field, $optionalFields) ) {
             unset($info[$field]);
+        }
+    }
+}
+
+function validateField($field, &$info) {
+    require_once 'inputValidators.php';
+
+    $validations = array(
+        'CompanyName'   =>  'isValidTextField',
+        'CustomerTaxID' =>  'isValidPositiveNumber',
+        'Email'         =>  'isValidEmail',
+     // 'AddressDetail' =>  'isValidLargeTextField',
+     // 'City'          =>  'isValidTextField',
+     // 'PostalCode'    =>  '',
+     // 'Country'       =>  '',
+     // 'CountryName'   =>  'isValidTextField',
+        'InvoiceNo'     =>  'isValidInvoiceNo',
+     // 'InvoiceDate'   =>  '',
+        'Quantity'      =>  'isValidPositiveNumber',
+        'TaxPercentage' =>  'isValidPositiveNumber',
+        'UnitPrice'     =>  'isValidPositiveNumber'
+    );
+
+    if (array_key_exists($field, $validations)) {
+        $valid = call_user_func($validations[$field], $info[$field]);
+        if (!$valid) {
+            $error = new Error(700, "Invalid field $field");
+            die(json_encode($error->getInfo()));
         }
     }
 }

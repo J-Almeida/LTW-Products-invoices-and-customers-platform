@@ -13,7 +13,7 @@ class Update extends Query {
         foreach ($updatedInfoArray as $row => $info ) {
             $this->updatedInfo .= $row . ' = ' . $this->quote($info) .', ';
         }
-        $this->updatedInfo = rtrim($this->updatedInfo, ", ");
+        $this->updatedInfo = rtrim($this->updatedInfo, ', ');
     }
 
     public function __construct($table, $updatedInfoArray, $field, $value) {
