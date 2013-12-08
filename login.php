@@ -2,7 +2,7 @@
 require_once 'bootstrap.php';
 require_once './api/authenticationUtilities.php';
 
-header('Refresh: 1; URL=http://localhost/ltw/index.php');
+header('Refresh: 1; URL=./index.php');
 
 echo "<link rel=\"stylesheet\" href=\"style.css\">";
 echo "<br><br><br>";
