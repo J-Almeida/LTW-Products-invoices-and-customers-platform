@@ -157,31 +157,15 @@ function getLastInvoiceNoPlusOne() {
 }
 
 function getTaxId($invoiceLine) {
-    if(isset($invoiceLine['TaxID']) && !empty($invoiceLine['TaxID'])){
-        $taxId = $invoiceLine['TaxID'];
-        $search = new EqualSearch('Tax', 'TaxID', array($taxId), array('TaxID'));
-        $results = $search->getResults();
-        if(!isset($results[0]) || !$results[0] ) { // tax doesn't exist in the DB
-            $newTax = array(
-                'TaxType' =>  $invoiceLine['Tax']['TaxType'],
-                'TaxPercentage' => $invoiceLine['Tax']['TaxPercentage'],
-                'TaxDescription' => $invoiceLine['Tax']['TaxType']
-            );
-            new Insert('Tax', $newTax);
-            return getId('Tax', 'TaxType', $invoiceLine['Tax']['TaxType']);
-        }
-        return $taxId;
-    } else {
-        $taxId = getId('Tax', 'TaxType', $invoiceLine['Tax']['TaxType']);
-        if ($taxId == null) {
-            $newTax = array(
-                'TaxType' =>  $invoiceLine['Tax']['TaxType'],
-                'TaxPercentage' => $invoiceLine['Tax']['TaxPercentage'],
-                'TaxDescription' => $invoiceLine['Tax']['TaxType']
-            );
-            new Insert('Tax', $newTax);
-            return getId('Tax', 'TaxType', $invoiceLine['Tax']['TaxType']);
-        }
-        return $taxId;
+    $taxId = getId('Tax', 'TaxType', $invoiceLine['Tax']['TaxType']);
+    if ($taxId == null) {
+        $newTax = array(
+            'TaxType' =>  $invoiceLine['Tax']['TaxType'],
+            'TaxPercentage' => $invoiceLine['Tax']['TaxPercentage'],
+            'TaxDescription' => $invoiceLine['Tax']['TaxType']
+        );
+        new Insert('Tax', $newTax);
+        return getId('Tax', 'TaxType', $invoiceLine['Tax']['TaxType']);
     }
+    return $taxId;
 }

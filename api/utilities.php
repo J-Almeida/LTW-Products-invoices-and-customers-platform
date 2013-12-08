@@ -108,8 +108,8 @@ function roundProductTotals(&$product) {
 function getId($table, $field, $value) {
     $values = array($value);
     $rows = array($table.'ID');
-    $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
-    $results = $invoiceSearch->getResults();
+    $search = new EqualSearch($table, $field, $values, $rows);
+    $results = $search->getResults();
     if(isSet($results[0])) {
         return $results[0][$table.'ID'];
     }
