@@ -42,7 +42,7 @@ evaluateSessionPermissions($neededPermissions);
                 </span></li>
 
                 <li>Tax identification: <span id="customerTaxID">
-                        <input type="number" pattern="^[0-9]{1,20}$" name="CustomerTaxID">
+                        <input type="number" pattern="^[0-9]{1,20}$" min="0" name="CustomerTaxID">
                 </span></li>
             </ul>
         </header>

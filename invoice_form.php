@@ -105,10 +105,10 @@ evaluateSessionPermissions($neededPermissions);
                             <input class="quantity" type="number" pattern="^[0-9]{1,20}$" min="0" name="Line[1].Quantity" value="1" onchange="updateLine($(this));">
                         </th>
                         <th>
-                            <input class="unitPrice" type="number" pattern="^\d*\.?\d*$" min="0" maxlength="30" name="Line[1].UnitPrice" value="1" readonly>
+                            <input class="unitPrice" type="number" pattern="^\d*\.?\d*$" min="0" step="any" maxlength="30" name="Line[1].UnitPrice" value="1" readonly>
                         </th>
                         <th>
-                            <input class="creditAmount" type="number" pattern="^\d*\.?\d*$" min="0" maxlength="30" name="Line[1].CreditAmount" value="1" readonly>
+                            <input class="creditAmount" type="number" pattern="^\d*\.?\d*$" min="0" step="any" maxlength="30" name="Line[1].CreditAmount" value="1" readonly>
                         </th>
                         <th>
                             <select class="taxId" pattern="^[0-9]{1,20}$" name="Line[1].TaxID" onchange="updateTotals();">

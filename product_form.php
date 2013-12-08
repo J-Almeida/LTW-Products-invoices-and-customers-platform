@@ -52,7 +52,7 @@ evaluateSessionPermissions($neededPermissions);
 
                 <li>Unit Price:
                     <p id="unitPrice"></p>
-                    <input type="number" pattern="^\d*\.?\d*$" maxlength="30" min="0" name="UnitPrice">
+                    <input type="number" pattern="^\d*\.?\d*$" maxlength="30" min="0" step="any" name="UnitPrice">
                 </li>
 
                 <li>Unit of measure:
