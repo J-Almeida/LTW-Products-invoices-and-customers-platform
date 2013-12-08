@@ -375,9 +375,9 @@ INSERT INTO Invoice (InvoiceNo, InvoiceDate, CustomerID)
             VALUES ("FT SEQ/44", "2013-11-30", 5);
 
 
-INSERT INTO Tax(TaxType, TaxPercentage, TaxDescription) VALUES ("IVA 1", 23.00, "Taxa Normal");
-INSERT INTO Tax(TaxType, TaxPercentage, TaxDescription) VALUES ("IVA 2", 13.00, "Taxa Intermédia");
-INSERT INTO Tax(TaxType, TaxPercentage, TaxDescription) VALUES ("IVA 3",  6.00, "Taxa Reduzida");
+INSERT INTO Tax(TaxType, TaxPercentage, TaxDescription) VALUES ("IVA", 23.00, "Taxa Normal");
+INSERT INTO Tax(TaxType, TaxPercentage, TaxDescription) VALUES ("IS", 13.00, "Taxa Intermédia");
+INSERT INTO Tax(TaxType, TaxPercentage, TaxDescription) VALUES ("NS",  6.00, "Taxa Reduzida");
 
 
 INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
