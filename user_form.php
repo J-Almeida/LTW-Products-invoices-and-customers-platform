@@ -28,7 +28,7 @@ evaluateSessionPermissions($neededPermissions);
     </div>
 
     <div id="user" style="display: none; /*Jquery deals with showing the element after everything is loaded */">
-        <form onchange="submitForm('user'); return false;" data-action="./api/updateUser.php" method="POST" autocomplete="off">
+        <form onsubmit="submitForm('user'); return false;" data-action="./api/updateUser.php" method="POST" autocomplete="off">
 
             <div class="userTitle">
                 <strong>Manage user</strong>
