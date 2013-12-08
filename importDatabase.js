@@ -1,7 +1,41 @@
+var invalidURL = true;
+var authenticatedURL = false;
+
 function importDatabase() {
     var otherURL = $('#otherDatabaseURL').val();
     if (otherURL == "") {
-        alert('Please enter a valid URL, for example:\ngnomo.fe.up.pt/~ei11XXX/ltw/');
+        alert('Please enter a valid URL, for example:\ngnomo.fe.up.pt/~ei11XXX/ltw');
+    }
+
+    if (otherURL.slice(-1) == "/")
+        otherURL.substr(0, otherURL.length - 1);
+
+    // test URL
+    $.ajax(otherURL + "/api/searchInvoicesByField.php?op=contains&field=InvoiceNo&value[]= " , {
+        async: false,
+        dataType: "json",
+        data: "",
+        success: function(data){
+            invalidURL = false;
+            if (data.error){
+                alert("You are not logged on the specified website.\nPlease log in first and then try to import again.")
+                authenticatedURL = false;
+            } else
+                authenticatedURL = true;
+        },
+        error: function()
+        {
+            invalidURL = true;
+            alert("The supplied URL is invalid.\nPlease input a website that supports our API.");
+        }
+    });
+
+    if (invalidURL || !authenticatedURL) return;
+
+    var proceed = confirm("This will delete the current database and import the new one.\nThe process might take a few seconds.\nDo you wish to continue?");
+
+    if (proceed == false) {
+        return;
     }
 
     var ourURL = document.URL;
