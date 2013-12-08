@@ -3,8 +3,9 @@ require_once 'utilities.php';
 
 function checkPassword($login, $password) {
 	$db = new PDO(getDatabase());
-	$query = $db->query("SELECT * FROM User WHERE (username = '$login' OR email = '$login') AND password = '$password'");
-	$query->setFetchMode(PDO::FETCH_ASSOC);
+	$query = $db->prepare("SELECT * FROM User WHERE (username = '$login' OR email = '$login') AND password = '$password'");
+	$query->execute();
+    $query->setFetchMode(PDO::FETCH_ASSOC);
    	$result = $query->fetch();
 
    	if($result)
@@ -15,7 +16,8 @@ function checkPassword($login, $password) {
 
 function getUsername($login) {
 	$db = new PDO(getDatabase());
-	$query = $db->query("SELECT username FROM User WHERE (username = '$login' OR email = '$login')");
+	$query = $db->prepare("SELECT username FROM User WHERE (username = '$login' OR email = '$login')");
+    $query->execute();
 	$query->setFetchMode(PDO::FETCH_ASSOC);
    	$result = $query->fetch();
 
@@ -27,8 +29,9 @@ function getUsername($login) {
 
 function getPermissions($user) {
 	$db = new PDO(getDatabase());
-	$query = $db->query("SELECT * FROM User, Permission WHERE (username = '$user' AND User.permissionId = Permission.permissionId)");
-	$query->setFetchMode(PDO::FETCH_ASSOC);
+	$query = $db->prepare("SELECT * FROM User, Permission WHERE (username = '$user' AND User.permissionId = Permission.permissionId)");
+	$query->execute();
+    $query->setFetchMode(PDO::FETCH_ASSOC);
    	$result = $query->fetch();
 
    	if($result) {

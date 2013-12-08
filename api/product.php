@@ -30,8 +30,6 @@ function getProduct($productCode) {
 
 function updateProduct($productInfo) {
 
-// TODO select only the necessary fields from the json, return error when important fields are missing
-
     $table = 'Product';
     $field = 'ProductCode';
     
@@ -39,6 +37,10 @@ function updateProduct($productInfo) {
         $productCode = $productInfo['ProductCode'];
     else
         $productCode = NULL;
+
+    $obligatoryFields = array('ProductDescription');
+    $optionalFields = array('UnitPrice', 'UnitOfMeasure');
+    checkFields($productInfo, $obligatoryFields, $optionalFields);
 
     if ($productCode == NULL) {
         $productCode = getLastProductCode() + 1;
