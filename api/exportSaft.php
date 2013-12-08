@@ -77,6 +77,9 @@ foreach($customers as $customer){
 	$BillingAddress->addChild('PostalCode',htmlspecialchars($customer['PostalCode']));
 	$BillingAddress->addChild('Country',htmlspecialchars($customer['Country']));
 
+	if(isset($customer['Email']) && !empty($customer['Email']))
+		$customerElement->addChild('Email', $customer['Email']);
+	
 	$customerElement->addChild('SelfBillingIndicator', '0');
 }
 
@@ -190,8 +193,13 @@ foreach($invoices as $invoice)
 /****************************************************
 Save to a file
 ****************************************************/
+$dom = new DOMDocument("1.0");
+$dom->preserveWhiteSpace = false;
+$dom->formatOutput = true;
+$dom->loadXML($AuditElement->asXML());
+
 	$filename = $date . '_SAFT-PT.xml';
-	if($AuditElement->asXML($filename)) {
+	if($dom->save($filename)) {
 		header("Content-Disposition: attachment; filename=\"" . $filename . "\"");
 		readfile($filename);
 		unlink($filename);
