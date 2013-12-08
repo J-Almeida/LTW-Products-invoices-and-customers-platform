@@ -2,6 +2,12 @@
 require_once '../bootstrap.php';
 require_once 'search.php';
 require_once 'utilities.php';
+require_once 'authenticationUtilities.php';
+
+if(!comparePermissions(array('write'))) {
+    $error = new Error(601, 'Permission denied');
+    die( json_encode($error->getInfo()) );
+}
 
 $sourceID = $_SESSION['username'];
 
@@ -29,14 +35,14 @@ $endDate = getEndDate();
 
 $Header = $AuditElement->addChild('Header');
 $Header->addChild('AuditFileVersion','1.03_01');
-$Header->addChild('CompanyID','Leiria 55555');
-$Header->addChild('TaxRegistrationNumber','506219300');
+$Header->addChild('CompanyID','13');
+$Header->addChild('TaxRegistrationNumber','133713666');
 $Header->addChild('TaxAccountingBasis', 'F');
-$Header->addChild('CompanyName','Pens &amp; Pencils');
+$Header->addChild('CompanyName','Totally Legit Sellers, Inc.');
 $CompanyAddress = $Header->addChild('CompanyAddress');
-$CompanyAddress->addChild('AddressDetail','Avenida dos Queijos, nº 1');
+$CompanyAddress->addChild('AddressDetail','Travessa Sta. dos Ludibriados, 117');
 $CompanyAddress->addChild('City','Porto');
-$CompanyAddress->addChild('PostalCode','4400-125');
+$CompanyAddress->addChild('PostalCode','1337-666');
 $CompanyAddress->addChild('Country','PT');
 $Header->addChild('FiscalYear',$fiscalYear);
 $Header->addChild('StartDate',$startDate);
@@ -44,7 +50,7 @@ $Header->addChild('EndDate',$endDate);
 $Header->addChild('CurrencyCode','EUR');
 $Header->addChild('DateCreated',$date);
 $Header->addChild('TaxEntity','Global');
-$Header->addChild('ProductCompanyTaxID','506209365');
+$Header->addChild('ProductCompanyTaxID','133769666');
 $Header->addChild('SoftwareCertificateNumber','0');
 $Header->addChild('ProductID','Empresa/MagnumInvoices');
 $Header->addChild('ProductVersion','1.0');

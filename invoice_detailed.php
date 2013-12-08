@@ -49,7 +49,11 @@ evaluateSessionPermissions($neededPermissions);
             <div class="invoiceCompany">
                 <h2>Invoice From:</h2>
                 <div id="invoiceFrom" class="concernedInfo">
-                    <div class="concerned" id="invoiceFromName"></div>
+                    <div class="concerned" id="invoiceFromName">
+                        Totally Legit Sellers, Inc. (T. ID 1539920)</br>
+                        Travessa Sta. dos Ludibriados, 117</br>
+                        1337-666 Porto, Portugal</br>
+                    </div>
                 </div>
             </div>
         </section>
