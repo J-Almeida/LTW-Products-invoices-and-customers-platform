@@ -8,6 +8,7 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="searches.js"></script>
+    <script src="importDatabase.js"></script>
 
     <script type="text/javascript">
         /*  // example
@@ -88,6 +89,12 @@
         <label for="file">Import a Saft file</label>
         <input type="file" name="file" id="file"><br>
         <input type="submit" name="submit" value="Submit">
+    </form>
+
+
+    <form>
+        <input id="otherDatabaseURL" name="url" type="text" value="http://localhost/ltw2">
+        <input type="button" value="Import Database" onclick="importDatabase(); return false;">
     </form>
 </div>
 

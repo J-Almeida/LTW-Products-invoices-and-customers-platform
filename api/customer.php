@@ -23,6 +23,8 @@ function getCustomer($customerId) {
 
     $result = $result[0];
 
+    setValuesAsArray('BillingAddress', array('AddressDetail', 'CityName', 'PostalCode', 'CountryCode', 'CountryName'), $result);
+
     return $result;
 }
 

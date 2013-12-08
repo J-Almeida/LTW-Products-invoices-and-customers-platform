@@ -12,14 +12,12 @@ function getParameter(urlQuery) {
     return params;
 }
 
-function drawCustomerStructure(customerData) {
-    var json = JSON.parse(customerData);
-
-    $("#customerID").html(json.CustomerID);
-    $("#customerTaxID").html(json.CustomerTaxID);
-    $("#companyName").html(json.CompanyName);
-    $("#billingAddress").html(json.AddressDetail + "<br>" + json.PostalCode + " " + json.CityName + ", " + json.CountryName);
-    $("#emailAddress").html(json.Email);
+function drawCustomerStructure(customer) {
+    $("#customerID").html(customer.CustomerID);
+    $("#customerTaxID").html(customer.CustomerTaxID);
+    $("#companyName").html(customer.CompanyName);
+    $("#billingAddress").html(customer.AddressDetail + "<br>" + customer.PostalCode + " " + customer.CityName + ", " + customer.CountryName);
+    $("#emailAddress").html(customer.Email);
 }
 
 function displayCustomer(customerID) {
@@ -30,7 +28,11 @@ function displayCustomer(customerID) {
         data: "",
         success: function(data)
         {
-            drawCustomerStructure(data);
+            var customer = JSON.parse(data);
+            for(var field in customer['BillingAddress']){
+                customer[field] = customer['BillingAddress'][field];
+            }
+            drawCustomerStructure(customer);
         },
         error: function(a, b, c)
         {
