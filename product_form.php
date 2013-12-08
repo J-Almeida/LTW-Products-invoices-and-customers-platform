@@ -37,7 +37,8 @@ evaluateSessionPermissions($neededPermissions);
         <header id="productHeader">
             <ul class="productInfo">
                 <li>Product code: <span id="productCode"></span>
-                    <input id="productCodeInput" type="number" name="ProductCode" readonly>
+                    <input id="productCodeInput" type="number" name="ProductCode" readonly
+                           onclick="warnReadOnly($(this))">
                 </li>
             </ul>
         </header>

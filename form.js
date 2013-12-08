@@ -230,3 +230,12 @@ function getFormData($form){
 
     return indexedArray;
 }
+
+function warnReadOnly(input){
+    var value = input.val();
+    if (value == "") {
+        alert("The database will automatically handle this field on insertion.");
+    } else {
+        alert("The " + input.attr('name') + " cannot be modified. It is a unique reference and is calculated on insertion in the database.");
+    }
+}

@@ -42,7 +42,8 @@ evaluateSessionPermissions($neededPermissions);
         <header id="invoiceHeader">
             <ul class="invoiceInfo">
                 <li>Invoice no: <span id="invoiceNo">
-                        <input id="invoiceNoInput" type="text" name="InvoiceNo" readonly>
+                        <input id="invoiceNoInput" type="text" name="InvoiceNo" readonly
+                               onclick="warnReadOnly($(this))">
                 </span></li>
 
                 <li>Invoice date: <span id="invoiceDate">
