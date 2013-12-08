@@ -133,3 +133,22 @@ function getDatabase() {
     $db .= 'database.db';
     return $db;
 }
+
+function getStartDate() {
+    $invoiceSearch = new MinSearch('Invoice', 'InvoiceDate', array(), array('*'));
+    $results = $invoiceSearch->getResults();
+
+    return $results[0]['InvoiceDate'];
+}
+
+function getEndDate() {
+    $invoiceSearch = new MaxSearch('Invoice', 'InvoiceDate', array(), array('*'));
+    $results = $invoiceSearch->getResults();
+
+    return $results[0]['InvoiceDate'];
+}
+
+function getFiscalYear() {
+    $startDate = DateTime::createFromFormat("Y-m-d", getStartDate());
+    return $startDate->format("Y");
+}

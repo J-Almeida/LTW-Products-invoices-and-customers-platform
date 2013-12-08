@@ -22,6 +22,10 @@ $AuditElement->addAttribute('xsi:xsi:schemaLocation', 'urn:OECD:StandardAuditFil
 /****************************************************
 HEADER
 ****************************************************/
+$date = date('Y-m-d');
+$fiscalYear = getFiscalYear();
+$startDate = getStartDate();
+$endDate = getEndDate();
 
 $Header = $AuditElement->addChild('Header');
 $Header->addChild('AuditFileVersion','1.03_01');
@@ -34,11 +38,11 @@ $CompanyAddress->addChild('AddressDetail','Avenida dos Queijos, nº 1');
 $CompanyAddress->addChild('City','Porto');
 $CompanyAddress->addChild('PostalCode','4400-125');
 $CompanyAddress->addChild('Country','PT');
-$Header->addChild('FiscalYear','2010');
-$Header->addChild('StartDate','2010-01-01');//TODO
-$Header->addChild('EndDate','2011-12-31');//TODO
+$Header->addChild('FiscalYear',$fiscalYear);
+$Header->addChild('StartDate',$startDate);
+$Header->addChild('EndDate',$endDate);
 $Header->addChild('CurrencyCode','EUR');
-$Header->addChild('DateCreated','2013-11-15');//TODO
+$Header->addChild('DateCreated',$date);
 $Header->addChild('TaxEntity','Global');
 $Header->addChild('ProductCompanyTaxID','506209365');
 $Header->addChild('SoftwareCertificateNumber','0');
@@ -108,7 +112,7 @@ $invoices = $search4->getResults();
 
 $number = count($invoices);
 $SalesInvoices->addChild('NumberOfEntries',$number);
-$SalesInvoices->addChild('TotalDebit','0');//TODO
+$SalesInvoices->addChild('TotalDebit','0');
 
 $credit = 0;
 
@@ -119,11 +123,6 @@ foreach($invoices as $invoice)
 
 $SalesInvoices->addChild('TotalCredit',$credit);
 
-//date_default_timezone_set("GMT");
-
-$fulltime = date('c'); 
-$date = date('Y-m-d');
-
 foreach($invoices as $invoice)
 {
 	$invoiceElement = $SalesInvoices->addChild('Invoice');
@@ -131,12 +130,12 @@ foreach($invoices as $invoice)
 	$documentStatus = $invoiceElement->addChild('DocumentStatus');
 
 	$documentStatus->addChild('InvoiceStatus','N');
-	$documentStatus->addChild('InvoiceStatusDate',$fulltime);
-	$documentStatus->addChild('SourceID',$sourceID);//TODO
+	$documentStatus->addChild('InvoiceStatusDate',$invoice['SystemEntryDate']);
+	$documentStatus->addChild('SourceID',$sourceID);
 	$documentStatus->addChild('SourceBilling','P');
 
 	$invoiceElement->addChild('Hash','0');
-	$invoiceElement->addChild('InvoiceDate',$date);//TODO - isto pode ser o system date $date ou $invoice['invoiceDate']
+	$invoiceElement->addChild('InvoiceDate',$invoice['InvoiceDate']);
 	$invoiceElement->addChild('InvoiceType','FT');
 
 	$SpecialRegimes = $invoiceElement->addChild('SpecialRegimes');
@@ -144,8 +143,8 @@ foreach($invoices as $invoice)
 	$SpecialRegimes->addChild('CashVATSchemeIndicator','0');
 	$SpecialRegimes->addChild('ThirdPartiesBillingIndicator','0');
 
-	$invoiceElement->addChild('SourceID',$sourceID);//TODO
-	$invoiceElement->addChild('SystemEntryDate',$fulltime);
+	$invoiceElement->addChild('SourceID',$sourceID);
+	$invoiceElement->addChild('SystemEntryDate',$invoice['SystemEntryDate']);
 	$invoiceElement->addChild('CustomerID',$invoice['CustomerID']);
 
 	//lines
@@ -170,8 +169,8 @@ foreach($invoices as $invoice)
         	$Line->addChild('Quantity',$invoiceLine['Quantity']);
         	$Line->addChild('UnitOfMeasure',$invoiceLine['UnitOfMeasure']);
         	$Line->addChild('UnitPrice',$invoiceLine['UnitPrice']);
-        	$Line->addChild('TaxPointDate',$date);//TODO - isto pode ser o system date $date ou $invoice['invoiceDate']
-        	$Line->addChild('Description',$invoiceLine['ProductDescription']);//TODO - evernote says "longer description"
+        	$Line->addChild('TaxPointDate',$invoice['InvoiceDate']);
+        	$Line->addChild('Description',$invoiceLine['ProductDescription']);
         	$Line->addChild('CreditAmount',$invoiceLine['CreditAmount']);
         	$TaxLine = $Line->addChild('Tax');
         	$TaxLine->addChild('TaxType',$invoiceLine['Tax']['TaxType']);
