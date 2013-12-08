@@ -172,7 +172,7 @@ function submitForm(objectName) {
     information += "=";
     information += form;
 
-    $.ajax($('form').attr('action'), {
+    $.ajax($('form').attr('data-action'), {
         async: false,
         type: "POST",
         data: information,
