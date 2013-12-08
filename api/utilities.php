@@ -152,3 +152,25 @@ function getFiscalYear() {
     $startDate = DateTime::createFromFormat("Y-m-d", getStartDate());
     return $startDate->format("Y");
 }
+
+// Checks if all obligatory fields are missing or empty in a json info array
+// deletes all fields which are neither obligatory nor optional
+function checkFields(&$info, $obligatoryFields, $optionalFields = array()) {
+    foreach($obligatoryFields as $field) {
+        if ( !isset($info[$field]) ) {
+            $error = new Error(700, "Missing field $field");
+            die( json_encode($error->getInfo()) );
+        }
+
+        if ( empty($info[$field]) ) {
+            $error = new Error(700, "Empty field $field");
+            die( json_encode($error->getInfo()) );
+        }
+    }
+
+    foreach($info as $field => $value) {
+        if ( !in_array($field, $obligatoryFields) && !in_array($field, $optionalFields) ) {
+            unset($info[$field]);
+        }
+    }
+}

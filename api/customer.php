@@ -29,8 +29,6 @@ function getCustomer($customerId) {
 }
 
 function updateCustomer($customerInfo) {
-// TODO select only the necessary fields from the json, return error when important fields are missing
-
     $table = 'Customer';
     $field = 'CustomerID';
     
@@ -55,6 +53,13 @@ function updateCustomer($customerInfo) {
         $customerInfo['CountryID'] = getCountryId($customerInfo['Country'], $countryName);
         unset($customerInfo['Country']);
     }
+
+    $obligatoryFields = array(
+        'CompanyName', 'CustomerTaxID', 'CountryID',
+        'AddressDetail', 'City', 'PostalCode', 'CountryID'
+    );
+    $optionalFields = array('Email');
+    checkFields($customerInfo, $obligatoryFields, $optionalFields);
 
     if ($customerId == NULL) {
         $customerInfo['CustomerID'] = getLastCustomerId() + 1;

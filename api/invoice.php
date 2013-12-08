@@ -49,6 +49,10 @@ function getInvoice($invoiceNo) {
 }
 
 function insertInvoice($invoiceInfo) {
+    $obligatoryFields = array('InvoiceNo', 'InvoiceDate', 'CustomerID', 'Line');
+    $optionalFields = array('DocumentTotals');
+    checkFields($invoiceInfo, $obligatoryFields, $optionalFields);
+
     $invoiceLines = $invoiceInfo['Line'];
     unset($invoiceInfo['Line']);
     unset($invoiceInfo['DocumentTotals']);
@@ -56,24 +60,12 @@ function insertInvoice($invoiceInfo) {
     new Insert('Invoice', $invoiceInfo);
     $invoiceId = getId('Invoice', 'InvoiceNo', $invoiceInfo['InvoiceNo']);
 
-    foreach($invoiceLines as $line) {
-        $taxId = getTaxId($line);
-
-        $fields = array(
-            'InvoiceID' => $invoiceId,
-            'ProductID' => getId('Product', 'ProductCode', $line['ProductCode']),
-            'Quantity'  => $line['Quantity'],
-            'TaxID'     => $taxId
-        );
-        new Insert('InvoiceLine', $fields);
-    }
+    insertLines($invoiceLines, $invoiceId);
 
     return getInvoice($invoiceInfo['InvoiceNo']);
 }
 
 function updateInvoice($invoiceInfo) {
-// TODO select only the necessary fields from the json, return error when important fields are missing
-
     $table = 'Invoice';
     $field = 'InvoiceNo';
     if(isset($invoiceInfo['InvoiceNo']) && !empty($invoiceInfo['InvoiceNo']))
@@ -92,6 +84,10 @@ function updateInvoice($invoiceInfo) {
     $invoiceId = getId('Invoice', 'InvoiceNo', $invoiceNo);
     $invoiceLines = $invoiceInfo['Line'];
 
+    $obligatoryFields = array('InvoiceDate', 'CustomerID', 'Line');
+    $optionalFields = array('DocumentTotals');
+    checkFields($invoiceInfo, $obligatoryFields, $optionalFields);
+
     // ignore and reset document totals and lines
     unset($invoiceInfo['Line']);
     unset($invoiceInfo['DocumentTotals']);
@@ -105,19 +101,30 @@ function updateInvoice($invoiceInfo) {
     // This is necessary because the database will calculate the new invoice totals
     new Delete('InvoiceLine', array('InvoiceID' => $invoiceId));
 
-    foreach($invoiceLines as $line) {
-        $taxId = getTaxId($line);
+    insertLines($invoiceLines, $invoiceId);
+
+    return getInvoice($invoiceNo);
+}
+
+function insertLines($invoiceLines, $invoiceId) {
+    foreach ($invoiceLines as $line) {
+        if (isset($line['Tax']) && !empty($line['Tax'])) {
+            checkFields($line['Tax'], array('TaxType', 'TaxPercentage'));
+            $line['TaxID'] = getTaxId($line);
+        }
+
+        $obligatoryFields = array('ProductCode', 'Quantity', 'TaxID');
+        $optionalFields = array('LineNumber', 'UnitPrice', 'CreditAmount', 'Tax');
+        checkFields($line, $obligatoryFields, $optionalFields);
 
         $fields = array(
             'InvoiceID' => $invoiceId,
-            'ProductID' => getId('Product', 'ProductCode' ,$line['ProductCode']),
-            'Quantity'  => $line['Quantity'],
-            'TaxID'     => $taxId
+            'ProductID' => getId('Product', 'ProductCode', $line['ProductCode']),
+            'Quantity' => $line['Quantity'],
+            'TaxID' => $line['TaxID']
         );
         new Insert('InvoiceLine', $fields);
     }
-
-    return getInvoice($invoiceNo);
 }
 
 function getLastInvoiceNo(){
