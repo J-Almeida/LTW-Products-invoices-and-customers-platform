@@ -50,7 +50,7 @@ class RangeSearch extends Search {
         if ( count($values) != 2 )
             throw new Error(700, "Expected only 2 values");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
-        $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field BETWEEN '". $this->values[0] . "' AND '" . $this->values[1] . "'";
+        $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field BETWEEN ". $this->quote($this->values[0]) . " AND " . $this->quote($this->values[1]);
     }
 }
 
@@ -59,7 +59,7 @@ class EqualSearch extends Search {
         if ( count($values) != 1 )
             throw new Error(700, "Expected only 1 value");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
-        $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field = '" . $this->values[0] . "'";
+        $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field = " . $this->quote($this->values[0]) ;
     }
 }
 
@@ -68,7 +68,7 @@ class ContainsSearch extends Search {
         if ( count($values) != 1 )
             throw new Error(700, "Expected only 1 value");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
-        $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field LIKE ('%" . $this->values[0] ."%')";
+        $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field LIKE (".$this->quote('%'.$this->values[0].'%').')';
     }
 }
 
