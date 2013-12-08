@@ -51,16 +51,16 @@ evaluateSessionPermissions($neededPermissions);
             <ul class="customerDetail">
                 <li>Name:
                     <p id="companyName">
-                        <input type="text" pattern="^[a-zA-Z0-9 ,#.-]{1,50}$" name="CompanyName">
+                        <input type="text" pattern="^[a-zA-Z0-9 ,'#.-]{1,50}$" name="CompanyName">
                     </p>
                 </li>
 
                 <li>Billing Address:
                     <p id="billingAddress">
                         <label for="addressDetail">Address</label> <br/>
-                        <input type="text" pattern="^[a-zA-Z0-9 ,#.-]{1,200}$" name="AddressDetail"> <br/>
+                        <input type="text" pattern="^[a-zA-Z0-9 ,'#.-]{1,200}$" name="AddressDetail"> <br/>
                         <label for="cityName">City</label> <br/>
-                        <input type="text" pattern="^[a-zA-Z0-9 ,#.-]{1,20}$" name="City"> <br/>
+                        <input type="text" pattern="^[a-zA-Z0-9 ,'#.-]{1,20}$" name="City"> <br/>
                         <label for="countryName">Country</label> <br/>
                         <select name="CountryID">
                             <?php
@@ -68,14 +68,14 @@ evaluateSessionPermissions($neededPermissions);
                             $search = new ListAllSearch('Country', 'CountryID', array(), array('*'));
                             $countries = $search->getResults();
                             foreach($countries as $country){
-                                echo '<option pattern="^[a-zA-Z0-9 ,#.-]{1,50}$" value='.$country['CountryID'].'>';
+                                echo '<option pattern="^[a-zA-Z0-9 ,\'#.-]{1,50}$" value='.$country['CountryID'].'>';
                                 echo $country['CountryName'] . ' - ' . $country['Country'];
                                 echo '</option>';
                             }
                             ?>
                         </select><br/>
                         <label for="postalCode">Postal Code</label> <br/>
-                        <input type="text" pattern="^[a-zA-Z0-9 ,#.-]{1,20}$" name="PostalCode">
+                        <input type="text" pattern="^[a-zA-Z0-9 ,'#.-]{1,20}$" name="PostalCode">
                     </p>
                 </li>
 
