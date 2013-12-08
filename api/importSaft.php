@@ -1,5 +1,17 @@
 <?php
+require_once '../bootstrap.php';
 require_once 'error.php';
+require_once 'authenticationUtilities.php';
+
+if(!comparePermissions(array('write'))) {
+    $error = new Error(601, 'Permission denied');
+    die( json_encode($error->getInfo()) );
+}
+
+if(!isset($_FILES['file'])) {
+    $error = new Error(700, 'Missing file to import');
+    die( json_encode($error->getInfo()) );
+}
 
 if ($_FILES['file']['error'] == UPLOAD_ERR_OK               //checks for errors
     && is_uploaded_file($_FILES['file']['tmp_name'])) { //checks that file is uploaded

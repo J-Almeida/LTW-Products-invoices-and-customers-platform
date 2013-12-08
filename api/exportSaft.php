@@ -2,6 +2,12 @@
 require_once '../bootstrap.php';
 require_once 'search.php';
 require_once 'utilities.php';
+require_once 'authenticationUtilities.php';
+
+if(!comparePermissions(array('write'))) {
+    $error = new Error(601, 'Permission denied');
+    die( json_encode($error->getInfo()) );
+}
 
 $sourceID = $_SESSION['username'];
 
