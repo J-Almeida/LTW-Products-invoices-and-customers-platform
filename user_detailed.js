@@ -17,7 +17,7 @@ function drawUserStructure(userData) {
 
     $("#Username").html(json.username);
     $("#Name").html(json.name);
-    $("#emailAddress").html(json.email);
+    $("#emailAddress").html(json.Email);
     $("#PermissionType").html(json.permissionType);
 }
 

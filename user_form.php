@@ -51,7 +51,7 @@ evaluateSessionPermissions($neededPermissions);
 
                     <li>Email Address:
                         <p id="emailAddress">
-                            <input type="email" name="email">
+                            <input type="email" name="Email">
                         </p>
                     </li>
 

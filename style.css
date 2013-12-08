@@ -8,7 +8,7 @@ body {
 
 body p {
 	font-size: 14px;
-	text-align: center;
+	/* text-align: center; */
 }
 
 #loadingCustomer, #loadingProduct, #loadingUser {
@@ -95,8 +95,10 @@ body p {
 /** Login form **/
 .login {
 	display: inline-block;
-	width: 58%;
 	text-align: right;
+	float: right;
+	padding-top: 15px;
+	padding-right: 10px;
 }
 
 #loginMenu {
