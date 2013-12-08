@@ -77,6 +77,9 @@ foreach($customers as $customer){
 	$BillingAddress->addChild('PostalCode',htmlspecialchars($customer['PostalCode']));
 	$BillingAddress->addChild('Country',htmlspecialchars($customer['Country']));
 
+	if(isset($customer['Email']) && !empty($customer['Email']))
+		$customerElement->addChild('Email', $customer['Email']);
+	
 	$customerElement->addChild('SelfBillingIndicator', '0');
 }
 
