@@ -10,7 +10,7 @@ class Delete extends Query {
     public function setFieldsAndValues($fieldsAndValues) {
         $this->fieldsAndValues = "";
         foreach($fieldsAndValues as $field => $value) {
-            $this->fieldsAndValues .= $field . ' = ' . "'$value' AND ";
+            $this->fieldsAndValues .= $field . ' = ' . $this->quote($value) . " AND ";
         }
         $this->fieldsAndValues = rtrim($this->fieldsAndValues, "AND ");
     }
