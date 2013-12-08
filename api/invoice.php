@@ -30,7 +30,7 @@ function getInvoice($invoiceNo) {
     $table = 'InvoiceLine';
     $field = 'InvoiceID';
     $values = array($invoice['InvoiceID']);
-    $rows = array('LineNumber', 'ProductCode', 'Quantity', 'UnitPrice', 'CreditAmount' , 'Tax.TaxID AS TaxID', 'TaxType', 'TaxPercentage');
+    $rows = array('LineNumber', 'ProductCode', 'ProductDescription', 'Quantity', 'UnitPrice', 'CreditAmount' , 'Tax.TaxID AS TaxID', 'TaxType', 'TaxPercentage');
     $joins = array('InvoiceLine' => array('Tax', 'Product'));
 
     $invoiceLinesSearch = new EqualSearch($table, $field, $values, $rows, $joins);
