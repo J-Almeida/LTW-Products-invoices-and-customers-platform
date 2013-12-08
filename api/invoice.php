@@ -170,5 +170,6 @@ function getTaxId($invoiceLine) {
             new Insert('Tax', $newTax);
             return getId('Tax', 'TaxType', $invoiceLine['Tax']['TaxType']);
         }
+        return $taxId;
     }
 }
