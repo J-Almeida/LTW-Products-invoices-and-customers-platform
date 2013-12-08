@@ -14,6 +14,9 @@ function getParameter(urlQuery) {
 
 function drawCustomerDetails(customerId, content) {
     $.getJSON("./api/getCustomer.php?CustomerID=" + customerId, function(data) {
+        for(var field in data['BillingAddress']){
+            data[field] = data['BillingAddress'][field];
+        }
         var details = data.CompanyName + " (T.ID  " + data.CustomerTaxID +  ")<br>";
         details += data.AddressDetail + "<br>" + data.PostalCode + " " + data.City + ", " + data.CountryName;
         content.html(details);

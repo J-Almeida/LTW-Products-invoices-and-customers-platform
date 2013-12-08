@@ -107,14 +107,8 @@ if (!$xml->schemaValidate('./saft.xsd')){
             $products[$oldProductCode] = json_decode($existingProduct, true);
             echo "Product with code $oldProductCode already in current database with code ".$products[$oldProductCode]['ProductCode'].'<br/>';
         } else {
-            $productInfo = getProductInfo((int)$product->ProductCode, $auditFile);
-            if ($productInfo == null) {
-                continue; // not a valid product, skip
-            }
             $productToImport = array(
                 'ProductDescription' => (string) $product->ProductDescription,
-                'UnitPrice' => $productInfo['UnitPrice'],
-                'UnitOfMeasure' => $productInfo['UnitOfMeasure']
             );
 
             $response = updateProduct($productToImport);
@@ -157,6 +151,12 @@ if (!$xml->schemaValidate('./saft.xsd')){
                 )
             );
             array_push($lines, $importedLine);
+
+            $updatedProduct = array(
+                'UnitPrice' => (float) $line->UnitPrice,
+                'UnitOfMeasure' => (string) $line->UnitOfMeasure
+            );
+            new Update('Product', $updatedProduct, 'ProductCode', $importedLine['ProductCode']);
         }
 
         $invoiceToImport = array(
@@ -179,20 +179,6 @@ if (!$xml->schemaValidate('./saft.xsd')){
             echo "Imported invoice with number $invoice->InvoiceNo as ".$response['InvoiceNo'].'<br/>';
         }
     }
-}
-
-function getProductInfo($productCode, $auditFile) {
-    foreach($auditFile->SourceDocuments->SalesInvoices->Invoice as $invoice) {
-        foreach($invoice->Line as $line) {
-            if ($productCode == (int)$line->ProductCode) {
-                $productInfo = array();
-                $productInfo['UnitPrice'] = (float) $line->UnitPrice;
-                $productInfo['UnitOfMeasure'] = (string) $line->UnitOfMeasure;
-                return $productInfo;
-            }
-        }
-    }
-    return null;
 }
 
 function getObject($table, $field, $value) {

@@ -30,8 +30,8 @@ CREATE TABLE Product (
 	ProductID INTEGER PRIMARY KEY AUTOINCREMENT,
 	ProductCode INTEGER UNIQUE,
 	ProductDescription TEXT NOT NULL,
-	UnitPrice REAL NOT NULL,
-	UnitOfMeasure TEXT NOT NULL
+	UnitPrice REAL,
+	UnitOfMeasure TEXT
 );
 
 CREATE TABLE Invoice (
