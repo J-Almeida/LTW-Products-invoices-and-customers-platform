@@ -33,7 +33,12 @@ function updateProduct($productInfo) {
 
     $table = 'Product';
     $field = 'ProductCode';
-    $productCode = $productInfo['ProductCode'];
+    
+    if(isset($productInfo['ProductCode']))
+        $productCode = $productInfo['ProductCode'];
+    else
+        $productCode = NULL;
+
     if ($productCode == NULL) {
         $productCode = getLastProductCode() + 1;
         $productInfo['ProductCode'] = $productCode;
