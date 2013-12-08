@@ -40,31 +40,31 @@ if ($table == 'Product' && $field != null && $value != null) {
     $search = new EqualSearch('Product', $field, array($value), array('*'));
     $results = $search->getResults();
     foreach($results as $product) {
-        $productId = $product['productId'];
-        $search = new EqualSearch('InvoiceLine', 'productId', array($productId), array('*') );
+        $productId = $product['ProductID'];
+        $search = new EqualSearch('InvoiceLine', 'ProductID', array($productId), array('*') );
         $invoiceLines = $search->getResults();
         foreach($invoiceLines as $line) {
             // when a product is deleted, the line from the invoice will be too
             // so we must update the invoice totals
-            $taxSearch = new EqualSearch('Tax', 'taxId', array($line['taxId']), array('taxPercentage'));
+            $taxSearch = new EqualSearch('Tax', 'TaxID', array($line['TaxID']), array('TaxPercentage'));
             $results = $taxSearch->getResults();
             if(isSet($results[0])) {
-                $taxPercentage = $results[0]['taxPercentage'];
+                $taxPercentage = $results[0]['TaxPercentage'];
             }
 
-            $productTaxPayable = $line['creditAmount'] * 0.01 * $taxPercentage;
-            $productNetTotal = $line['creditAmount'];
+            $productTaxPayable = $line['CreditAmount'] * 0.01 * $taxPercentage;
+            $productNetTotal = $line['CreditAmount'];
 
-            $invoiceSearch = new EqualSearch('Invoice', 'invoiceId', array($line['invoiceId']), array('*'));
+            $invoiceSearch = new EqualSearch('Invoice', 'InvoiceID', array($line['InvoiceID']), array('*'));
             $results = $invoiceSearch->getResults();
             if(isSet($results[0])) {
                 $invoice = $results[0];
             }
-            $invoice['taxPayable'] = $invoice['taxPayable'] - $productTaxPayable;
-            $invoice['netTotal'] = $invoice['netTotal'] - $productNetTotal;
-            $invoice['grossTotal'] = $invoice['netTotal'] + $invoice['taxPayable'];
+            $invoice['TaxPayable'] = $invoice['TaxPayable'] - $productTaxPayable;
+            $invoice['NetTotal'] = $invoice['NetTotal'] - $productNetTotal;
+            $invoice['GrossTotal'] = $invoice['NetTotal'] + $invoice['TaxPayable'];
 
-            new Update('Invoice', $invoice, 'invoiceId', $invoice['invoiceId']);
+            new Update('Invoice', $invoice, 'InvoiceID', $invoice['InvoiceID']);
         }
     }
 }

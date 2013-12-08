@@ -187,6 +187,9 @@ foreach($invoices as $invoice)
 	$documentTotals->addChild('GrossTotal',$invoice['GrossTotal']);
 }
 
+/****************************************************
+Save to a file
+****************************************************/
 	$filename = $date . '_SAFT-PT.xml';
 	if($AuditElement->asXML($filename)) {
 		header("Content-Disposition: attachment; filename=\"" . $filename . "\"");
