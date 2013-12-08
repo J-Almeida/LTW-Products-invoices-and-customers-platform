@@ -108,8 +108,8 @@ function updateInvoice($invoiceInfo) {
     return getInvoice($invoiceNo);
 }
 
-function validateLines($invoiceLines){
-    foreach ($invoiceLines as $line) {
+function validateLines(&$invoiceLines){
+    foreach ($invoiceLines as &$line) {
         if (isset($line['Tax']) && !empty($line['Tax'])) {
             validateFields($line['Tax'], array('TaxType', 'TaxPercentage'));
             $line['TaxID'] = getTaxId($line);

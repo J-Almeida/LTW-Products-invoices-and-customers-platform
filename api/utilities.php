@@ -187,7 +187,7 @@ function validateField($field, &$info) {
     require_once 'inputValidators.php';
 
     $validations = array(
-        'CompanyName'   =>  'isValidTextField',
+     // 'CompanyName'   =>  'isValidTextField',
         'CustomerTaxID' =>  'isValidPositiveNumber',
         'Email'         =>  'isValidEmail',
      // 'AddressDetail' =>  'isValidLargeTextField',
