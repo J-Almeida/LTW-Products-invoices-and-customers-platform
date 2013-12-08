@@ -2,6 +2,7 @@
 require_once 'bootstrap.php';
 require_once './api/insert.php';
 require_once './api/authenticationUtilities.php';
+require_once './api/inputValidators.php';
 
 header('Refresh: 2; URL=./index.php');
 
@@ -25,6 +26,26 @@ if( !isset($_POST["username"]) || !isset($_POST["name"]) || !isset($_POST["passw
 $login = $_POST["username"];
 $email = $_POST["email"];
 $password = $_POST["password"];
+$name = $_POST["name"];
+
+//Check if they're valid inputs
+if(!isValidUsername($login)) {
+	echo "<p style='text-align: center;'>Invalid username.</p>";
+	echo "<p style='text-align: center;'>Redirecting... </p>";
+	exit;
+}
+
+if(!isValidEmail($email)) {
+	echo "<p style='text-align: center;'>Invalid email.</p>";
+	echo "<p style='text-align: center;'>Redirecting... </p>";
+	exit;
+}
+
+if(!isValidTextField($name)) {
+	echo "<p style='text-align: center;'>Invalid name.</p>";
+	echo "<p style='text-align: center;'>Redirecting... </p>";
+	exit;
+}
 
 //Verify if a user already exists with that username or that email and exit if so
 $existingUsername = getUsername($login);

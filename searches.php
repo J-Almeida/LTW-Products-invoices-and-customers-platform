@@ -38,7 +38,7 @@ function getLoginForm()
     if (empty($_SESSION["username"])) {
         $loginForm .= '<form method="post" action="login.php">';
         $loginForm .= '<ul id="loginMenu">';
-        $loginForm .= '<li><input type="text" name="login" value="" placeholder="Username or Email"></li>';
+        $loginForm .= '<li><input type="text" name="login" value="" pattern="^[A-Za-z][A-Za-z0-9]{4,29}$" placeholder="Username or Email"></li>';
         $loginForm .= '<li><input type="password" name="password" value="" placeholder="Password"></li>';
         $loginForm .= '<li class="submit"><input type="submit" name="commit" value="Login"></li>';
         $loginForm .= '<li class="loginHelp"> <a href="register.html">Register</a></li>';

@@ -1,11 +1,11 @@
 <?php
 function isValidLargeTextField($textField) {
-    $pattern = '/^[a-zA-Z0-9 \u00C0-\u018F &$%!@,\'#.-]{1,200}$/';
+    $pattern = '/^[a-zA-Z0-9 \x{00C0}-\x{018F} &$%!@,\'#.-]{1,200}$/u';
     return(preg_match($pattern, $textField));
 }
 
 function isValidTextField($textField) {
-    $pattern = '/^[a-zA-Z0-9 \u00C0-\u018F &$%!@,\'#.-]{1,20}$/';
+    $pattern = '/^[a-zA-Z0-9 \x{00C0}-\x{018F} &$%!@,\'#.-]{1,50}$/u';
     return(preg_match($pattern, $textField));
 }
 
