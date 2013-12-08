@@ -47,7 +47,7 @@ evaluateSessionPermissions($neededPermissions);
             <ul class="productDetail">
                 <li>Description:
                     <p id="productDescription"></p>
-                    <input type="text" pattern="^[a-zA-Z0-9 \u00C0-\u018F &amp;$%!@,'#.-]{1,200}$" name="ProductDescription">
+                    <input type="text" pattern="^[a-zA-Z0-9 \u00A0-\u018F &amp;$%!@,'#.-]{1,200}$" name="ProductDescription">
                 </li>
 
                 <li>Unit Price:
@@ -57,7 +57,7 @@ evaluateSessionPermissions($neededPermissions);
 
                 <li>Unit of measure:
                     <p id="unitOfMeasure"></p>
-                    <input type="text" pattern="^[a-zA-Z0-9 \u00C0-\u018F &amp;$%!@,'#.-]{1,20}$" name="UnitOfMeasure">
+                    <input type="text" pattern="^[a-zA-Z0-9 \u00A0-\u018F &amp;$%!@,'#.-]{1,20}$" name="UnitOfMeasure">
                 </li>
             </ul>
         </section>

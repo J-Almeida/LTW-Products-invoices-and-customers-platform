@@ -152,7 +152,7 @@ function getValueBoxes(operation, field) {
         input = '<input name="value[]"';
         input += fieldTypes[field]; input += ">";
     } else
-        input = '<input name="value[]" type="text" pattern="^[a-zA-Z0-9 \u00C0-\u018F &amp;$%!@,\'#.-]{1,50}$">';
+        input = '<input name="value[]" type="text" pattern="^[a-zA-Z0-9 \u00A0-\u018F &amp;$%!@,\'#.-]{1,50}$">';
 
     $( "#fieldSelect" ).show();
     if(operation == "range") {

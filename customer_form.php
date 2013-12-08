@@ -51,16 +51,16 @@ evaluateSessionPermissions($neededPermissions);
             <ul class="customerDetail">
                 <li>Name:
                     <p id="companyName">
-                        <input type="text" pattern="^[a-zA-Z0-9 \u00C0-\u018F &amp;$%!@,'#.-]{1,50}$" name="CompanyName">
+                        <input type="text" pattern="^[a-zA-Z0-9 \u00A0-\u018F &amp;$%!@,'#.-]{1,50}$" name="CompanyName">
                     </p>
                 </li>
 
                 <li>Billing Address:
                     <p id="billingAddress">
                         <label for="addressDetail">Address</label> <br/>
-                        <input type="text" pattern="^[a-zA-Z0-9 \u00C0-\u018F &amp;$%!@,'#.-]{1,200}$" name="AddressDetail"> <br/>
+                        <input type="text" pattern="^[a-zA-Z0-9 \u00A0-\u018F &amp;$%!@,'#.-]{1,200}$" name="AddressDetail"> <br/>
                         <label for="cityName">City</label> <br/>
-                        <input type="text" pattern="^[a-zA-Z0-9 \u00C0-\u018F &amp;$%!@,'#.-]{1,20}$" name="City"> <br/>
+                        <input type="text" pattern="^[a-zA-Z0-9 \u00A0-\u018F &amp;$%!@,'#.-]{1,20}$" name="City"> <br/>
                         <label for="countryName">Country</label> <br/>
                         <select name="CountryID" pattern="^[0-9]{1,20}$">
                             <?php
@@ -75,7 +75,7 @@ evaluateSessionPermissions($neededPermissions);
                             ?>
                         </select><br/>
                         <label for="postalCode">Postal Code</label> <br/>
-                        <input type="text" pattern="^[a-zA-Z0-9 \u00C0-\u018F &amp;$%!@,'#.-]{1,20}$" name="PostalCode">
+                        <input type="text" pattern="^[a-zA-Z0-9 \u00A0-\u018F &amp;$%!@,'#.-]{1,20}$" name="PostalCode">
                     </p>
                 </li>
 

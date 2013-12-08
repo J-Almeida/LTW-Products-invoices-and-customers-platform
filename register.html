@@ -39,7 +39,7 @@
             <h1>Registration details</h1>
                 <div class="line"><label for="username">Username: </label><input type="text" title="(5 to 30 characters, only alfanumeric characters)" pattern="^[A-Za-z][A-Za-z0-9]{4,29}$" name="username" id="username" required/> <span id="userExists" style="display:none;">This username is taken</span></div>
                 <div class="line"><label for="password">Password: </label><input type="password" name="password" id="password" required/></div>
-                <div class="line"><label for="name">Name: </label><input type="text" pattern="^[a-zA-Z0-9 \u00C0-\u018F &amp;$%!@,'#.-]{1,50}$" name="name" id="name" required/></div>
+                <div class="line"><label for="name">Name: </label><input type="text" pattern="^[a-zA-Z0-9 \u00A0-\u018F &amp;$%!@,'#.-]{1,50}$" name="name" id="name" required/></div>
                 <div class="line"><label for="email">Email: </label><input type="email" name="email" id="email" required/> <span id="emailExists" style="display:none;">This email is already registered</span></div>
                 <div class="submit"><input type="submit" name="commit" id="commit" value="Register"></div>
         </form>

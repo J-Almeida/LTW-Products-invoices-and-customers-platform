@@ -187,14 +187,14 @@ function validateField($field, &$info) {
     require_once 'inputValidators.php';
 
     $validations = array(
-     // 'CompanyName'   =>  'isValidTextField',
+        'CompanyName'   =>  'isValidTextField',
         'CustomerTaxID' =>  'isValidPositiveNumber',
         'Email'         =>  'isValidEmail',
-     // 'AddressDetail' =>  'isValidLargeTextField',
-     // 'City'          =>  'isValidTextField',
-     // 'PostalCode'    =>  '',
-     // 'Country'       =>  '',
-     // 'CountryName'   =>  'isValidTextField',
+        'AddressDetail' =>  'isValidLargeTextField',
+        'City'          =>  'isValidTextField',
+        'PostalCode'    =>  'isValidTextField',
+        'Country'       =>  'isValidTextField',
+        'CountryName'   =>  'isValidTextField',
         'InvoiceNo'     =>  'isValidInvoiceNo',
      // 'InvoiceDate'   =>  '',
         'Quantity'      =>  'isValidPositiveNumber',
