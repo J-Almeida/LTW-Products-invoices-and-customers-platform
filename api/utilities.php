@@ -87,30 +87,33 @@ function itemExists($table, $itemValue, $itemType) {
 }
 
 function roundMoneyAmount(&$amount) {
-    $amount = round($amount, 2, PHP_ROUND_HALF_UP);
+    $amount = round($amount, 2);
 }
 
 function roundDocumentTotals(&$invoice) {
-    roundMoneyAmount($invoice['taxPayable']);
-    roundMoneyAmount($invoice['netTotal']);
-    roundMoneyAmount($invoice['grossTotal']);
+    roundMoneyAmount($invoice['TaxPayable']);
+    roundMoneyAmount($invoice['NetTotal']);
+    roundMoneyAmount($invoice['GrossTotal']);
 }
 
 function roundLineTotals(&$line) {
-    roundMoneyAmount($line['unitPrice']);
-    roundMoneyAmount($line['creditAmount']);
+    roundMoneyAmount($line['UnitPrice']);
+    roundMoneyAmount($line['CreditAmount']);
 }
 
 function roundProductTotals(&$product) {
-    roundMoneyAmount($product['unitPrice']);
+    roundMoneyAmount($product['UnitPrice']);
 }
 
 function getId($table, $field, $value) {
-    $table = lcfirst($table);
     $values = array($value);
-    $rows = array($table.'Id');
-    $invoiceSearch = new EqualSearch($table, $field, $values, $rows);
-    return $invoiceSearch->getResults()[0][$table.'Id'];
+    $rows = array($table.'ID');
+    $search = new EqualSearch($table, $field, $values, $rows);
+    $results = $search->getResults();
+    if(isSet($results[0])) {
+        return $results[0][$table.'ID'];
+    }
+    return null;
 }
 
 function getAllPermissions() {
@@ -129,4 +132,81 @@ function getDatabase() {
     $db = substr($db, 0, strpos($db, 'api'));
     $db .= 'database.db';
     return $db;
+}
+
+function getStartDate() {
+    $invoiceSearch = new MinSearch('Invoice', 'InvoiceDate', array(), array('*'));
+    $results = $invoiceSearch->getResults();
+
+    return $results[0]['InvoiceDate'];
+}
+
+function getEndDate() {
+    $invoiceSearch = new MaxSearch('Invoice', 'InvoiceDate', array(), array('*'));
+    $results = $invoiceSearch->getResults();
+
+    return $results[0]['InvoiceDate'];
+}
+
+function getFiscalYear() {
+    $startDate = DateTime::createFromFormat("Y-m-d", getStartDate());
+    return $startDate->format("Y");
+}
+
+// Checks if all obligatory fields are missing or empty in a json info array
+// deletes all fields which are neither obligatory nor optional
+function validateFields(&$info, $obligatoryFields, $optionalFields = array()) {
+
+    foreach($obligatoryFields as $field) {
+        if ( !isset($info[$field]) ) {
+            $error = new Error(700, "Missing field $field");
+            die( json_encode($error->getInfo()) );
+        }
+
+        if ( empty($info[$field]) ) {
+            $error = new Error(700, "Empty field $field");
+            die( json_encode($error->getInfo()) );
+        }
+
+        validateField($field, $info);
+    }
+
+    foreach($optionalFields as $field) {
+        if ( array_key_exists($field, $info) )
+            validateField($field, $info);
+    }
+
+    foreach($info as $field => $value) {
+        if ( !in_array($field, $obligatoryFields) && !in_array($field, $optionalFields) ) {
+            unset($info[$field]);
+        }
+    }
+}
+
+function validateField($field, &$info) {
+    require_once 'inputValidators.php';
+
+    $validations = array(
+        'CompanyName'   =>  'isValidTextField',
+        'CustomerTaxID' =>  'isValidPositiveNumber',
+        'Email'         =>  'isValidEmail',
+     // 'AddressDetail' =>  'isValidLargeTextField',
+     // 'City'          =>  'isValidTextField',
+     // 'PostalCode'    =>  '',
+     // 'Country'       =>  '',
+     // 'CountryName'   =>  'isValidTextField',
+        'InvoiceNo'     =>  'isValidInvoiceNo',
+     // 'InvoiceDate'   =>  '',
+        'Quantity'      =>  'isValidPositiveNumber',
+        'TaxPercentage' =>  'isValidPositiveNumber',
+        'UnitPrice'     =>  'isValidPositiveNumber'
+    );
+
+    if (array_key_exists($field, $validations)) {
+        $valid = call_user_func($validations[$field], $info[$field]);
+        if (!$valid) {
+            $error = new Error(700, "Invalid field $field");
+            die(json_encode($error->getInfo()));
+        }
+    }
 }

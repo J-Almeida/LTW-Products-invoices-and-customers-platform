@@ -26,9 +26,9 @@ class Search extends Query {
             foreach ($tableJoins as $table => $joins ) {
                 if ( is_array($joins) )  // support for multiple joins on the same table
                     foreach ($joins as $join)
-                        $this->joins .= "INNER JOIN $join ON $table.$join" . "Id" . " = $join.$join" . "Id ";
+                        $this->joins .= "INNER JOIN $join ON $table.$join" . "ID" . " = $join.$join" . "ID ";
                 else
-                    $this->joins .= "INNER JOIN $joins ON $table.$joins" . "Id" . " = $joins.$joins" . "Id ";
+                    $this->joins .= "INNER JOIN $joins ON $table.$joins" . "ID" . " = $joins.$joins" . "ID ";
             }
     }
 
@@ -50,7 +50,7 @@ class RangeSearch extends Search {
         if ( count($values) != 2 )
             throw new Error(700, "Expected only 2 values");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
-        $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field BETWEEN '". $this->values[0] . "' AND '" . $this->values[1] . "'";
+        $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field BETWEEN ". $this->quote($this->values[0]) . " AND " . $this->quote($this->values[1]);
     }
 }
 
@@ -59,7 +59,7 @@ class EqualSearch extends Search {
         if ( count($values) != 1 )
             throw new Error(700, "Expected only 1 value");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
-        $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field = '" . $this->values[0] . "'";
+        $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field = " . $this->quote($this->values[0]) ;
     }
 }
 
@@ -68,7 +68,7 @@ class ContainsSearch extends Search {
         if ( count($values) != 1 )
             throw new Error(700, "Expected only 1 value");
         $this->initialize($table, $field, $values, $rows, $tableJoins);
-        $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field LIKE ('%" . $this->values[0] ."%')";
+        $this->sql = "SELECT $this->rows FROM $this->table $this->joins WHERE $this->field LIKE (".$this->quote('%'.$this->values[0].'%').')';
     }
 }
 

@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/ico" href="favicon.ico"/>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="register.js"></script>
 </head>
 <body>
 
@@ -33,13 +36,13 @@
 
 <div id="content">
     <div id="registerUser">
-        <form method="post" action="register.php">
+        <form method="post" action="register.php" autocomplete="off">
             <h1>Registration details</h1>
-                <div class="line"><label for="username">Username: </label><input type="text" name="username" id="username" required/></div>
+                <div class="line"><label for="username">Username: </label><input type="text" name="username" id="username" required/> <span id="userExists" style="display:none;">This username is taken</span></div>
                 <div class="line"><label for="password">Password: </label><input type="password" name="password" id="password" required/></div>
                 <div class="line"><label for="name">Name: </label><input type="text" name="name" id="name" required/></div>
-                <div class="line"><label for="email">Email: </label><input type="email" name="email" id="email" required/></div>
-                <div class="submit"><input type="submit" name="commit" value="Register"></div>
+                <div class="line"><label for="email">Email: </label><input type="email" name="email" id="email" required/> <span id="emailExists" style="display:none;">This email is already registered</span></div>
+                <div class="submit"><input type="submit" name="commit" id="commit" value="Register"></div>
         </form>
     </div>
 </div>

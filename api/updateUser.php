@@ -1,11 +1,11 @@
 <?php
-session_start();
+require_once '../bootstrap.php';
 
 require_once 'user.php';
 require_once 'authenticationUtilities.php';
 
 if(!comparePermissions(array('promote'))) {
-	$error = new Error(601, 'Permission Denied');
+	$error = new Error(601, 'Permission denied');
     die( json_encode($error->getInfo()) );
 }
 
@@ -18,4 +18,4 @@ if ( isset($_POST['user']) && !empty($_POST['user']) ) {
 }
 
 $userInfo = json_decode($jsonUser, true);
-echo json_encode(updateUser($userInfo), JSON_NUMERIC_CHECK);
+echo json_encode(updateUser($userInfo));

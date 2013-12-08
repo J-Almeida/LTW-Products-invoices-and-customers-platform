@@ -14,8 +14,11 @@ function getParameter(urlQuery) {
 
 function drawCustomerDetails(customerId, content) {
     $.getJSON("./api/getCustomer.php?CustomerID=" + customerId, function(data) {
-        var details = data.companyName + " (T.ID  " + data.customerTaxId +  ")<br>";
-        details += data.addressDetail + "<br>" + data.postalCode + " " + data.cityName + ", " + data.countryName;
+        for(var field in data['BillingAddress']){
+            data[field] = data['BillingAddress'][field];
+        }
+        var details = data.CompanyName + " (T.ID  " + data.CustomerTaxID +  ")<br>";
+        details += data.AddressDetail + "<br>" + data.PostalCode + " " + data.City + ", " + data.CountryName;
         content.html(details);
     });
 }
@@ -38,54 +41,54 @@ function getProductDetails(productCode) {
 function drawInvoiceStructure(invoiceData) {
     var json = JSON.parse(invoiceData);
 
-    $("#invoiceNo").html(json.invoiceNo);
-    $("#invoiceDate").html(json.invoiceDate);
-    drawCustomerDetails(json.customerId, $("#invoiceToName"));
+    $("#invoiceNo").html(json.InvoiceNo);
+    $("#invoiceDate").html(json.InvoiceDate);
+    drawCustomerDetails(json.CustomerID, $("#invoiceToName"));
 
     $("#invoiceCustomer").click(function() {
-        window.open("customer_detailed.php?CustomerID=" + json.customerId);
+        window.open("customer_detailed.php?CustomerID=" + json.CustomerID);
     });
 
     var lines = "";
-    for(result in json.line) {
-        var object = json.line[result];
+    for(result in json.Line) {
+        var object = json.Line[result];
         var productData;
         lines += "<tr id=";
-        lines += object.lineNumber;
+        lines += object.LineNumber;
         lines += ">";
         for(var field in object) {
-            if(field == 'taxId'){
+            if(field == 'TaxID'){
                 continue;
             }
-            if(field != "lineNumber") {
-                if(field == "tax") {
+            if(field != "LineNumber") {
+                if(field == "Tax") {
                     for(taxField in object[field]) {
                         lines += "<td>";
                         lines += object[field][taxField];
                         lines += "</td>";
                     }
                 }
-                else if(field == "productCode") {
+                else if(field == "ProductCode") {
                     productData = getProductDetails(object[field]);
                     lines += "<td>";
                     lines += "[";
-                    lines += productData.productCode;
+                    lines += productData.ProductCode;
                     lines += "] ";
-                    lines += productData.productDescription;
+                    lines += productData.ProductDescription;
                     lines += "</td>";
                 }
                 else {
                     lines += "<td>";
-                    if(field == "unitPrice" || field == "creditAmount")
+                    if(field == "UnitPrice" || field == "CreditAmount")
                         lines += "€ "; 
                     lines += object[field];
                     lines += "</td>";
                 }
             }
 
-            if(field == "quantity") {
+            if(field == "Quantity") {
                 lines += "<td>";
-                lines += productData.unitOfMeasure;
+                lines += productData.UnitOfMeasure;
                 lines += "</td>";
             }
         }
@@ -96,23 +99,23 @@ function drawInvoiceStructure(invoiceData) {
 
 //Load onClick events for table rows
 var rowProd = {};
-for(result in json.line) {
-    var object = json.line[result];
-    var rowID = "#" + object.lineNumber;
-    var pCode = object.productCode;
-    rowProd[object.lineNumber] = pCode;
+for(result in json.Line) {
+    var object = json.Line[result];
+    var rowID = "#" + object.LineNumber;
+    var pCode = object.ProductCode;
+    rowProd[object.LineNumber] = pCode;
     $(rowID).click(function() {
         window.open("product_detailed.php?ProductCode=" + rowProd[this.id]);
     });
 }
 
-var documentTotals = json.documentTotals;
+var documentTotals = json.DocumentTotals;
 
-$("#taxPay").html("€ " + documentTotals.taxPayable);
-$("#netTotal").html("€ " + documentTotals.netTotal);
-$("#grossTotal").html("€ " + documentTotals.grossTotal);
+$("#taxPay").html("€ " + documentTotals.TaxPayable);
+$("#netTotal").html("€ " + documentTotals.NetTotal);
+$("#grossTotal").html("€ " + documentTotals.GrossTotal);
 
-$("#invoiceFooter").html(json.invoiceNo + "     |     " + json.invoiceDate);
+$("#invoiceFooter").html(json.InvoiceNo + "     |     " + json.InvoiceDate);
 }
 
 function displayInvoice(invoiceNo) {
@@ -123,7 +126,12 @@ function displayInvoice(invoiceNo) {
         data: "",
         success: function(data)
         {
-            drawInvoiceStructure(data);
+            var json = JSON.parse(data);
+            if (json.error) {
+                document.body.innerHTML = "<p>Error loading invoice</p>" + "<p>Code " + json.error.code + ": " + json.error.reason + "</p>";
+            }
+            else
+                drawInvoiceStructure(data);
         },
         error: function(a, b, c)
         {

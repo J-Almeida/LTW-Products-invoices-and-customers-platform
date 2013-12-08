@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once 'bootstrap.php';
 require_once "searches.php";
 require_once './api/authenticationUtilities.php';
 
@@ -7,9 +7,9 @@ $neededPermissions = array('read');
 evaluateSessionPermissions($neededPermissions);
 
 $fields = array(
-    'productCode' => 'Product Code',
-    'productDescription' => 'Description',
-    'unitPrice' => 'Unit Price',
-    'unitOfMeasure' => 'Units Of Measure');
+    'ProductCode' => 'Product Code',
+    'ProductDescription' => 'Description',
+    'UnitPrice' => 'Unit Price',
+    'UnitOfMeasure' => 'Units Of Measure');
 
 echo getSearchPage("Products", $fields);

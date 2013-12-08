@@ -13,19 +13,19 @@ function populateForm(data) {
         }).val(value);
     });
 
-    if ( data.invoiceNo ) {
+    if ( data.InvoiceNo ) {
         loadInvoiceLines(data);
     }
 }
 
 function loadInvoiceLines(invoiceData) {
-    var lines = invoiceData['line'];
+    var lines = invoiceData['Line'];
     for (var index = 1; index < lines.length; ++index) {
         addRow();
     }
     var jsonLines = new Object();
     for(var line in lines) {
-        var lineNumber = 'line[' + lines[line].lineNumber + ']';
+        var lineNumber = 'Line[' + lines[line].LineNumber + ']';
         for(var field in lines[line]) {
             jsonLines[lineNumber + '.' + field] = lines[line][field];
         }
@@ -70,7 +70,11 @@ function getCustomer(customerID) {
         data: "",
         success: function(data)
         {
-            populateForm(JSON.parse(data));
+            var customer = JSON.parse(data);
+            for(var field in customer['BillingAddress']){
+                customer[field] = customer['BillingAddress'][field];
+            }
+            populateForm(customer);
         },
         error: function(a, b, c)
         {
@@ -90,7 +94,6 @@ function getCustomer(customerID) {
 }
 
 function getInvoice(invoiceNo) {
-    $("#invoice").hide();
 
     $.ajax("./api/getInvoice.php?InvoiceNo=" + invoiceNo, {
         async: false,
@@ -151,9 +154,9 @@ function submitForm(objectName) {
     objectID['user'] = 'Username';
 
     var objectFields = new Object();
-    objectFields['customer'] = 'customerId';
-    objectFields['product'] = 'productCode';
-    objectFields['invoice'] = 'invoiceNo';
+    objectFields['customer'] = 'CustomerID';
+    objectFields['product'] = 'ProductCode';
+    objectFields['invoice'] = 'InvoiceNo';
     objectFields['user'] = 'username';
 
     // clean empty fields from form
@@ -169,7 +172,7 @@ function submitForm(objectName) {
     information += "=";
     information += form;
 
-    $.ajax($('form').attr('action'), {
+    $.ajax($('form').attr('data-action'), {
         async: false,
         type: "POST",
         data: information,
@@ -192,7 +195,7 @@ function submitForm(objectName) {
 function parseLines(invoiceJson) {
     var lineArray = new Array();
     for(var field in invoiceJson) {
-        if (field.indexOf("line") > -1) {
+        if (field.indexOf("Line") > -1) {
             var lineNumber = parseInt(field.match(/\d+/)) - 1;
             var lineField = field.split('.')[1];
             if (!lineArray[lineNumber])
@@ -203,7 +206,7 @@ function parseLines(invoiceJson) {
     }
     // clear the lines that were deleted
     lineArray.clean(null);
-    invoiceJson['line'] = lineArray;
+    invoiceJson['Line'] = lineArray;
     return invoiceJson;
 }
 
@@ -226,4 +229,13 @@ function getFormData($form){
     });
 
     return indexedArray;
+}
+
+function warnReadOnly(input){
+    var value = input.val();
+    if (value == "") {
+        alert("The database will automatically handle this field on insertion.");
+    } else {
+        alert("The " + input.attr('name') + " cannot be modified. It is a unique reference and is calculated on insertion in the database.");
+    }
 }

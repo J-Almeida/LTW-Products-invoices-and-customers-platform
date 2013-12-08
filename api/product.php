@@ -2,13 +2,14 @@
 require_once 'search.php';
 require_once 'utilities.php';
 require_once 'update.php';
+require_once 'insert.php';
 
 function getProduct($productCode) {
     // Fetch the product we are looking for
     $table = 'Product';
-    $field = 'productCode';
+    $field = 'ProductCode';
     $values = array($productCode);
-    $rows = array('productCode','productDescription', 'unitPrice', 'unitOfMeasure');
+    $rows = array('ProductCode','ProductDescription', 'UnitPrice', 'UnitOfMeasure');
     $joins = array();
 
     $search = new EqualSearch($table, $field, $values, $rows, $joins);
@@ -29,14 +30,21 @@ function getProduct($productCode) {
 
 function updateProduct($productInfo) {
 
-// TODO select only the necessary fields from the json, return error when important fields are missing
-
     $table = 'Product';
-    $field = 'productCode';
-    $productCode = $productInfo['productCode'];
+    $field = 'ProductCode';
+    
+    if(isset($productInfo['ProductCode']))
+        $productCode = $productInfo['ProductCode'];
+    else
+        $productCode = NULL;
+
+    $obligatoryFields = array('ProductDescription');
+    $optionalFields = array('UnitPrice', 'UnitOfMeasure');
+    validateFields($productInfo, $obligatoryFields, $optionalFields);
+
     if ($productCode == NULL) {
         $productCode = getLastProductCode() + 1;
-        $productInfo['productCode'] = $productCode;
+        $productInfo['ProductCode'] = $productCode;
         new Insert('Product', $productInfo);
     } else
         new Update($table, $productInfo, $field, $productCode);
@@ -46,9 +54,13 @@ function updateProduct($productInfo) {
 
 function getLastProductCode(){
     $table = 'Product';
-    $field = 'productCode';
+    $field = 'ProductCode';
     $values = array();
-    $rows = array('productCode');
+    $rows = array('ProductCode');
     $max = new MaxSearch($table, $field, $values, $rows);
-    return $max->getResults()[0]['productCode'];
+    $results = $max->getResults();
+    if(isSet($results[0])) {
+        return $results[0]['ProductCode'];
+    }
+    return 0;
 }

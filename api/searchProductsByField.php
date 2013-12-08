@@ -1,18 +1,18 @@
 <?php
-session_start();
+require_once '../bootstrap.php';
 require_once 'utilities.php';
 require_once 'search.php';
 require_once 'authenticationUtilities.php';
 
 if(!comparePermissions(array('read'))) {
-    $error = new Error(601, 'Permission Denied');
+    $error = new Error(601, 'Permission denied');
     die( json_encode($error->getInfo()) );
 }
 
 $parameters = getSearchParametersFromURL();
 
 $parameters['table'] = 'Product';
-$parameters['rows'] = array('productCode', 'productDescription', 'unitPrice', 'unitOfMeasure');
+$parameters['rows'] = array('ProductCode', 'ProductDescription', 'UnitPrice', 'UnitOfMeasure');
 $parameters['joins'] = array();
 
 $result = executeSearch($parameters);
@@ -24,4 +24,4 @@ foreach($result as &$product) {
 if (!$result)
     echo '[]';
 else
-    echo json_encode($result, JSON_NUMERIC_CHECK);
+    echo json_encode($result);

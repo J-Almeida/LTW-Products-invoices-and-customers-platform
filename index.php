@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php require_once 'bootstrap.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,6 +26,10 @@
             
             if(isset($_SESSION['permissions']) && isset($_SESSION['username']) && $_SESSION['permissions']['promote'] == '1') {
                 echo '<li><a href="users.php">Users</a></li>';
+            }
+
+            if(isset($_SESSION['permissions']) && isset($_SESSION['username']) && $_SESSION['permissions']['write'] == '1') {
+                echo '<li><a href="importAndExport.php">Import and Export</a></li>';
             }
             ?>
         </ul>

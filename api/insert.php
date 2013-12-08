@@ -11,8 +11,8 @@ class Insert extends Query {
         $this->fields = '(';
         $this->values = '(';
         foreach($fieldsAndValues as $field => $value) {
-            $this->fields .= "'$field', ";
-            $this->values .= "'$value', ";
+            $this->fields .= $this->quote($field).', ';
+            $this->values .= $this->quote($value).', ';
         }
         $this->fields = rtrim($this->fields, ', ');
         $this->fields .= ')';

@@ -15,10 +15,10 @@ function getParameter(urlQuery) {
 function drawProductStructure(productData) {
     var json = JSON.parse(productData);
 
-    $("#productCode").html(json.productCode);
-    $("#productDescription").html(json.productDescription);
-    $("#unitPrice").html("€" + json.unitPrice);
-    $("#unitOfMeasure").html(json.unitOfMeasure);
+    $("#productCode").html(json.ProductCode);
+    $("#productDescription").html(json.ProductDescription);
+    $("#unitPrice").html("€" + json.UnitPrice);
+    $("#unitOfMeasure").html(json.UnitOfMeasure);
 }
 
 function displayProduct(productCode) {
@@ -29,7 +29,14 @@ function displayProduct(productCode) {
         data: "",
         success: function(data)
         {
-            drawProductStructure(data);
+            var product = JSON.parse(data);
+
+            if (product.error) {
+                document.body.innerHTML = "<p>Error loading product</p>" + "<p>Code " + product.error.code + ": " + product.error.reason + "</p>";
+            }
+            else {
+                drawProductStructure(data);
+            }
         },
         error: function(a, b, c)
         {

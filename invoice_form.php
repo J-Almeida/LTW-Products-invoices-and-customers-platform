@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once 'bootstrap.php';
 require_once './api/authenticationUtilities.php';
 $neededPermissions = array('write');
 evaluateSessionPermissions($neededPermissions);
@@ -32,8 +32,8 @@ evaluateSessionPermissions($neededPermissions);
     <img src='ajax-loader.gif' alt='loading' />
 </div>
 
-<div id="invoice">
-    <form id="invoiceForm" action="./api/updateInvoice.php" method="POST" autocomplete="off">
+<div id="invoice" style="display: none; /*Jquery deals with showing the element after everything is loaded */">
+    <form id="invoiceForm" onsubmit="submitForm('invoice'); return false;" data-action="./api/updateInvoice.php" method="POST" autocomplete="off">
 
         <div class="invoiceTitle">
             <strong>Invoice</strong>
@@ -42,11 +42,12 @@ evaluateSessionPermissions($neededPermissions);
         <header id="invoiceHeader">
             <ul class="invoiceInfo">
                 <li>Invoice no: <span id="invoiceNo">
-                        <input id="invoiceNoInput" type="text" name="invoiceNo" readonly>
+                        <input id="invoiceNoInput" type="text" name="InvoiceNo" readonly
+                               onclick="warnReadOnly($(this))">
                 </span></li>
 
                 <li>Invoice date: <span id="invoiceDate">
-                        <input type="date" name="invoiceDate">
+                        <input type="date" pattern="^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$" name="InvoiceDate">
                 </span></li>
             </ul>
         </header>
@@ -55,13 +56,13 @@ evaluateSessionPermissions($neededPermissions);
             <div class="invoiceCustomer" id="invoiceCustomer">
                 <h2>Invoice To:</h2>
                 <div id="invoiceTo" class="concernedInfo">
-                    <select name="customerId">
+                    <select pattern="^[0-9]{1,20}$" name="CustomerID">
                         <?php
-                        $search = new ListAllSearch('Customer', 'customerId', array(), array('*'));
+                        $search = new ListAllSearch('Customer', 'CustomerID', array(), array('*'));
                         $customers = $search->getResults();
                         foreach($customers as $customer){
-                            echo '<option value='.$customer['customerId'].'>';
-                            echo $customer['companyName'] . ' - Tax ID ' . $customer['customerTaxId'];
+                            echo '<option value='.$customer['CustomerID'].'>';
+                            echo $customer['CompanyName'] . ' - Tax ID ' . $customer['CustomerTaxID'];
                             echo '</option>';
                         }
                         ?>
@@ -88,35 +89,35 @@ evaluateSessionPermissions($neededPermissions);
                     <tbody id="invoiceLines">
                     <tr class="invoiceLine" id="1">
                         <th>
-                            <select class="productCode" name="line[1].productCode" onchange="updateLine($(this));">
+                            <select class="productCode" pattern="^[a-zA-Z0-9 ,\'#.-]{1,50}$" name="Line[1].ProductCode" onchange="updateLine($(this));">
                                 <?php
-                                $search = new ListAllSearch('Product', 'productCode', array(), array('*'));
+                                $search = new ListAllSearch('Product', 'ProductCode', array(), array('*'));
                                 $products = $search->getResults();
                                 foreach($products as $product){
-                                    echo '<option value='.$product['productCode'].' data-unitprice="'.$product['unitPrice'].'">';
-                                    echo '['. $product['productCode'] . '] ' . $product['productDescription'];
+                                    echo '<option value='.$product['ProductCode'].' data-unitprice="'.$product['UnitPrice'].'">';
+                                    echo '['. $product['ProductCode'] . '] ' . $product['ProductDescription'];
                                     echo '</option>';
                                 }
                                 ?>
                             </select>
                         </th>
                         <th>
-                            <input class="quantity" type="number" name="line[1].quantity" value="1" onchange="updateLine($(this));">
+                            <input class="quantity" type="number" pattern="^[0-9]{1,20}$" name="Line[1].Quantity" value="1" onchange="updateLine($(this));">
                         </th>
                         <th>
-                            <input class="unitPrice" type="number" name="line[1].unitPrice" value="1" readonly>
+                            <input class="unitPrice" type="number" pattern="^\d*\.?\d*$" maxlength="30" name="Line[1].UnitPrice" value="1" readonly>
                         </th>
                         <th>
-                            <input class="creditAmount" type="number" name="line[1].creditAmount" value="1" readonly>
+                            <input class="creditAmount" type="number" pattern="^\d*\.?\d*$" maxlength="30" name="Line[1].CreditAmount" value="1" readonly>
                         </th>
                         <th>
-                            <select class="taxId" name="line[1].taxId" onchange="updateTotals();">
+                            <select class="taxId" pattern="^[0-9]{1,20}$" name="Line[1].TaxID" onchange="updateTotals();">
                                 <?php
-                                $search = new ListAllSearch('Tax', 'taxId', array(), array('*'));
+                                $search = new ListAllSearch('Tax', 'TaxID', array(), array('*'));
                                 $taxes = $search->getResults();
                                 foreach($taxes as $tax){
-                                    echo '<option value='.$tax['taxId'].' data-taxpercentage="'.$tax['taxPercentage'].'">';
-                                    echo $tax['taxType'] . ' - ' . $tax['taxPercentage'] . '%';
+                                    echo '<option value='.$tax['TaxID'].' data-taxpercentage="'.$tax['TaxPercentage'].'">';
+                                    echo $tax['TaxType'] . ' - ' . $tax['TaxPercentage'] . '%';
                                     echo '</option>';
                                 }
                                 ?>
@@ -161,7 +162,7 @@ evaluateSessionPermissions($neededPermissions);
         </section>
 
         <div id="submitButton">
-            <input type="submit" value="Submit" onclick="submitForm('invoice'); return false;">
+            <input type="submit" value="Submit">
         </div>
     </form>
 </div>

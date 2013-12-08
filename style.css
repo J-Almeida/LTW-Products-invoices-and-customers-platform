@@ -6,6 +6,11 @@ body {
 	margin: auto;
 }
 
+body p {
+	font-size: 14px;
+	/* text-align: center; */
+}
+
 #loadingCustomer, #loadingProduct, #loadingUser {
 	font-size: 14px;
 	margin-top: 40px;
@@ -90,8 +95,10 @@ body {
 /** Login form **/
 .login {
 	display: inline-block;
-	width: 58%;
 	text-align: right;
+	float: right;
+	padding-top: 15px;
+	padding-right: 10px;
 }
 
 #loginMenu {

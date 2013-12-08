@@ -23,6 +23,8 @@ function getUsername($login) {
 
    	if($result)
    		return($result["username"]);
+      else
+         return(array());
 }
 
 function getPermissions($user) {

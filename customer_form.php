@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once 'bootstrap.php';
 require_once './api/authenticationUtilities.php';
 $neededPermissions = array('write');
 evaluateSessionPermissions($neededPermissions);
@@ -28,7 +28,7 @@ evaluateSessionPermissions($neededPermissions);
 </div>
 
 <div id="customer" style="display: none; /*Jquery deals with showing the element after everything is loaded */">
-    <form action="./api/updateCustomer.php" method="POST" autocomplete="off">
+    <form onsubmit="submitForm('customer'); return false;" data-action="./api/updateCustomer.php" method="POST" autocomplete="off">
 
         <div class="customerTitle">
             <strong>Customer Form</strong>
@@ -37,11 +37,12 @@ evaluateSessionPermissions($neededPermissions);
         <header id="customerHeader">
             <ul class="customerInfo">
                 <li>ID Number: <span id="customerID">
-                        <input id="customerIDInput" type="number" name="customerId" readonly>
+                        <input id="customerIDInput" type="number" name="CustomerID" readonly
+                               onclick="warnReadOnly($(this))">
                 </span></li>
 
                 <li>Tax identification: <span id="customerTaxID">
-                        <input type="number" name="customerTaxId">
+                        <input type="number" pattern="^[0-9]{1,20}$" name="CustomerTaxID">
                 </span></li>
             </ul>
         </header>
@@ -50,47 +51,44 @@ evaluateSessionPermissions($neededPermissions);
             <ul class="customerDetail">
                 <li>Name:
                     <p id="companyName">
-                        <input type="text" name="companyName">
+                        <input type="text" pattern="^[a-zA-Z0-9 ,'#.-]{1,50}$" name="CompanyName">
                     </p>
                 </li>
 
                 <li>Billing Address:
                     <p id="billingAddress">
                         <label for="addressDetail">Address</label> <br/>
-                        <input type="text" name="addressDetail"> <br/>
+                        <input type="text" pattern="^[a-zA-Z0-9 ,'#.-]{1,200}$" name="AddressDetail"> <br/>
                         <label for="cityName">City</label> <br/>
-                        <input type="text" name="cityName"> <br/>
+                        <input type="text" pattern="^[a-zA-Z0-9 ,'#.-]{1,20}$" name="City"> <br/>
                         <label for="countryName">Country</label> <br/>
-                        <!--
-                        <input type="text" name="countryName"> <br/>
-                        -->
-                        <select name="countryId">
+                        <select name="CountryID">
                             <?php
                             require_once './api/search.php';
-                            $search = new ListAllSearch('Country', 'countryId', array(), array('*'));
+                            $search = new ListAllSearch('Country', 'CountryID', array(), array('*'));
                             $countries = $search->getResults();
                             foreach($countries as $country){
-                                echo '<option value='.$country['countryId'].'>';
-                                echo $country['countryName'] . ' - ' . $country['countryCode'];
+                                echo '<option pattern="^[a-zA-Z0-9 ,\'#.-]{1,50}$" value='.$country['CountryID'].'>';
+                                echo $country['CountryName'] . ' - ' . $country['Country'];
                                 echo '</option>';
                             }
                             ?>
                         </select><br/>
                         <label for="postalCode">Postal Code</label> <br/>
-                        <input type="text" name="postalCode">
+                        <input type="text" pattern="^[a-zA-Z0-9 ,'#.-]{1,20}$" name="PostalCode">
                     </p>
                 </li>
 
                 <li>Email Address:
                     <p id="emailAddress">
-                        <input type="email" name="email">
+                        <input type="email" name="Email">
                     </p>
                 </li>
             </ul>
         </section>
 
         <div id="submitButton">
-            <input type="submit" value="Submit" onclick="submitForm('customer'); return false;">
+            <input type="submit" value="Submit">
         </div>
     </form>
 </div>

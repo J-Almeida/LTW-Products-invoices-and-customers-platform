@@ -17,7 +17,7 @@ function drawUserStructure(userData) {
 
     $("#Username").html(json.username);
     $("#Name").html(json.name);
-    $("#emailAddress").html(json.email);
+    $("#emailAddress").html(json.Email);
     $("#PermissionType").html(json.permissionType);
 }
 
@@ -29,7 +29,14 @@ function displayUser(username) {
         data: "",
         success: function(data)
         {
-            drawUserStructure(data);
+            var user = JSON.parse(data);
+
+            if (user.error) {
+                document.body.innerHTML = "<p>Error loading user</p>" + "<p>Code " + user.error.code + ": " + user.error.reason + "</p>";
+            }
+            else {
+                drawUserStructure(data);
+            }
         },
         error: function(a, b, c)
         {

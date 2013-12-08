@@ -1,11 +1,11 @@
 <?php
-session_start();
+require_once '../bootstrap.php';
 
 require_once 'invoice.php';
 require_once 'authenticationUtilities.php';
 
 if(!comparePermissions(array('write'))) {
-    $error = new Error(601, 'Permission Denied');
+    $error = new Error(601, 'Permission denied');
     die( json_encode($error->getInfo()) );
 }
 
@@ -18,4 +18,4 @@ if ( isset($_POST['invoice']) && !empty($_POST['invoice']) ) {
 }
 
 $invoiceInfo = json_decode($jsonInvoice, true);
-echo json_encode(updateInvoice($invoiceInfo), JSON_NUMERIC_CHECK);
+echo json_encode(updateInvoice($invoiceInfo));

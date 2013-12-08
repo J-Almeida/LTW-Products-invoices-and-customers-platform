@@ -11,9 +11,9 @@ class Update extends Query {
     public function setUpdatedInfo($updatedInfoArray) {
         $this->updatedInfo = "";
         foreach ($updatedInfoArray as $row => $info ) {
-            $this->updatedInfo .= $row . ' = ' . "'$info', ";
+            $this->updatedInfo .= $row . ' = ' . $this->quote($info) .', ';
         }
-        $this->updatedInfo = rtrim($this->updatedInfo, ", ");
+        $this->updatedInfo = rtrim($this->updatedInfo, ', ');
     }
 
     public function __construct($table, $updatedInfoArray, $field, $value) {
@@ -21,7 +21,7 @@ class Update extends Query {
         $this->setUpdatedInfo($updatedInfoArray);
         $this->field = $field;
         $this->value = $value;
-        $this->sql = "UPDATE $this->table SET $this->updatedInfo WHERE $this->field = '" . $this->value . "'";
+        $this->sql = "UPDATE $this->table SET $this->updatedInfo WHERE $this->field = " . $this->quote($this->value);
 
         $this->executeQuery();
     }

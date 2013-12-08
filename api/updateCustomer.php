@@ -1,11 +1,11 @@
 <?php
-session_start();
+require_once '../bootstrap.php';
 
 require_once 'customer.php';
 require_once 'authenticationUtilities.php';
 
 if(!comparePermissions(array('write'))) {
-    $error = new Error(601, 'Permission Denied');
+    $error = new Error(601, 'Permission denied');
     die( json_encode($error->getInfo()) );
 }
 
@@ -18,4 +18,4 @@ if ( isset($_POST['customer']) && !empty($_POST['customer']) ) {
 }
 
 $customerInfo = json_decode($jsonCustomer, true);
-echo json_encode(updateCustomer($customerInfo), JSON_NUMERIC_CHECK);
+echo json_encode(updateCustomer($customerInfo));

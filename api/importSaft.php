@@ -42,6 +42,9 @@ function libxml_display_errors() {
 // Enable user error handling
 libxml_use_internal_errors(true);
 
+// Extend the time limit for this script
+set_time_limit(300);
+
 $xml= new DOMDocument();
 $xml->loadXML($contents, LIBXML_NOBLANKS); // Or load if filename required
 
@@ -66,28 +69,28 @@ if (!$xml->schemaValidate('./saft.xsd')){
         $oldCustomerId = (int) $customer->CustomerID;
 
         // check if the customer already exists in our DB (by tax ID)
-        $existingCustomer = getObject('Customer', 'customerTaxId', $customer->CustomerTaxID);
+        $existingCustomer = getObject('Customer', 'CustomerTaxID', $customer->CustomerTaxID);
 
         if ($existingCustomer) {
             // if tax ID is found, we already have this customer
             $customers[$oldCustomerId] = json_decode($existingCustomer, true);
-            echo "Customer with ID $oldCustomerId already in current database with ID ".$customers[$oldCustomerId]['customerId'].'<br/>';
+            echo "Customer with ID $oldCustomerId already in current database with ID ".$customers[$oldCustomerId]['CustomerID'].'<br/>';
         } else {
             // if not found, we parse the new customer and add him to our DB
             $customerToImport = array(
-                'companyName' => (string) $customer->CompanyName,
-                'customerTaxId' => (int) $customer->CustomerTaxID,
-                'email' => (string) $customer->Email,
-                'addressDetail' => (string) $customer->BillingAddress->AddressDetail,
-                'cityName' => (string) $customer->BillingAddress->City,
-                'countryId' => getCountry($customer->BillingAddress->Country),
-                'postalCode' => (string) $customer->BillingAddress->PostalCode
+                'CompanyName' => (string) $customer->CompanyName,
+                'CustomerTaxID' => (int) $customer->CustomerTaxID,
+                'Email' => (string) $customer->Email,
+                'AddressDetail' => (string) $customer->BillingAddress->AddressDetail,
+                'City' => (string) $customer->BillingAddress->City,
+                'CountryID' => getCountryId($customer->BillingAddress->Country),
+                'PostalCode' => (string) $customer->BillingAddress->PostalCode
             );
 
             $response = updateCustomer($customerToImport);
-            if ($response['error'] == null) {
+            if (!isset($response['error']) || empty($response['error'])) {
                 $customers[$oldCustomerId] = $response;
-                echo "Imported customer with ID $oldCustomerId as ".$response['customerId'].'<br/>';
+                echo "Imported customer with ID $oldCustomerId as ".$response['CustomerID'].'<br/>';
             } else {
                 echo "Error inserting customer with ID $oldCustomerId:<br/>";
                 echo 'Error code '.$response['error']['code'].': '.$response['error']['reason'].'<br/>';
@@ -98,26 +101,20 @@ if (!$xml->schemaValidate('./saft.xsd')){
     foreach($auditFile->MasterFiles->Product as $product) {
         $oldProductCode = (int) $product->ProductCode;
 
-        $existingProduct = getObject('Product', 'productDescription', $product->ProductDescription);
+        $existingProduct = getObject('Product', 'ProductDescription', $product->ProductDescription);
 
         if ($existingProduct) {
             $products[$oldProductCode] = json_decode($existingProduct, true);
-            echo "Product with code $oldProductCode already in current database with code ".$products[$oldProductCode]['productCode'].'<br/>';
+            echo "Product with code $oldProductCode already in current database with code ".$products[$oldProductCode]['ProductCode'].'<br/>';
         } else {
-            $productInfo = getProductInfo((int)$product->ProductCode, $auditFile);
-            if ($productInfo == null) {
-                continue; // not a valid product, skip
-            }
             $productToImport = array(
-                'productDescription' => (string) $product->ProductDescription,
-                'unitPrice' => $productInfo['unitPrice'],
-                'unitOfMeasure' => $productInfo['unitOfMeasure']
+                'ProductDescription' => (string) $product->ProductDescription,
             );
 
             $response = updateProduct($productToImport);
-            if ($response['error'] == null) {
+            if (!isset($response['error']) || empty($response['error'])) {
                 $products[$oldProductCode] = $response;
-                echo "Imported product with code $oldProductCode as ".$response['productCode'].'<br/>';
+                echo "Imported product with code $oldProductCode as ".$response['ProductCode'].'<br/>';
             } else {
                 echo "Error inserting product with code $oldProductCode:<br/>";
                 echo 'Error code '.$response['error']['code'].': '.$response['error']['reason'].'<br/>';
@@ -127,13 +124,13 @@ if (!$xml->schemaValidate('./saft.xsd')){
 
     foreach($auditFile->MasterFiles->TaxTable->TaxTableEntry as $tax) {
         $taxType = (string) $tax->TaxType;
-        $search = new EqualSearch('Tax', 'taxType', array($taxType), array('taxId'));
+        $search = new EqualSearch('Tax', 'TaxType', array($taxType), array('TaxID'));
         $results = $search->getResults();
-        if( !$results[0] ) { // tax doesn't exist in the DB
+        if(!isset($results[0]) || !$results[0] ) { // tax doesn't exist in the DB
             $newTax = array(
-                'taxType' =>  (string) $tax->TaxType,
-                'taxPercentage' =>  (float) $tax->TaxPercentage,
-                'taxDescription' => (string) $tax->Description
+                'TaxType' =>  (string) $tax->TaxType,
+                'TaxPercentage' =>  (float) $tax->TaxPercentage,
+                'TaxDescription' => (string) $tax->Description
             );
             new Insert('Tax', $newTax);
         }
@@ -143,75 +140,55 @@ if (!$xml->schemaValidate('./saft.xsd')){
         $lines = array();
         foreach($invoice->Line as $line) {
             $importedLine = array(
-                'lineNumber' => (int) $line->LineNumber,
-                'productCode' => $products[(int)$line->ProductCode]['productCode'],
-                'quantity' => (int) $line->Quantity,
-                'unitPrice' => (float) $line->UnitPrice,
-                'creditAmount' => (float) $line->CreditAmount,
-                'tax' => array(
-                    'taxType' => (string) $line->Tax->TaxType,
-                    'taxPercentage' => (float) $line->Tax->TaxPercentage
+                'LineNumber' => (int) $line->LineNumber,
+                'ProductCode' => $products[(int)$line->ProductCode]['ProductCode'],
+                'Quantity' => (int) $line->Quantity,
+                'UnitPrice' => (float) $line->UnitPrice,
+                'CreditAmount' => (float) $line->CreditAmount,
+                'Tax' => array(
+                    'TaxType' => (string) $line->Tax->TaxType,
+                    'TaxPercentage' => (float) $line->Tax->TaxPercentage
                 )
             );
             array_push($lines, $importedLine);
+
+            $updatedProduct = array(
+                'UnitPrice' => (float) $line->UnitPrice,
+                'UnitOfMeasure' => (string) $line->UnitOfMeasure
+            );
+            new Update('Product', $updatedProduct, 'ProductCode', $importedLine['ProductCode']);
         }
 
         $invoiceToImport = array(
-            'invoiceDate' => (string) $invoice->InvoiceDate,
-            'customerId' => $customers[(int)$invoice->CustomerID]['customerId'],
-            'line' => $lines,
-            'documentTotals' => array(
-                'taxPayable' => (float) $invoice->DocumentTotals->TaxPayable,
-                'netTotal' => (float) $invoice->DocumentTotals->NetTotal,
-                'grossTotal' => (float) $invoice->DocumentTotals->GrossTotal
+            'InvoiceDate' => (string) $invoice->InvoiceDate,
+            'CustomerID' => $customers[(int)$invoice->CustomerID]['CustomerID'],
+            'Line' => $lines,
+            'DocumentTotals' => array(
+                'TaxPayable' => (float) $invoice->DocumentTotals->TaxPayable,
+                'NetTotal' => (float) $invoice->DocumentTotals->NetTotal,
+                'GrossTotal' => (float) $invoice->DocumentTotals->GrossTotal
             )
         );
 
         $response = updateInvoice($invoiceToImport);
-        if ($response['error']) {
+
+        if (isset($response['error']) && !empty($response['error'])) {
             echo "Error inserting product with number $invoice->InvoiceNo:<br/>";
             echo 'Error code '.$response['error']['code'].': '.$response['error']['reason'].'<br/>';
         } else {
-            echo "Imported invoice with number $invoice->InvoiceNo as ".$response['invoiceNo'].'<br/>';
+            echo "Imported invoice with number $invoice->InvoiceNo as ".$response['InvoiceNo'].'<br/>';
         }
     }
-}
-
-function getProductInfo($productCode, $auditFile) {
-    foreach($auditFile->SourceDocuments->SalesInvoices->Invoice as $invoice) {
-        foreach($invoice->Line as $line) {
-            if ($productCode == (int)$line->ProductCode) {
-                $productInfo = array();
-                $productInfo['unitPrice'] = (float) $line->UnitPrice;
-                $productInfo['unitOfMeasure'] = (string) $line->UnitOfMeasure;
-                return $productInfo;
-            }
-        }
-    }
-    return null;
 }
 
 function getObject($table, $field, $value) {
     $search = new EqualSearch($table, $field, array($value), array('*'));
     $results = $search->getResults();
-    if(!$results[0]) {
+    if(!isset($results[0]) || !$results[0]) {
         return null;
     }
-    $results = json_encode($results[0], JSON_NUMERIC_CHECK);
+    $results = json_encode($results[0]);
     return $results;
-}
-
-function getCountry($countryCode) {
-    $countrySearch = new EqualSearch('Country', 'countryCode', array($countryCode), array('countryId'));
-    $results = $countrySearch->getResults();
-    if (!$results[0]) {
-        // got no results, insert country into database
-        new Insert('Country', array('countryName' => $countryCode.'land', 'countryCode' => $countryCode));
-        $countrySearch = new EqualSearch('Country', 'countryCode', array($countryCode), array('countryId'));
-        $insertedCountry = $countrySearch->getResults()[0];
-        return $insertedCountry['countryId'];
-    }
-    return $results[0]['countryId'];
 }
 
 ?>

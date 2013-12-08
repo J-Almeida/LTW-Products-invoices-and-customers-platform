@@ -12,14 +12,12 @@ function getParameter(urlQuery) {
     return params;
 }
 
-function drawCustomerStructure(customerData) {
-    var json = JSON.parse(customerData);
-
-    $("#customerID").html(json.customerId);
-    $("#customerTaxID").html(json.customerTaxId);
-    $("#companyName").html(json.companyName);
-    $("#billingAddress").html(json.addressDetail + "<br>" + json.postalCode + " " + json.cityName + ", " + json.countryName);
-    $("#emailAddress").html(json.email);
+function drawCustomerStructure(customer) {
+    $("#customerID").html(customer.CustomerID);
+    $("#customerTaxID").html(customer.CustomerTaxID);
+    $("#companyName").html(customer.CompanyName);
+    $("#billingAddress").html(customer.AddressDetail + "<br>" + customer.PostalCode + " " + customer.City + ", " + customer.CountryName);
+    $("#emailAddress").html(customer.Email);
 }
 
 function displayCustomer(customerID) {
@@ -30,7 +28,17 @@ function displayCustomer(customerID) {
         data: "",
         success: function(data)
         {
-            drawCustomerStructure(data);
+            var customer = JSON.parse(data);
+
+            if (customer.error) {
+                document.body.innerHTML = "<p>Error loading customer</p>" + "<p>Code " + customer.error.code + ": " + customer.error.reason + "</p>";
+            }
+            else {
+                for(var field in customer['BillingAddress']){
+                    customer[field] = customer['BillingAddress'][field];
+                }
+                drawCustomerStructure(customer);
+            }
         },
         error: function(a, b, c)
         {
