@@ -29,7 +29,7 @@ evaluateSessionPermissions($neededPermissions);
 </div>
 
 <div id="product" style="display: none; /*Jquery deals with showing the element after everything is loaded */">
-    <form action="./api/updateProduct.php" method="POST" autocomplete="off">
+    <form onsubmit="submitForm('product'); return false;" data-action="./api/updateProduct.php" method="POST" autocomplete="off">
         <div class="productTitle">
             <strong>Product Form</strong>
         </div>
@@ -47,23 +47,23 @@ evaluateSessionPermissions($neededPermissions);
             <ul class="productDetail">
                 <li>Description:
                     <p id="productDescription"></p>
-                    <input type="text" name="ProductDescription">
+                    <input type="text" pattern="^[a-zA-Z0-9 ,'#.-]{1,200}$" name="ProductDescription">
                 </li>
 
                 <li>Unit Price:
                     <p id="unitPrice"></p>
-                    <input type="number" name="UnitPrice">
+                    <input type="number" pattern="^\d*\.?\d*$" maxlength="30" name="UnitPrice">
                 </li>
 
                 <li>Unit of measure:
                     <p id="unitOfMeasure"></p>
-                    <input type="text" name="UnitOfMeasure">
+                    <input type="text" pattern="^[a-zA-Z0-9 ,'#.-]{1,20}$" name="UnitOfMeasure">
                 </li>
             </ul>
         </section>
 
         <div id="submitButton">
-            <input type="submit" value="Submit" onclick="submitForm('product'); return false;">
+            <input type="submit" value="Submit">
         </div>
     </form>
 </div>

@@ -33,7 +33,7 @@ evaluateSessionPermissions($neededPermissions);
 </div>
 
 <div id="invoice" style="display: none; /*Jquery deals with showing the element after everything is loaded */">
-    <form id="invoiceForm" action="./api/updateInvoice.php" method="POST" autocomplete="off">
+    <form id="invoiceForm" onsubmit="submitForm('invoice'); return false;" data-action="./api/updateInvoice.php" method="POST" autocomplete="off">
 
         <div class="invoiceTitle">
             <strong>Invoice</strong>
@@ -47,7 +47,7 @@ evaluateSessionPermissions($neededPermissions);
                 </span></li>
 
                 <li>Invoice date: <span id="invoiceDate">
-                        <input type="date" name="InvoiceDate">
+                        <input type="date" pattern="^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$" name="InvoiceDate">
                 </span></li>
             </ul>
         </header>
@@ -56,7 +56,7 @@ evaluateSessionPermissions($neededPermissions);
             <div class="invoiceCustomer" id="invoiceCustomer">
                 <h2>Invoice To:</h2>
                 <div id="invoiceTo" class="concernedInfo">
-                    <select name="CustomerID">
+                    <select pattern="^[0-9]{1,20}$" name="CustomerID">
                         <?php
                         $search = new ListAllSearch('Customer', 'CustomerID', array(), array('*'));
                         $customers = $search->getResults();
@@ -89,7 +89,7 @@ evaluateSessionPermissions($neededPermissions);
                     <tbody id="invoiceLines">
                     <tr class="invoiceLine" id="1">
                         <th>
-                            <select class="productCode" name="Line[1].ProductCode" onchange="updateLine($(this));">
+                            <select class="productCode" pattern="^[a-zA-Z0-9 ,\'#.-]{1,50}$" name="Line[1].ProductCode" onchange="updateLine($(this));">
                                 <?php
                                 $search = new ListAllSearch('Product', 'ProductCode', array(), array('*'));
                                 $products = $search->getResults();
@@ -102,16 +102,16 @@ evaluateSessionPermissions($neededPermissions);
                             </select>
                         </th>
                         <th>
-                            <input class="quantity" type="number" name="Line[1].Quantity" value="1" onchange="updateLine($(this));">
+                            <input class="quantity" type="number" pattern="^[0-9]{1,20}$" name="Line[1].Quantity" value="1" onchange="updateLine($(this));">
                         </th>
                         <th>
-                            <input class="unitPrice" type="number" name="Line[1].UnitPrice" value="1" readonly>
+                            <input class="unitPrice" type="number" pattern="^\d*\.?\d*$" maxlength="30" name="Line[1].UnitPrice" value="1" readonly>
                         </th>
                         <th>
-                            <input class="creditAmount" type="number" name="Line[1].CreditAmount" value="1" readonly>
+                            <input class="creditAmount" type="number" pattern="^\d*\.?\d*$" maxlength="30" name="Line[1].CreditAmount" value="1" readonly>
                         </th>
                         <th>
-                            <select class="taxId" name="Line[1].TaxID" onchange="updateTotals();">
+                            <select class="taxId" pattern="^[0-9]{1,20}$" name="Line[1].TaxID" onchange="updateTotals();">
                                 <?php
                                 $search = new ListAllSearch('Tax', 'TaxID', array(), array('*'));
                                 $taxes = $search->getResults();
@@ -162,7 +162,7 @@ evaluateSessionPermissions($neededPermissions);
         </section>
 
         <div id="submitButton">
-            <input type="submit" value="Submit" onclick="submitForm('invoice'); return false;">
+            <input type="submit" value="Submit">
         </div>
     </form>
 </div>
