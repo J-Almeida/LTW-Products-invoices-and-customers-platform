@@ -59,7 +59,7 @@ function updateCustomer($customerInfo) {
         'AddressDetail', 'City', 'PostalCode', 'CountryID'
     );
     $optionalFields = array('Email');
-    checkFields($customerInfo, $obligatoryFields, $optionalFields);
+    validateFields($customerInfo, $obligatoryFields, $optionalFields);
 
     if ($customerId == NULL) {
         $customerInfo['CustomerID'] = getLastCustomerId() + 1;

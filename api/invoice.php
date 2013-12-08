@@ -51,9 +51,10 @@ function getInvoice($invoiceNo) {
 function insertInvoice($invoiceInfo) {
     $obligatoryFields = array('InvoiceNo', 'InvoiceDate', 'CustomerID', 'Line');
     $optionalFields = array('DocumentTotals');
-    checkFields($invoiceInfo, $obligatoryFields, $optionalFields);
+    validateFields($invoiceInfo, $obligatoryFields, $optionalFields);
 
     $invoiceLines = $invoiceInfo['Line'];
+    validateLines($invoiceLines);
     unset($invoiceInfo['Line']);
     unset($invoiceInfo['DocumentTotals']);
 
@@ -86,7 +87,8 @@ function updateInvoice($invoiceInfo) {
 
     $obligatoryFields = array('InvoiceDate', 'CustomerID', 'Line');
     $optionalFields = array('DocumentTotals');
-    checkFields($invoiceInfo, $obligatoryFields, $optionalFields);
+    validateFields($invoiceInfo, $obligatoryFields, $optionalFields);
+    validateLines($invoiceLines);
 
     // ignore and reset document totals and lines
     unset($invoiceInfo['Line']);
@@ -106,17 +108,21 @@ function updateInvoice($invoiceInfo) {
     return getInvoice($invoiceNo);
 }
 
-function insertLines($invoiceLines, $invoiceId) {
+function validateLines($invoiceLines){
     foreach ($invoiceLines as $line) {
         if (isset($line['Tax']) && !empty($line['Tax'])) {
-            checkFields($line['Tax'], array('TaxType', 'TaxPercentage'));
+            validateFields($line['Tax'], array('TaxType', 'TaxPercentage'));
             $line['TaxID'] = getTaxId($line);
         }
 
         $obligatoryFields = array('ProductCode', 'Quantity', 'TaxID');
         $optionalFields = array('LineNumber', 'UnitPrice', 'CreditAmount', 'Tax');
-        checkFields($line, $obligatoryFields, $optionalFields);
+        validateFields($line, $obligatoryFields, $optionalFields);
+    }
+}
 
+function insertLines($invoiceLines, $invoiceId) {
+    foreach ($invoiceLines as $line) {
         $fields = array(
             'InvoiceID' => $invoiceId,
             'ProductID' => getId('Product', 'ProductCode', $line['ProductCode']),

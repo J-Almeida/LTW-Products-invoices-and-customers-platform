@@ -40,7 +40,7 @@ function updateProduct($productInfo) {
 
     $obligatoryFields = array('ProductDescription');
     $optionalFields = array('UnitPrice', 'UnitOfMeasure');
-    checkFields($productInfo, $obligatoryFields, $optionalFields);
+    validateFields($productInfo, $obligatoryFields, $optionalFields);
 
     if ($productCode == NULL) {
         $productCode = getLastProductCode() + 1;
