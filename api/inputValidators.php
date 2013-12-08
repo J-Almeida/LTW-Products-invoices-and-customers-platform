@@ -1,11 +1,11 @@
 <?php
 	function isValidLargeTextField($textField) {
-		$pattern = '/^[a-zA-Z0-9 ,#.-]{0,199}$/';
+		$pattern = '/^[a-zA-Z0-9 ,#.-]{1,200}$/';
 		return(preg_match($pattern, $textField));
 	}
 
 	function isValidTextField($textField) {
-		$pattern = '/^[a-zA-Z0-9 ,#.-]{0,19}$/';
+		$pattern = '/^[a-zA-Z0-9 ,#.-]{1,20}$/';
 		return(preg_match($pattern, $textField));
 	}
 
@@ -19,5 +19,14 @@
 			return false;
 		else
 			return true;
+	}
+
+	function isValidNumber($number) {
+		return is_numeric($number);
+	}
+
+	function isValidInvoiceNo($invoiceNo) {
+		$pattern = '/^FT SEQ\/[0-9]{1,}$/';
+		return(preg_match($pattern, $invoiceNo));
 	}
 ?>
