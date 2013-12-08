@@ -37,13 +37,13 @@ require_once 'searches.php';
 <div id="searchMenu">
     <form action="./api/importSaft.php" method="post"
           enctype="multipart/form-data">
-        <label for="file">Import a Saft file</label>
+        <label for="file">Import a SAFT-PT file</label>
         <input type="file" name="file" id="file">
         <input type="submit" name="submit" value="Submit">
     </form>
-    <br/>
-    <li class="exportSaft"> <a href="./api/exportSaft.php">Export</a></li>
-    <br/>
+    <form action="./api/exportSaft.php">
+        <input type="submit" value="Export to SAFT-PT">
+    </form>
     <form>
         <input id="otherDatabaseURL" name="url" type="text" value="http://localhost/ltw2">
         <input type="button" value="Import Database" onclick="importDatabase(); return false;">
