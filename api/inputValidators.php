@@ -10,7 +10,7 @@ function isValidTextField($textField) {
 }
 
 function isValidUsername($username) {
-    $pattern = '/^[A-Za-z][A-Za-z0-9]{5,31}$/';
+    $pattern = '/^[A-Za-z][A-Za-z0-9]{4,29}$/';
     return(preg_match($pattern, $username));
 }
 
