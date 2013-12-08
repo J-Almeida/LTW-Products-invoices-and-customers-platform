@@ -79,7 +79,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
                 'CustomerTaxID' => (int) $customer->CustomerTaxID,
                 'Email' => (string) $customer->Email,
                 'AddressDetail' => (string) $customer->BillingAddress->AddressDetail,
-                'CityName' => (string) $customer->BillingAddress->City,
+                'City' => (string) $customer->BillingAddress->City,
                 'CountryID' => getCountry($customer->BillingAddress->Country),
                 'PostalCode' => (string) $customer->BillingAddress->PostalCode
             );
@@ -202,12 +202,12 @@ function getObject($table, $field, $value) {
 }
 
 function getCountry($countryCode) {
-    $countrySearch = new EqualSearch('Country', 'CountryCode', array($countryCode), array('CountryID'));
+    $countrySearch = new EqualSearch('Country', 'Country', array($countryCode), array('CountryID'));
     $results = $countrySearch->getResults();
     if (!$results[0]) {
         // got no results, insert country into database
-        new Insert('Country', array('CountryName' => $countryCode.'land', 'CountryCode' => $countryCode));
-        $countrySearch = new EqualSearch('Country', 'CountryCode', array($countryCode), array('CountryID'));
+        new Insert('Country', array('CountryName' => $countryCode.'land', 'Country' => $countryCode));
+        $countrySearch = new EqualSearch('Country', 'Country', array($countryCode), array('CountryID'));
         $insertedCountry = $countrySearch->getResults();
         if(isSet($insertedCountry[0])) {
             return $insertedCountry[0]['CountryID'];
