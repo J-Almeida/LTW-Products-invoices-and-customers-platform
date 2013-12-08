@@ -12,7 +12,7 @@ if(!comparePermissions(array('read'))) {
 $parameters = getSearchParametersFromURL();
 
 $parameters['table'] = 'Customer';
-$parameters['rows'] = array('CustomerID', 'CustomerTaxID', 'CompanyName', 'AddressDetail', 'CityName', 'CountryName', 'Email');
+$parameters['rows'] = array('CustomerID', 'CustomerTaxID', 'CompanyName', 'AddressDetail', 'City', 'CountryName', 'Email');
 $parameters['joins'] = array('Customer' => 'Country');
 
 $result = executeSearch($parameters);

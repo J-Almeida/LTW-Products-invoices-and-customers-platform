@@ -12,7 +12,7 @@ $fields = array(
     'CompanyName' => 'Name',
     'Email' => 'Email',
     'AddressDetail' => 'Address',
-    'CityName' => 'City',
+    'City' => 'City',
     'CountryName' => 'Country');
 
 echo getSearchPage("Customers", $fields);

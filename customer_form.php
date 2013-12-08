@@ -59,7 +59,7 @@ evaluateSessionPermissions($neededPermissions);
                         <label for="addressDetail">Address</label> <br/>
                         <input type="text" name="AddressDetail"> <br/>
                         <label for="cityName">City</label> <br/>
-                        <input type="text" name="CityName"> <br/>
+                        <input type="text" name="City"> <br/>
                         <label for="countryName">Country</label> <br/>
                         <!--
                         <input type="text" name="countryName"> <br/>
@@ -71,7 +71,7 @@ evaluateSessionPermissions($neededPermissions);
                             $countries = $search->getResults();
                             foreach($countries as $country){
                                 echo '<option value='.$country['CountryID'].'>';
-                                echo $country['CountryName'] . ' - ' . $country['CountryCode'];
+                                echo $country['CountryName'] . ' - ' . $country['Country'];
                                 echo '</option>';
                             }
                             ?>

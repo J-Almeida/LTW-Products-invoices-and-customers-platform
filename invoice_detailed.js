@@ -15,7 +15,7 @@ function getParameter(urlQuery) {
 function drawCustomerDetails(customerId, content) {
     $.getJSON("./api/getCustomer.php?CustomerID=" + customerId, function(data) {
         var details = data.CompanyName + " (T.ID  " + data.CustomerTaxID +  ")<br>";
-        details += data.AddressDetail + "<br>" + data.PostalCode + " " + data.CityName + ", " + data.CountryName;
+        details += data.AddressDetail + "<br>" + data.PostalCode + " " + data.City + ", " + data.CountryName;
         content.html(details);
     });
 }

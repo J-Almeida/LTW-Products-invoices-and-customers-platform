@@ -9,7 +9,7 @@ function getCustomer($customerId) {
     $table = 'Customer';
     $field = 'CustomerID';
     $values = array($customerId);
-    $rows = array('CustomerID', 'CompanyName', 'CustomerTaxID', 'Email', 'AddressDetail', 'CityName', 'Country.CountryID AS CountryID', 'CountryName', 'CountryCode', 'PostalCode' );
+    $rows = array('CustomerID', 'CompanyName', 'CustomerTaxID', 'Email', 'AddressDetail', 'City', 'Country.CountryID AS CountryID', 'CountryName', 'Country', 'PostalCode' );
     $joins = array('Customer' => 'Country');
 
     $search = new EqualSearch($table, $field, $values, $rows, $joins);
@@ -23,7 +23,7 @@ function getCustomer($customerId) {
 
     $result = $result[0];
 
-    setValuesAsArray('BillingAddress', array('AddressDetail', 'CityName', 'PostalCode', 'CountryCode', 'CountryName'), $result);
+    setValuesAsArray('BillingAddress', array('AddressDetail', 'City', 'PostalCode', 'Country', 'CountryName'), $result);
 
     return $result;
 }

@@ -16,7 +16,7 @@ function drawCustomerStructure(customer) {
     $("#customerID").html(customer.CustomerID);
     $("#customerTaxID").html(customer.CustomerTaxID);
     $("#companyName").html(customer.CompanyName);
-    $("#billingAddress").html(customer.AddressDetail + "<br>" + customer.PostalCode + " " + customer.CityName + ", " + customer.CountryName);
+    $("#billingAddress").html(customer.AddressDetail + "<br>" + customer.PostalCode + " " + customer.City + ", " + customer.CountryName);
     $("#emailAddress").html(customer.Email);
 }
 
