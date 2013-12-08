@@ -70,7 +70,11 @@ function getCustomer(customerID) {
         data: "",
         success: function(data)
         {
-            populateForm(JSON.parse(data));
+            var customer = JSON.parse(data);
+            for(var field in customer['BillingAddress']){
+                customer[field] = customer['BillingAddress'][field];
+            }
+            populateForm(customer);
         },
         error: function(a, b, c)
         {
