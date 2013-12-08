@@ -47,7 +47,7 @@ function importDatabase() {
 
     for(var table in IDs) {
         for (var index in IDs[table]) {
-            $.ajax(otherURL + "/api/get" + table + "?" + tables[table] + "=" + IDs[table][index] , {
+            $.ajax(otherURL + "/api/get" + table + ".php?" + tables[table] + "=" + IDs[table][index] , {
                 async: false,
                 dataType: "json",
                 data: "",
@@ -57,7 +57,9 @@ function importDatabase() {
                         async: false,
                         type: "POST",
                         data: table.toLowerCase() + "=" + JSON.stringify(data),
-                        success: function(data){},
+                        success: function(data){
+                            console.log(data);
+                        },
                         error: function(a, b, c)
                         {
                             console.log(a + ", " + b + ", " + c);
