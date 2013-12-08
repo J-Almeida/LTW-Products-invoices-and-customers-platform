@@ -33,7 +33,12 @@ function updateCustomer($customerInfo) {
 
     $table = 'Customer';
     $field = 'CustomerID';
-    $customerId = $customerInfo['CustomerID'];
+    
+    if(isset($customerInfo['CustomerID']))
+        $customerId = $customerInfo['CustomerID'];
+    else
+        $customerId = NULL;
+
     if ($customerId == NULL) {
         $customerInfo['CustomerID'] = getLastCustomerId() + 1;
         new Insert('Customer', $customerInfo);

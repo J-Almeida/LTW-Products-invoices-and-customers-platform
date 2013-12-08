@@ -30,7 +30,7 @@ function getInvoice($invoiceNo) {
     $table = 'InvoiceLine';
     $field = 'InvoiceID';
     $values = array($invoice['InvoiceID']);
-    $rows = array('LineNumber', 'ProductCode', 'ProductDescription', 'Quantity', 'UnitPrice', 'CreditAmount' , 'Tax.TaxID AS TaxID', 'TaxType', 'TaxPercentage');
+    $rows = array('LineNumber', 'ProductCode', 'Quantity', 'UnitPrice', 'CreditAmount' , 'Tax.TaxID AS TaxID', 'TaxType', 'TaxPercentage');
     $joins = array('InvoiceLine' => array('Tax', 'Product'));
 
     $invoiceLinesSearch = new EqualSearch($table, $field, $values, $rows, $joins);
@@ -57,8 +57,8 @@ function insertInvoice($invoiceInfo) {
     $invoiceId = getId('Invoice', 'InvoiceNo', $invoiceInfo['InvoiceNo']);
 
     foreach($invoiceLines as $line) {
-        if($line['TaxId'])
-            $taxId = $line['TaxId'];
+        if(isset($line['TaxID']) && !empty($line['TaxID'])) 
+            $taxId = $line['TaxID'];
         else
             $taxId = getId('Tax', 'TaxType', $line['Tax']['TaxType']);
 
@@ -66,7 +66,7 @@ function insertInvoice($invoiceInfo) {
             'InvoiceID' => $invoiceId,
             'ProductID' => getId('Product', 'ProductCode', $line['ProductCode']),
             'Quantity'  => $line['Quantity'],
-            'TaxId'     => $taxId
+            'TaxID'     => $taxId
         );
         new Insert('InvoiceLine', $fields);
     }
@@ -80,7 +80,10 @@ function updateInvoice($invoiceInfo) {
 
     $table = 'Invoice';
     $field = 'InvoiceNo';
-    $invoiceNo = $invoiceInfo['InvoiceNo'];
+    if(isset($invoiceInfo['InvoiceNo']))
+        $invoiceNo = $invoiceInfo['InvoiceNo'];
+    else
+        $invoiceNo = NULL;
 
     if ($invoiceNo == NULL) {
         // create a new invoice with the last invoiceNo + 1
@@ -108,7 +111,7 @@ function updateInvoice($invoiceInfo) {
 
     foreach($invoiceLines as $line) {
         // INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
-        if($line['TaxID'])
+        if(isset($line['TaxID']) && !empty($line['TaxID']))
             $taxId = $line['TaxID'];
         else
             $taxId = getId('Tax', 'TaxType', $line['Tax']['TaxType']);

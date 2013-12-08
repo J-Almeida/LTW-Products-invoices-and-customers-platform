@@ -42,6 +42,9 @@ function libxml_display_errors() {
 // Enable user error handling
 libxml_use_internal_errors(true);
 
+// Extend the time limit for this script
+set_time_limit(300);
+
 $xml= new DOMDocument();
 $xml->loadXML($contents, LIBXML_NOBLANKS); // Or load if filename required
 
@@ -85,7 +88,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
             );
 
             $response = updateCustomer($customerToImport);
-            if ($response['error'] == null) {
+            if (!isset($response['error']) || empty($response['error'])) {
                 $customers[$oldCustomerId] = $response;
                 echo "Imported customer with ID $oldCustomerId as ".$response['CustomerID'].'<br/>';
             } else {
@@ -115,7 +118,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
             );
 
             $response = updateProduct($productToImport);
-            if ($response['error'] == null) {
+            if (!isset($response['error']) || empty($response['error'])) {
                 $products[$oldProductCode] = $response;
                 echo "Imported product with code $oldProductCode as ".$response['ProductCode'].'<br/>';
             } else {
@@ -129,7 +132,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
         $taxType = (string) $tax->TaxType;
         $search = new EqualSearch('Tax', 'TaxType', array($taxType), array('TaxID'));
         $results = $search->getResults();
-        if( !$results[0] ) { // tax doesn't exist in the DB
+        if(!isset($results[0]) || !$results[0] ) { // tax doesn't exist in the DB
             $newTax = array(
                 'TaxType' =>  (string) $tax->TaxType,
                 'TaxPercentage' =>  (float) $tax->TaxPercentage,
@@ -168,7 +171,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
         );
 
         $response = updateInvoice($invoiceToImport);
-        if ($response['error']) {
+        if (isset($response['error']) && !empty($response['error'])) {
             echo "Error inserting product with number $invoice->InvoiceNo:<br/>";
             echo 'Error code '.$response['error']['code'].': '.$response['error']['reason'].'<br/>';
         } else {
@@ -194,7 +197,7 @@ function getProductInfo($productCode, $auditFile) {
 function getObject($table, $field, $value) {
     $search = new EqualSearch($table, $field, array($value), array('*'));
     $results = $search->getResults();
-    if(!$results[0]) {
+    if(!isset($results[0]) || !$results[0]) {
         return null;
     }
     $results = json_encode($results[0]);
@@ -204,7 +207,7 @@ function getObject($table, $field, $value) {
 function getCountry($countryCode) {
     $countrySearch = new EqualSearch('Country', 'Country', array($countryCode), array('CountryID'));
     $results = $countrySearch->getResults();
-    if (!$results[0]) {
+    if (!isset($results[0]) || !$results[0]) {
         // got no results, insert country into database
         new Insert('Country', array('CountryName' => $countryCode.'land', 'Country' => $countryCode));
         $countrySearch = new EqualSearch('Country', 'Country', array($countryCode), array('CountryID'));
