@@ -37,7 +37,8 @@ evaluateSessionPermissions($neededPermissions);
         <header id="customerHeader">
             <ul class="customerInfo">
                 <li>ID Number: <span id="customerID">
-                        <input id="customerIDInput" type="number" name="CustomerID" readonly>
+                        <input id="customerIDInput" type="number" name="CustomerID" readonly
+                               onclick="warnReadOnly($(this))">
                 </span></li>
 
                 <li>Tax identification: <span id="customerTaxID">
