@@ -28,7 +28,7 @@ evaluateSessionPermissions($neededPermissions);
     </div>
 
     <div id="user" style="display: none; /*Jquery deals with showing the element after everything is loaded */">
-        <form action="./api/updateUser.php" method="POST" autocomplete="off">
+        <form onchange="submitForm('user'); return false;" data-action="./api/updateUser.php" method="POST" autocomplete="off">
 
             <div class="userTitle">
                 <strong>Manage user</strong>
@@ -36,7 +36,7 @@ evaluateSessionPermissions($neededPermissions);
 
             <header id="userHeader">
                 <ul class="userInfo">
-                    <li>Username: <span id="username"> <input type="text" name="username" readonly="readonly">
+                    <li>Username: <span id="username"> <input type="text" pattern="^[A-Za-z][A-Za-z0-9]{5,31}$" name="username" readonly="readonly">
                     </span></li>
                 </ul>
             </header>
@@ -45,7 +45,7 @@ evaluateSessionPermissions($neededPermissions);
                 <ul class="userDetail">
                     <li>Name:
                         <p id="name">
-                            <input type="text" name="name">
+                            <input type="text" pattern="^[a-zA-Z0-9 ,'#.-]{1,50}$" name="name">
                         </p>
                     </li>
 
@@ -57,7 +57,7 @@ evaluateSessionPermissions($neededPermissions);
 
                     <li>Permission level:
                         <p id="permissionType">
-                            <select name="permissionId">
+                            <select name="permissionId" pattern="^[0-9]{1,20}$">
                                 <?php
                                 $permissions = getAllPermissions();
                                 foreach($permissions as $permission) {
@@ -73,7 +73,7 @@ evaluateSessionPermissions($neededPermissions);
             </section>
 
             <div id="submitButton">
-                <input type="submit" value="Submit" onclick="submitForm('user'); return false;">
+                <input type="submit" value="Submit">
             </div>
         </form>
     </div>
