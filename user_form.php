@@ -45,7 +45,7 @@ evaluateSessionPermissions($neededPermissions);
                 <ul class="userDetail">
                     <li>Name:
                         <p id="name">
-                            <input type="text" pattern="^[a-zA-Z0-9 ,'#.-]{1,50}$" name="name">
+                            <input type="text" pattern="^[a-zA-Z0-9 \u00C0-\u018F &amp;$%!@,'#.-]{1,50}$" name="name">
                         </p>
                     </li>
 

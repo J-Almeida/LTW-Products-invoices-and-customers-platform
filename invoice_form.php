@@ -89,7 +89,7 @@ evaluateSessionPermissions($neededPermissions);
                     <tbody id="invoiceLines">
                     <tr class="invoiceLine" id="1">
                         <th>
-                            <select class="productCode" pattern="^[a-zA-Z0-9 ,\'#.-]{1,50}$" name="Line[1].ProductCode" onchange="updateLine($(this));">
+                            <select class="productCode" pattern="^[a-zA-Z0-9 \u00C0-\u018F &amp;$%!@,'#.-]{1,50}$" name="Line[1].ProductCode" onchange="updateLine($(this));">
                                 <?php
                                 $search = new ListAllSearch('Product', 'ProductCode', array(), array('*'));
                                 $products = $search->getResults();
