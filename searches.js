@@ -1,3 +1,10 @@
+$(this).keypress(function(e) {
+    if (e.keyCode == '13') {
+        e.preventDefault();
+        submitForm();
+    }
+});
+
 function submitForm() {
 
     var form = "?";
@@ -127,13 +134,13 @@ function drawSearchResults(data, fieldNames) {
 }
 
 var fieldTypes = {
-    'InvoiceDate' : 'type="date"',
-    'TaxPayable' : 'type="number"',
-    'NetTotal' : 'type="number"',
-    'GrossTotal' : 'type="number"',
-    'CustomerID' : 'type="number"',
-    'CustomerTaxID' : 'type="number"',
-    'UnitPrice' : 'type="number"',
+    'InvoiceDate' : 'type="date" pattern="^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$"',
+    'TaxPayable' : 'type="number" pattern="^\\\\d*\\\\.?\\\\d*$" maxlength="50"',
+    'NetTotal' : 'type="number" pattern="^\\\\d*\\\\.?\\\\d*$" maxlength="50"',
+    'GrossTotal' : 'type="number" pattern="^\\\\d*\\\\.?\\\\d*$" maxlength="50"',
+    'CustomerID' : 'type="number" pattern="^[0-9]{1,20}$"',
+    'CustomerTaxID' : 'type="number" pattern="^[0-9]{1,20}$"',
+    'UnitPrice' : 'type="number" pattern="^\\\\d*\\\\.?\\\\d*$" maxlength="50"',
     'Email' : 'type="email"'
 };
 
@@ -145,7 +152,7 @@ function getValueBoxes(operation, field) {
         input = '<input name="value[]"';
         input += fieldTypes[field]; input += ">";
     } else
-        input = '<input name="value[]" type="text">';
+        input = '<input name="value[]" type="text" pattern="^[a-zA-Z0-9 \u00A0-\u018F &amp;$%!@,\'#.-]{1,50}$">';
 
     $( "#fieldSelect" ).show();
     if(operation == "range") {

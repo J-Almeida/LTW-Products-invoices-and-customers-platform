@@ -25,8 +25,6 @@ function getUser($userName) {
 }
 
 function updateUser($userInfo) {
-    // TODO select only the necessary fields from the json, return error when important fields are missing
-
     $table = 'User';
     $field = 'username';
     $username = $userInfo['username'];

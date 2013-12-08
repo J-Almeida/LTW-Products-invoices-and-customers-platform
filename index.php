@@ -40,10 +40,9 @@
                 if($sessionEmpty) {
                     echo '<form method="post" action="login.php">';
                         echo '<ul id="loginMenu">';
-                            echo '<li><input type="text" name="login" value="" placeholder="Username or Email"></li>';
+                            echo '<li><input type="text" name="login" pattern="^[A-Za-z][A-Za-z0-9]{4,29}$" value="" placeholder="Username or Email"></li>';
                             echo '<li><input type="password" name="password" value="" placeholder="Password"></li>';
                             echo '<li class="submit"><input type="submit" name="commit" value="Login"></li>';
-                            echo '<li class="loginHelp"> <a href="index.php">Forgot password?</a></li>';
                             echo '<li class="loginHelp"> <a href="register.html">Register</a></li>';
                         echo '</ul>';
                     echo '</form>';

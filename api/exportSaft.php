@@ -35,7 +35,7 @@ $endDate = getEndDate();
 
 $Header = $AuditElement->addChild('Header');
 $Header->addChild('AuditFileVersion','1.03_01');
-$Header->addChild('CompanyID','Porto 11511<');
+$Header->addChild('CompanyID','Porto 11511');
 $Header->addChild('TaxRegistrationNumber','133713666');
 $Header->addChild('TaxAccountingBasis', 'F');
 $Header->addChild('CompanyName','Totally Legit Sellers, Inc.');

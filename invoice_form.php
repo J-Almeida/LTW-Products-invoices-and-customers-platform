@@ -89,7 +89,7 @@ evaluateSessionPermissions($neededPermissions);
                     <tbody id="invoiceLines">
                     <tr class="invoiceLine" id="1">
                         <th>
-                            <select class="productCode" pattern="^[a-zA-Z0-9 \u00C0-\u018F &amp;$%!@,'#.-]{1,50}$" name="Line[1].ProductCode" onchange="updateLine($(this));">
+                            <select class="productCode" pattern="^[a-zA-Z0-9 \u00A0-\u018F &amp;$%!@,'#.-]{1,50}$" name="Line[1].ProductCode" onchange="updateLine($(this));">
                                 <?php
                                 $search = new ListAllSearch('Product', 'ProductCode', array(), array('*'));
                                 $products = $search->getResults();
@@ -102,13 +102,13 @@ evaluateSessionPermissions($neededPermissions);
                             </select>
                         </th>
                         <th>
-                            <input class="quantity" type="number" pattern="^[0-9]{1,20}$" name="Line[1].Quantity" value="1" onchange="updateLine($(this));">
+                            <input class="quantity" type="number" pattern="^[0-9]{1,20}$" min="0" name="Line[1].Quantity" value="1" onchange="updateLine($(this));">
                         </th>
                         <th>
-                            <input class="unitPrice" type="number" pattern="^\d*\.?\d*$" maxlength="30" name="Line[1].UnitPrice" value="1" readonly>
+                            <input class="unitPrice" type="number" pattern="^\d*\.?\d*$" min="0" step="any" maxlength="30" name="Line[1].UnitPrice" value="1" readonly>
                         </th>
                         <th>
-                            <input class="creditAmount" type="number" pattern="^\d*\.?\d*$" maxlength="30" name="Line[1].CreditAmount" value="1" readonly>
+                            <input class="creditAmount" type="number" pattern="^\d*\.?\d*$" min="0" step="any" maxlength="30" name="Line[1].CreditAmount" value="1" readonly>
                         </th>
                         <th>
                             <select class="taxId" pattern="^[0-9]{1,20}$" name="Line[1].TaxID" onchange="updateTotals();">
