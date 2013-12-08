@@ -57,10 +57,7 @@ function insertInvoice($invoiceInfo) {
     $invoiceId = getId('Invoice', 'InvoiceNo', $invoiceInfo['InvoiceNo']);
 
     foreach($invoiceLines as $line) {
-        if(isset($line['TaxID']) && !empty($line['TaxID'])) 
-            $taxId = $line['TaxID'];
-        else
-            $taxId = getId('Tax', 'TaxType', $line['Tax']['TaxType']);
+        $taxId = getTaxId($line);
 
         $fields = array(
             'InvoiceID' => $invoiceId,
@@ -110,11 +107,7 @@ function updateInvoice($invoiceInfo) {
     new Delete('InvoiceLine', array('InvoiceID' => $invoiceId));
 
     foreach($invoiceLines as $line) {
-        // INSERT INTO InvoiceLine(InvoiceID, ProductID, Quantity, TaxID)
-        if(isset($line['TaxID']) && !empty($line['TaxID']))
-            $taxId = $line['TaxID'];
-        else
-            $taxId = getId('Tax', 'TaxType', $line['Tax']['TaxType']);
+        $taxId = getTaxId($line);
 
         $fields = array(
             'InvoiceID' => $invoiceId,
@@ -142,7 +135,6 @@ function getLastInvoiceNo(){
 }
 
 function getLastInvoiceNoPlusOne() {
-    // TODO handle case when there isn't any invoice!
     $invoiceNo = getLastInvoiceNo();
     $matches = array();
     preg_match('/(\d+)$/', $invoiceNo, $matches);
@@ -150,4 +142,33 @@ function getLastInvoiceNoPlusOne() {
     $invoiceNumber = (float)$matches[0] + 1;
     $invoiceNo .= $invoiceNumber;
     return $invoiceNo;
+}
+
+function getTaxId($invoiceLine) {
+    if(isset($invoiceLine['TaxID']) && !empty($invoiceLine['TaxID'])){
+        $taxId = $invoiceLine['TaxID'];
+        $search = new EqualSearch('Tax', 'TaxID', array($taxId), array('TaxID'));
+        $results = $search->getResults();
+        if(!isset($results[0]) || !$results[0] ) { // tax doesn't exist in the DB
+            $newTax = array(
+                'TaxType' =>  $invoiceLine['Tax']['TaxType'],
+                'TaxPercentage' => $invoiceLine['Tax']['TaxPercentage'],
+                'TaxDescription' => $invoiceLine['Tax']['TaxType']
+            );
+            new Insert('Tax', $newTax);
+            return getId('Tax', 'TaxType', $invoiceLine['Tax']['TaxType']);
+        }
+        return $taxId;
+    } else {
+        $taxId = getId('Tax', 'TaxType', $invoiceLine['Tax']['TaxType']);
+        if ($taxId == null) {
+            $newTax = array(
+                'TaxType' =>  $invoiceLine['Tax']['TaxType'],
+                'TaxPercentage' => $invoiceLine['Tax']['TaxPercentage'],
+                'TaxDescription' => $invoiceLine['Tax']['TaxType']
+            );
+            new Insert('Tax', $newTax);
+            return getId('Tax', 'TaxType', $invoiceLine['Tax']['TaxType']);
+        }
+    }
 }

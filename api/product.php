@@ -2,6 +2,7 @@
 require_once 'search.php';
 require_once 'utilities.php';
 require_once 'update.php';
+require_once 'insert.php';
 
 function getProduct($productCode) {
     // Fetch the product we are looking for
