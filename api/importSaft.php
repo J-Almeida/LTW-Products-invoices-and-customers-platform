@@ -83,7 +83,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
                 'Email' => (string) $customer->Email,
                 'AddressDetail' => (string) $customer->BillingAddress->AddressDetail,
                 'City' => (string) $customer->BillingAddress->City,
-                'CountryID' => getCountry($customer->BillingAddress->Country),
+                'CountryID' => getCountryId($customer->BillingAddress->Country),
                 'PostalCode' => (string) $customer->BillingAddress->PostalCode
             );
 
@@ -202,22 +202,6 @@ function getObject($table, $field, $value) {
     }
     $results = json_encode($results[0]);
     return $results;
-}
-
-function getCountry($countryCode) {
-    $countrySearch = new EqualSearch('Country', 'Country', array($countryCode), array('CountryID'));
-    $results = $countrySearch->getResults();
-    if (!isset($results[0]) || !$results[0]) {
-        // got no results, insert country into database
-        new Insert('Country', array('CountryName' => $countryCode.'land', 'Country' => $countryCode));
-        $countrySearch = new EqualSearch('Country', 'Country', array($countryCode), array('CountryID'));
-        $insertedCountry = $countrySearch->getResults();
-        if(isSet($insertedCountry[0])) {
-            return $insertedCountry[0]['CountryID'];
-        }
-        return null;
-    }
-    return $results[0]['CountryID'];
 }
 
 ?>

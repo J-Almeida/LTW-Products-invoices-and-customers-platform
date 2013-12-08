@@ -47,24 +47,17 @@ function importDatabase() {
 
     for(var table in IDs) {
         for (var index in IDs[table]) {
-            //console.log(table);
-            //console.log(IDs[table][index]);
-
-            console.log(otherURL + "/api/get" + table + "?" + tables[table] + "=" + IDs[table][index]);
             $.ajax(otherURL + "/api/get" + table + "?" + tables[table] + "=" + IDs[table][index] , {
                 async: false,
                 dataType: "json",
                 data: "",
                 success: function(data){
                     delete data[tables[table]];
-                    console.log(data);
                     $.ajax(ourURL + "/api/update" + table + ".php"  , {
                         async: false,
                         type: "POST",
                         data: table.toLowerCase() + "=" + JSON.stringify(data),
-                        success: function(data){
-                            console.log(data);
-                        },
+                        success: function(data){},
                         error: function(a, b, c)
                         {
                             console.log(a + ", " + b + ", " + c);
@@ -79,5 +72,7 @@ function importDatabase() {
             });
         }
     }
+
+    alert('Database import is complete!');
 
 }

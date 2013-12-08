@@ -39,6 +39,23 @@ function updateCustomer($customerInfo) {
     else
         $customerId = NULL;
 
+    if(isset($customerInfo['BillingAddress'])){
+        foreach($customerInfo['BillingAddress'] as $addressField => $value) {
+            $customerInfo[$addressField] = $value;
+        }
+        unset($customerInfo['BillingAddress']);
+    }
+
+    if(isset($customerInfo['Country'])) {
+        $countryName = "";
+        if (isset($customerInfo['CountryName'])) {
+            $countryName = $customerInfo['CountryName'];
+            unset($customerInfo['CountryName']);
+        }
+        $customerInfo['CountryID'] = getCountryId($customerInfo['Country'], $countryName);
+        unset($customerInfo['Country']);
+    }
+
     if ($customerId == NULL) {
         $customerInfo['CustomerID'] = getLastCustomerId() + 1;
         new Insert('Customer', $customerInfo);
@@ -60,4 +77,22 @@ function getLastCustomerId(){
         return $results[0]['CustomerID'];
     }
     return 0;
+}
+
+function getCountryId($countryCode, $countryName = "") {
+    $countrySearch = new EqualSearch('Country', 'Country', array($countryCode), array('CountryID'));
+    $results = $countrySearch->getResults();
+    if (!isset($results[0]) || !$results[0]) {
+        // got no results, insert country into database
+        if ($countryName == "")
+            $countryName = $countryCode.'land';
+        new Insert('Country', array('CountryName' => $countryName, 'Country' => $countryCode));
+        $countrySearch = new EqualSearch('Country', 'Country', array($countryCode), array('CountryID'));
+        $insertedCountry = $countrySearch->getResults();
+        if(isSet($insertedCountry[0])) {
+            return $insertedCountry[0]['CountryID'];
+        }
+        return null;
+    }
+    return $results[0]['CountryID'];
 }
