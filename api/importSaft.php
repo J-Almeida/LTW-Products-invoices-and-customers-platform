@@ -171,6 +171,7 @@ if (!$xml->schemaValidate('./saft.xsd')){
         );
 
         $response = updateInvoice($invoiceToImport);
+
         if (isset($response['error']) && !empty($response['error'])) {
             echo "Error inserting product with number $invoice->InvoiceNo:<br/>";
             echo 'Error code '.$response['error']['code'].': '.$response['error']['reason'].'<br/>';

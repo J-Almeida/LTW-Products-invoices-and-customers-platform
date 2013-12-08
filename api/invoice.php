@@ -72,12 +72,11 @@ function insertInvoice($invoiceInfo) {
 }
 
 function updateInvoice($invoiceInfo) {
-
 // TODO select only the necessary fields from the json, return error when important fields are missing
 
     $table = 'Invoice';
     $field = 'InvoiceNo';
-    if(isset($invoiceInfo['InvoiceNo']))
+    if(isset($invoiceInfo['InvoiceNo']) && !empty($invoiceInfo['InvoiceNo']))
         $invoiceNo = $invoiceInfo['InvoiceNo'];
     else
         $invoiceNo = NULL;
@@ -126,12 +125,25 @@ function getLastInvoiceNo(){
     $field = 'InvoiceNo';
     $values = array();
     $rows = array('InvoiceNo');
-    $invoiceSearch = new MaxSearch($table, $field, $values, $rows);
+    $invoiceSearch = new ListAllSearch($table, $field, $values, $rows);
     $results = $invoiceSearch->getResults();
-    if(isSet($results[0])) {
-        return $results[0]['InvoiceNo'];
+    $maxInv = 'FT SEQ/0';
+    $maxInvNo = 0;
+    if(isset($results) && !empty($results)) {
+        foreach($results as $result) {
+            $matches = array();
+            $invoiceNo = $result['InvoiceNo'];
+            preg_match('/(\d+)$/', $invoiceNo, $matches);
+            $invoiceNo = substr($invoiceNo, 0, strpos($invoiceNo, $matches[0]) );
+            $invoiceNumber = (float)$matches[0] + 1;
+            if($invoiceNumber > $maxInvNo) {
+                $maxInv = $result['InvoiceNo'];
+                $maxInvNo = $invoiceNumber;
+            }
+        }
     }
-    return 'FT SEQ/0';
+
+    return $maxInv;
 }
 
 function getLastInvoiceNoPlusOne() {
@@ -170,5 +182,6 @@ function getTaxId($invoiceLine) {
             new Insert('Tax', $newTax);
             return getId('Tax', 'TaxType', $invoiceLine['Tax']['TaxType']);
         }
+        return $taxId;
     }
 }
