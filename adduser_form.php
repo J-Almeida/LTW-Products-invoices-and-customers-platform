@@ -14,7 +14,7 @@ evaluateSessionPermissions($neededPermissions);
     <title>Manage user</title>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script src="form.js"></script>
+    <script src="adduser_form.js"></script>
     <script>
     var username = "<?php echo ( isset( $_GET['UsernameInput'] ) && $_GET['UsernameInput'] != '') ? $_GET['UsernameInput'] : '';?>";
     </script>
@@ -28,7 +28,7 @@ evaluateSessionPermissions($neededPermissions);
     </div>
 
     <div id="user" style="display: none; /*Jquery deals with showing the element after everything is loaded */">
-        <form onsubmit="submitForm('user'); return false;" data-action="./api/updateUser.php" method="POST" autocomplete="off">
+        <form onsubmit="submitForm('user'); return false;" data-action="./api/insertUser.php" method="POST" autocomplete="off">
 
             <div class="userTitle">
                 <strong>Manage user</strong>
@@ -36,7 +36,7 @@ evaluateSessionPermissions($neededPermissions);
 
             <header id="userHeader">
                 <ul class="userInfo">
-                    <li>Username: <span id="username"> <input type="text" pattern="^[A-Za-z][A-Za-z0-9]{4,29}$" name="username" readonly="readonly">
+                    <li>Username: <span id="username"> <input type="text" pattern="^[A-Za-z][A-Za-z0-9]{4,29}$" name="username">
                     </span></li>
                 </ul>
             </header>
@@ -52,6 +52,12 @@ evaluateSessionPermissions($neededPermissions);
                     <li>Email Address:
                         <p id="emailAddress">
                             <input type="email" name="Email">
+                        </p>
+                    </li>
+
+                    <li>Password:
+                        <p id="password">
+                            <input type="password" pattern="^[a-zA-Z0-9 \u00A0-\u018F &amp;$%!@,'#.-]{1,50}$" name="password">
                         </p>
                     </li>
 

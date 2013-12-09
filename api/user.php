@@ -2,6 +2,7 @@
 require_once 'search.php';
 require_once 'utilities.php';
 require_once 'update.php';
+require_once 'insert.php';
 
 function getUser($userName) {
 // Fetch the user we are looking for
@@ -29,6 +30,16 @@ function updateUser($userInfo) {
     $field = 'username';
     $username = $userInfo['username'];
     new Update($table, $userInfo, $field, $username);
+
+    return getUser($username);
+}
+
+function insertUser($userInfo) {
+    $table = 'User';
+    $field = 'username';
+    $username = $userInfo['username'];
+
+    new Insert($table, $userInfo);
 
     return getUser($username);
 }

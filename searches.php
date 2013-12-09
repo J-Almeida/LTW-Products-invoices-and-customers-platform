@@ -28,6 +28,13 @@ function getSearchPage($title, $fields) {
 
     $object = substr($title, 0, -1); $object = lcfirst($object);
     $html = str_replace("{{object}}", $object, $html);
+    
+    if($object == 'user') {
+        $html = str_replace("{{object_form}}", "adduser", $html);
+    }
+    else {
+        $html = str_replace("{{object_form}}", $object, $html);
+    }
 
     return $html;
 }
