@@ -484,12 +484,12 @@ div.pager span {
     text-align: left;
 }
 
-label + input {
+#registerUser label + input {
     width: 30%;
     margin: 0 5% 0 4%;
 }
 
-input + input {
+#registerUser input + input {
     float: right;
 }
 
