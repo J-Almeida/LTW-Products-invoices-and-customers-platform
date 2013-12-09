@@ -460,3 +460,40 @@ div.pager span {
 #importDB #otherDatabaseURL{
     width: 35%;
 }
+
+/****************************************************************************************************************************************/
+/*															 Register            														*/
+/****************************************************************************************************************************************/
+#registerUser form {
+    width: 80%;
+    margin: 0 auto;
+    margin-left: 0;
+}
+
+#registerUser label, #registerUser input {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+#registerUser label {
+    width: 30%;
+    text-align: left;
+}
+
+label + input {
+    width: 30%;
+    margin: 0 5% 0 4%;
+}
+
+input + input {
+    float: right;
+}
+
+#registerUser #commit {
+	margin-left: 85px;
+	margin-top: 25px;
+}
+
+#userExists, #emailExists {
+	color: red;
+}
