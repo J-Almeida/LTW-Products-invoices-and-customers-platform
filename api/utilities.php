@@ -149,7 +149,7 @@ function getEndDate() {
 }
 
 function getFiscalYear() {
-    $startDate = DateTime::createFromFormat("Y-m-d", getStartDate());
+    $startDate = createFromFormat("Y-m-d", getStartDate());
     return $startDate->format("Y");
 }
 

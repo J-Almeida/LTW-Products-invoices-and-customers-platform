@@ -65,6 +65,14 @@ if ($table == 'Product' && $field != null && $value != null) {
             $invoice['GrossTotal'] = $invoice['NetTotal'] + $invoice['TaxPayable'];
 
             new Update('Invoice', $invoice, 'InvoiceID', $invoice['InvoiceID']);
+
+            // check for invoices where the only line has the product that will be deleted
+            $linesSearch = new EqualSearch('InvoiceLine', 'InvoiceID', array($line['InvoiceID']), array('*'));
+            $invoiceUpdatedLines = $linesSearch->getResults();
+
+            if ( count($invoiceUpdatedLines) == 1 && $invoiceUpdatedLines[0]['ProductID'] == $productId ) {
+                new Delete('Invoice', array('InvoiceID' => $line['InvoiceID']));
+            }
         }
     }
 }
