@@ -31,7 +31,7 @@ function displayCustomer(customerID) {
             var customer = JSON.parse(data);
 
             if (customer.error) {
-                document.body.innerHTML = "<p>Error loading customer</p>" + "<p>Code " + customer.error.code + ": " + customer.error.reason + "</p>";
+                document.body.innerHTML = "<div id='error'><p>Error loading customer</p>" + "<p>Code " + customer.error.code + ": " + customer.error.reason + "</p></div>";
             }
             else {
                 for(var field in customer['BillingAddress']){

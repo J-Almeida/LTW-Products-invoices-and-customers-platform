@@ -32,7 +32,7 @@ function displayUser(username) {
             var user = JSON.parse(data);
 
             if (user.error) {
-                document.body.innerHTML = "<p>Error loading user</p>" + "<p>Code " + user.error.code + ": " + user.error.reason + "</p>";
+                document.body.innerHTML = "<div id='error'><p>Error loading user</p>" + "<p>Code " + user.error.code + ": " + user.error.reason + "</p></div>";
             }
             else {
                 drawUserStructure(data);

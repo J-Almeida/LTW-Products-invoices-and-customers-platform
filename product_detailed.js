@@ -32,7 +32,7 @@ function displayProduct(productCode) {
             var product = JSON.parse(data);
 
             if (product.error) {
-                document.body.innerHTML = "<p>Error loading product</p>" + "<p>Code " + product.error.code + ": " + product.error.reason + "</p>";
+                document.body.innerHTML = "<div id='error'><p>Error loading product</p>" + "<p>Code " + product.error.code + ": " + product.error.reason + "</p></div>";
             }
             else {
                 drawProductStructure(data);
