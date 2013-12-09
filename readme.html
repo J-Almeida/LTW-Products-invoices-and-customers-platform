@@ -15,15 +15,20 @@
 		<br>
 
 		<p><strong>Funcionalidades implementadas:</strong></p>
-		<p>Implementaram-se todas as funcionalidades pedidas no enunciado, para a primeira entrega. Nomeadamente, uma base de dados com diversos exemplos de Invoices, Costumers e Products, Pesquisa e listagem de Invoices, Costumers e Products, assim como vistas detalhadas para cada um destes e ainda versão de impressão A4 para uma Invoice. A forma específica desta implementação, assim como alguns extras funcionais ou na implementação, serão demonstrados na apresentação com o docente.</p>
+		<p>Implementaram-se todas as funcionalidades pedidas no enunciado, para ambas as entregas. Nomeadamente, uma base de dados com diversos exemplos de Invoices, Costumers e Products, Pesquisa e listagem de Invoices, Costumers e Products, assim como vistas detalhadas para cada um destes e ainda versão de impressão A4 para uma Invoice. É permitida a criação e edição dos diversos documentos da base de dados assim como registo e manutenção de utilizadores. É efectuada a verificação de potenciais erros em todas as funcionalidades pedidas. Este projecto possui também um sistema de autenticação (tanto client-side como server-side) que não permite acesso a áreas às quais o utilizador não tem permissão, assim como restringe a utilização de certas funcionalidades. Os inputs são verificados utilizando html5 e ainda expressões regulares, tanto do lado do cliente como do lado do servidor. Focou-se ainda numa geração dinâmica de páginas recorrendo a javascript e php, de forma a evitar uma exagerada repetição de código já implementado. Por último, é permitida a exportação da base de dados no formato SAFT-PT, assim como a importação de uma BD através de um ficheiro xml no mesmo formato. Também é permitida a importação de bases de dados a partir de um url externo que implemente uma API semelhante. Todas as tabelas da base de dados são importadas/exportadas, sendo efectuado controlo de conflitos e corrigidos estes onde necessário. A forma específica desta implementação, assim como alguns extras funcionais ou na implementação, serão demonstrados na apresentação com o docente.</p>
 		<br>
 
 		<p><strong>Notas:</strong>
-		Na versão de impressão de uma invoice, implementou-se repetição do cabeçalho das tabelas em cada página impressa e ainda repetição de um "footer" também em cada página impressa. No entanto, devido a um bug já conhecido, estas funcionalidades não funcionam nos browsers Chrome e Safari.</p>
+		Na versão de impressão de uma invoice, implementou-se repetição do cabeçalho das tabelas em cada página impressa e ainda repetição de um "footer" também em cada página impressa. No entanto, devido a um bug já conhecido, estas funcionalidades não funcionam nos browsers Chrome e Safari.<br>
+		Devido ao servidor gnomo da feup possuir uma versão de php desactualizada, foi necessário recorrer-se a certas adaptações pontuais que não seriam necessárias actualmente.
+	
+		Por se tratar de uma função auxiliar cuja necessidade surgiu de incompatibilidades com o gnomo da feup, que não possui implementação especificamente em windows, recorreu-se a uma versão da função sprptime(), para time parsing, encontrada na web, autoria de Lionel Sauron (http://sauron.lionel.free.fr:80). Mais informações em sprptimeWin.php.<br>
+		De notar que o desenvolvimento do projecto foi efectuado maioritariamente em PHP 5.4.
+		</p>
 		<br>
 
 		<p><strong>Utilizadores: </strong></p>
-		<p>Encontra-se aqui uma lista de alguns dos utilizadores existentes na base de dados. O website ainda não faz uso de autenticação de utilizadores, mas encontram-se já aqui para referência futura.</p>
+		<p>(Admin) Username: Jakim; Password: 1234abcd</p>
 		<p>(Admin) Username: MHawk; Password: supercalifragilisticexpialidocious</p>
 		<p>(Editor) Username: AnaMaria12; Password: abcd1234</p>
 		<p>(Reader) Username: HenriqueLuis; Password: 1990motocicleta</p>
