@@ -222,7 +222,7 @@ body p {
 }
 
 /****************************************************************************************************************************************/
-/*												costumer_detailed, product_detailed, user_detailed														*/
+/*												costumer_detailed, product_detailed, user_detailed and forms	     					*/
 /****************************************************************************************************************************************/
 
 #customer, #product, #user {
@@ -308,8 +308,8 @@ div.pager {
     user-select: none;
 }
 
-input[type="button"], div.pager span {
-	width: 70px;
+input[type="button"], input[type="submit"], div.pager span {
+	width: 150px;
     cursor: default;
     -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
     -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -350,7 +350,7 @@ div.pager span {
     text-shadow:0px 1px 0px #ffffff;
 }
 
-.page-change-button:hover, input[type="button"]:hover {
+.page-change-button:hover, input[type="button"]:hover, input[type="submit"]:hover {
     cursor: pointer;
 
     background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
@@ -401,4 +401,24 @@ div.pager span {
 
 #submitButton input {
     padding-left: 4px;
+}
+
+/****************************************************************************************************************************************/
+/*												      Import and Export                                									*/
+/****************************************************************************************************************************************/
+
+#importSaft, #exportSaft, #importDB {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #C4C4C4;
+    padding-left: 10px;
+}
+
+#importSaft #fileButton{
+    padding-left: 10px;
+    padding-right: 15px;
+}
+
+#importDB #otherDatabaseURL{
+    width: 35%;
 }

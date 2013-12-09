@@ -25,7 +25,7 @@ require_once 'searches.php';
 </div>
 
 <div id="menu">
-    <ul>
+    <ul id="menuList">
         <?php echo getMenuItems(); ?>
     </ul>
 
@@ -35,16 +35,16 @@ require_once 'searches.php';
 </div>
 
 <div id="searchMenu">
-    <form action="./api/importSaft.php" method="post"
+    <form id="importSaft" action="./api/importSaft.php" method="post"
           enctype="multipart/form-data">
-        <label for="file">Import a SAFT-PT file</label>
-        <input type="file" name="file" id="file">
-        <input type="submit" name="submit" value="Submit">
+        <label for="file">Import a SAFT-PT file:</label>
+        <input id="fileButton" type="file" name="file" id="file">
+        <input id="fileSubmitButton" type="submit" name="submit" value="Submit">
     </form>
-    <form action="./api/exportSaft.php">
+    <form id="exportSaft" action="./api/exportSaft.php">
         <input type="submit" value="Export to SAFT-PT">
     </form>
-    <form>
+    <form id="importDB">
         <input id="otherDatabaseURL" name="url" type="text" value="http://localhost/ltw2">
         <input type="button" value="Import Database" onclick="importDatabase(); return false;">
     </form>
